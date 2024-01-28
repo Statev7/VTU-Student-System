@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
-    using StudentSystem.Web.Data;
+    using StudentSystem.Data;
 
     public static class IServiceCollectionExtensions
     {
