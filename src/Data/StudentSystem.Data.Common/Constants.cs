@@ -9,6 +9,9 @@
 
             public const int LastNameMaxLength = 64;
             public const int LastNameMinLength = 2;
+
+            public const int UsernameMaxLength = 64;
+            public const int UsernameMinLength = 2;
         }
     }
 }

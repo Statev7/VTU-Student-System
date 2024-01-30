@@ -14,6 +14,7 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Messaging;
 
+    using static StudentSystem.Data.Common.Constants.User;
     using static StudentSystem.Common.Constants.GlobalConstants;
 
     public class RegisterModel : PageModel
@@ -48,14 +49,26 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [StringLength(UsernameMaxLength, MinimumLength = UsernameMinLength)]
+            public string Username { get; set; }
+
+            [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
@@ -80,7 +93,10 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
             {
                 var user = this.CreateUser();
 
-                await this.userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await this.userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
+                
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
                 user.Email = Input.Email;
 
                 var result = await this.userManager.CreateAsync(user, Input.Password);
