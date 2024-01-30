@@ -6,7 +6,7 @@
     using StudentSystem.Data.Common.Models;
     using StudentSystem.Data.Models.Users;
 
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

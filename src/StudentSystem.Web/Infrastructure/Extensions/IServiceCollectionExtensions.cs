@@ -3,7 +3,11 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
+    using StudentSystem.Common;
     using StudentSystem.Data;
+    using StudentSystem.Data.Models.Users;
+    using StudentSystem.Services.Messaging;
+    using StudentSystem.Services.Messaging.Senders;
 
     public static class IServiceCollectionExtensions
     {
@@ -34,10 +38,18 @@
         public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
         {
             services
-                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             return services;
         }
+
+        public static IServiceCollection ConfigureEmailSender(this IServiceCollection services)
+            => services.AddTransient<IEmailSender, SendGridEmailSender>();
+
+        public static IServiceCollection ConfigureApplicationSettings(this IServiceCollection services, ConfigurationManager configuration)
+            => services
+                .Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
     }
 }

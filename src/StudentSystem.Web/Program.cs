@@ -14,6 +14,8 @@ namespace StudentSystem.Web
                 .Services
                 .ConfigureDataBase(connectionString, builder.Environment)
                 .ConfigureIdentity()
+                .ConfigureEmailSender()
+                .ConfigureApplicationSettings(builder.Configuration)
                 .AddControllersWithViews();
 
             var app = builder.Build();
