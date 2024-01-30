@@ -9,7 +9,7 @@
         <h2 class="text-center mb-4">
             <span class="border-bottom border-info">Register</span>
         </h2>
-        <form>
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div class="form-group mb-3">
                 <input asp-for="Input.FirstName" type="text" class="form-control p-2" placeholder="First name">
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
