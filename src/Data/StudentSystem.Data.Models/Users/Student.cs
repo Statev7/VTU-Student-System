@@ -20,6 +20,8 @@
 
         public bool IsApproved { get; set; }
 
+        public bool IsApplied { get; set; }
+
         [Required]
         public string ApplicationUserId { get; set; } = null!;
 

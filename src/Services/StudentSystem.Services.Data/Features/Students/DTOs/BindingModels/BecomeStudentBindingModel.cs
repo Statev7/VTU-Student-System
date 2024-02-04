@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using StudentSystem.Services.Data.Features.City.DTOs.ViewModels;
+
     using static StudentSystem.Data.Common.Constants.Student;
 
     public class BecomeStudentBindingModel
@@ -17,6 +18,6 @@
         [Required]
         public Guid CityId { get; set; }
 
-        public IEnumerable<CityViewModel> Cities { get; set; }
+        public IEnumerable<CityViewModel> Cities { get; set; } = new List<CityViewModel>();
     }
 }

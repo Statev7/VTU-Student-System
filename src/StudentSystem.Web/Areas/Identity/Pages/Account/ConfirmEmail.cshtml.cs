@@ -10,9 +10,12 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
 
     using StudentSystem.Data.Models.Users;
 
+    using static StudentSystem.Common.Constants.GlobalConstants;
+
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
         {
@@ -46,6 +49,8 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
             this.StatusMessage = result.Succeeded 
                 ? "Thank you for confirming your email." 
                 : "Error confirming your email.";
+
+            await this.userManager.AddToRoleAsync(user, GuestRole);
 
             return this.Page();
         }

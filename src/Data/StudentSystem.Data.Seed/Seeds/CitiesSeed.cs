@@ -17,6 +17,11 @@
 
         public override async Task SeedAsync()
         {
+            if(await this.IsAlreadySeedAsync()) 
+            {
+                return;
+            }
+
             var cities = JsonConvert.DeserializeObject<IEnumerable<City>>(this.JsonData);
 
             await this.DbSet.AddRangeAsync(cities);

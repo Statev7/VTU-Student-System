@@ -1,6 +1,7 @@
 ﻿namespace StudentSystem.Web.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
     using StudentSystem.Common;
@@ -17,6 +18,8 @@
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
     using StudentSystem.Services.Messaging;
     using StudentSystem.Services.Messaging.Senders;
+    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
+    using StudentSystem.Web.Infrastructure.Helpers.Implementation;
 
     public static class IServiceCollectionExtensions
     {
@@ -47,7 +50,16 @@
         public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
         {
             services
-                .AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -63,6 +75,9 @@
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
 
+        public static IServiceCollection RegisterHelpers(this IServiceCollection services)
+            => services.AddTransient<INotificationHelper, NotificationHelper>();
+
         public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
             => services.AddAutoMapper(typeof(BaseMappingProfile).Assembly);
 
@@ -72,5 +87,8 @@
         public static IServiceCollection ConfigureApplicationSettings(this IServiceCollection services, ConfigurationManager configuration)
             => services
                 .Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
+
+        public static void ConfigureControllersWithViews(this IServiceCollection services)
+            => services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
     }
 }

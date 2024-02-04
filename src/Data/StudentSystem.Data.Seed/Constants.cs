@@ -2,6 +2,8 @@
 {
     public static class Constants
     {
+        public const string RolesJson = "Roles";
+
         public const string CitiesJson = "Cities";
     }
 }

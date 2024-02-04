@@ -1,0 +1,17 @@
+﻿[
+  {
+    "id": "23767933-c1dc-407a-8a08-cd6eb33614b4",
+    "name": "Admin",
+    "normalizedName": "ADMIN"
+  },
+  {
+    "id": "a61ddff5-bbf7-47f0-a998-e28c5839f21a",
+    "name": "Student",
+    "normalizedName": "STUDENT"
+  },
+  {
+    "id": "75acbf8a-49df-47f3-ac96-4dd3145db4df",
+    "name": "Guest",
+    "normalizedName": "GUEST"
+  }
+]

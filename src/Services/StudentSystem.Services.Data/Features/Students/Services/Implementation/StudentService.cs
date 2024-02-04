@@ -27,25 +27,19 @@
 
         public async Task<Result> CreateAsync(BecomeStudentBindingModel model)
         {
-            var userId = this.currentUserService.GetUserId();
-
-            var isUserAlreadyAStudent = await this.Repository
-                .AllAsNoTracking()
-                .AnyAsync(s => s.ApplicationUserId == userId);
-
-            if (isUserAlreadyAStudent)
-            {
-                //TODO: Change the error message
-                return "Error!";
-            }
-
             var studentToCreate = this.Mapper.Map<Student>(model);
-            studentToCreate.ApplicationUserId = userId;
+            studentToCreate.ApplicationUserId = this.currentUserService.GetUserId();
+            studentToCreate.IsApplied = true;
 
             await this.Repository.AddAsync(studentToCreate);
             await this.Repository.SaveChangesAsync();
 
             return true;
         }
+
+        public async Task<bool> IsAppliedAlreadyAsync()
+            => await this.Repository
+            .AllAsNoTracking()
+            .AnyAsync(s => s.ApplicationUserId == this.currentUserService.GetUserId() && s.IsApplied);
     }
 }

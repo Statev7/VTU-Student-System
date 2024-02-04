@@ -17,10 +17,11 @@ namespace StudentSystem.Web
                 .AddHttpContextAccessor()
                 .RegisterServices()
                 .RegisterRepositories()
+                .RegisterHelpers()
                 .RegisterAutoMapper()
                 .RegisterEmailSender()
                 .ConfigureApplicationSettings(builder.Configuration)
-                .AddControllersWithViews();
+                .ConfigureControllersWithViews();
 
             var app = builder.Build();
 

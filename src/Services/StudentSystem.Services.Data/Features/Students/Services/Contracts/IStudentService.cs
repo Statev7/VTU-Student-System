@@ -6,5 +6,7 @@
     public interface IStudentService
     {
         Task<Result> CreateAsync(BecomeStudentBindingModel model);
+
+        Task<bool> IsAppliedAlreadyAsync();
     }
 }
