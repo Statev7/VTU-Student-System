@@ -2,6 +2,12 @@
 {
     public static class GlobalConstants
     {
+        //Roles
+
+        public const string AdminRole = "Admin";
+        public const string StudentRole = "Student";
+        public const string GuestRole = "Guest";
+
         //Email
 
         public const string EmailSender = "petiostatev2703@gmail.com";

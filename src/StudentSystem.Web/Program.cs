@@ -14,20 +14,32 @@ namespace StudentSystem.Web
                 .Services
                 .ConfigureDataBase(connectionString, builder.Environment)
                 .ConfigureIdentity()
-                .ConfigureEmailSender()
+                .AddHttpContextAccessor()
+                .RegisterServices()
+                .RegisterRepositories()
+                .RegisterHelpers()
+                .RegisterAutoMapper()
+                .RegisterEmailSender()
                 .ConfigureApplicationSettings(builder.Configuration)
-                .AddControllersWithViews();
+                .ConfigureControllersWithViews();
 
             var app = builder.Build();
 
             app
-                .ConfigureEnvironment(app.Environment)
+                .ConfigureEnvironments(app.Environment)
                 .UseHttpsRedirection()
                 .UseStaticFiles()
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()
                 .ConfigureEndPoints();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.MigrateDatabaseAsync().GetAwaiter().GetResult();
+
+                app.SeedDataBaseAsync().GetAwaiter().GetResult();
+            }
 
             app.Run();
         }

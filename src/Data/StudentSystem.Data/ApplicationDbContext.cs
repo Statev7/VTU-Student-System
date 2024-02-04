@@ -1,5 +1,6 @@
 ﻿namespace StudentSystem.Data
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,8 @@
         }
 
         public DbSet<Student> Students { get; set; }
+
+        public DbSet<City> Cities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

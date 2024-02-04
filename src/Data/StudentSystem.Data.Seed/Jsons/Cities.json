@@ -1,0 +1,110 @@
+[
+  {
+    "id": "616a7b1e-a9f4-45e8-9f13-5816088b6ef7",
+    "name": "Blagoevgrad"
+  },
+  {
+    "id": "f402a936-d2ee-4ad0-88c6-4bb122cf5676",
+    "name": "Burgas"
+  },
+  {
+    "id": "97940356-5dc6-41a2-87e5-4691438f4b46",
+    "name": "Dobrich"
+  },
+  {
+    "id": "81f719b9-6525-4cdc-b863-52d7ddfec935",
+    "name": "Gabrovo"
+  },
+  {
+    "id": "ad458566-022b-4225-9378-c0e9adeebd4a",
+    "name": "Haskovo"
+  },
+  {
+    "id": "1be2d9be-477d-4f78-a0ab-237eeb69cc93",
+    "name": "Kardzhali"
+  },
+  {
+    "id": "ab2113ef-1f32-4fa3-bbf6-299ddd2c83af",
+    "name": "Kyustendil"
+  },
+  {
+    "id": "39cb991a-f61a-44ad-9c33-fef82675cc61",
+    "name": "Lovech"
+  },
+  {
+    "id": "88f01e44-046b-4787-9f43-4507ac052162",
+    "name": "Montana"
+  },
+  {
+    "id": "1fa03452-c69d-4860-87de-a226e4290c3d",
+    "name": "Pazardzhik"
+  },
+  {
+    "id": "af31b8cd-9adc-492c-90ed-bce2a81137b6",
+    "name": "Pernik"
+  },
+  {
+    "id": "4c0b2fc8-4302-4b5f-b3de-27e31153198f",
+    "name": "Pleven"
+  },
+  {
+    "id": "1412fc44-9e78-4dfe-890d-49934fca7780",
+    "name": "Plovdiv"
+  },
+  {
+    "id": "ea3f4801-23c0-4645-9c0f-6a57e28c0cab",
+    "name": "Razgrad"
+  },
+  {
+    "id": "31f5f51a-9b97-45e5-b0d6-ef4eb93cec09",
+    "name": "Ruse"
+  },
+  {
+    "id": "04e36c7e-285a-4f08-8236-568073fbe358",
+    "name": "Shumen"
+  },
+  {
+    "id": "2cfb2d67-0f49-4eb7-b6fe-705be09fd53f",
+    "name": "Silistra"
+  },
+  {
+    "id": "8cf11661-0a65-4a51-b90e-19a2ad2090c9",
+    "name": "Sliven"
+  },
+  {
+    "id": "1bfa3265-753f-4563-9c4f-abdf76057d3c",
+    "name": "Smolyan"
+  },
+  {
+    "id": "61d71eef-a2ec-4974-a236-f469d7a169a2",
+    "name": "Sofia"
+  },
+  {
+    "id": "024cb8e2-6c22-4345-b8ba-4651ad80abf6",
+    "name": "Stara Zagora"
+  },
+  {
+    "id": "218765f2-ba87-44d1-81a9-37c62cd6a1bb",
+    "name": "Targovishte"
+  },
+  {
+    "id": "769553ee-a753-4369-9373-b6c6be68c138",
+    "name": "Varna"
+  },
+  {
+    "id": "fa4c5a26-9fa5-47ba-be2c-dd91d597a893",
+    "name": "Veliko Tarnovo"
+  },
+  {
+    "id": "4cb1798d-fcbb-47ae-aaf6-2e86f16a0c1b",
+    "name": "Vidin"
+  },
+  {
+    "id": "a13e6fbd-24c5-42e1-a525-f3749bad0405",
+    "name": "Vratsa"
+  },
+  {
+    "id": "04e65efc-c4c3-4a39-967e-ad5f288973fb",
+    "name": "Yambol"
+  }
+]
