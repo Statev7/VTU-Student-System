@@ -14,7 +14,7 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Messaging;
 
-    using static StudentSystem.Data.Common.Constants.User;
+    using static StudentSystem.Data.Common.Constants.ApplicationUser;
     using static StudentSystem.Common.Constants.GlobalConstants;
 
     public class RegisterModel : PageModel
@@ -48,16 +48,6 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
-
-            [Required]
-            [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
-
             [Required]
             [StringLength(UsernameMaxLength, MinimumLength = UsernameMinLength)]
             public string Username { get; set; }
@@ -95,8 +85,6 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
 
                 await this.userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 
-                user.FirstName = Input.FirstName;
-                user.LastName = Input.LastName;
                 user.Email = Input.Email;
 
                 var result = await this.userManager.CreateAsync(user, Input.Password);

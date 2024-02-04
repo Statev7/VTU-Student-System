@@ -6,8 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-StudentSystem.Web-6f8c47fd-d430-4a13-be60-3cf9e854984d</UserSecretsId>
   </PropertyGroup>
-
+  
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.24" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.26" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.26" />
@@ -21,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Data\StudentSystem.Data.Seed\StudentSystem.Data.Seed.csproj" />
     <ProjectReference Include="..\Data\StudentSystem.Data\StudentSystem.Data.csproj" />
     <ProjectReference Include="..\Services\StudentSystem.Services.Data\StudentSystem.Services.Data.csproj" />
     <ProjectReference Include="..\Services\StudentSystem.Services.Messaging\StudentSystem.Services.Messaging.csproj" />

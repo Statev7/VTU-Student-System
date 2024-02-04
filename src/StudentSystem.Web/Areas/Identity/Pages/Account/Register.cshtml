@@ -11,14 +11,6 @@
         </h2>
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div class="form-group mb-3">
-                <input asp-for="Input.FirstName" type="text" class="form-control p-2" placeholder="First name">
-                <span asp-validation-for="Input.FirstName" class="text-danger error"></span>
-            </div>
-            <div class="form-group mb-3">
-                <input asp-for="Input.LastName" type="text" class="form-control p-2" placeholder="Last name">
-                <span asp-validation-for="Input.LastName" class="text-danger error"></span>
-            </div>
-            <div class="form-group mb-3">
                 <input asp-for="Input.Username" type="text" class="form-control p-2" placeholder="Username">
                 <span asp-validation-for="Input.Username" class="text-danger error"></span>
             </div>

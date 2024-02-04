@@ -5,7 +5,16 @@
 
     using StudentSystem.Common;
     using StudentSystem.Data;
+    using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
+    using StudentSystem.Data.Repositories;
+    using StudentSystem.Services.Data.Abstaction.Mapper;
+    using StudentSystem.Services.Data.Common.Services.Contracts;
+    using StudentSystem.Services.Data.Common.Services.Implementation;
+    using StudentSystem.Services.Data.Features.City.Services.Contracts;
+    using StudentSystem.Services.Data.Features.City.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Students.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Students.Services.Implementation;
     using StudentSystem.Services.Messaging;
     using StudentSystem.Services.Messaging.Senders;
 
@@ -45,7 +54,19 @@
             return services;
         }
 
-        public static IServiceCollection ConfigureEmailSender(this IServiceCollection services)
+        public static IServiceCollection RegisterServices(this IServiceCollection services)
+            => services
+                .AddTransient<ICityService, CityService>()
+                .AddTransient<IStudentService, StudentService>()
+                .AddTransient<ICurrentUserService, CurrentUserService>();
+
+        public static IServiceCollection RegisterRepositories(this IServiceCollection services)
+            => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+
+        public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
+            => services.AddAutoMapper(typeof(BaseMappingProfile).Assembly);
+
+        public static IServiceCollection RegisterEmailSender(this IServiceCollection services)
             => services.AddTransient<IEmailSender, SendGridEmailSender>();
 
         public static IServiceCollection ConfigureApplicationSettings(this IServiceCollection services, ConfigurationManager configuration)
