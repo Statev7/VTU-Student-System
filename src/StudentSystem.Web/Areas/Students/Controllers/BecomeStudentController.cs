@@ -11,10 +11,11 @@
     using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
+    using static StudentSystem.Web.Infrastructure.Constants;
     using static StudentSystem.Common.Constants.GlobalConstants;
     using static StudentSystem.Common.Constants.NotificationConstants;
 
-    [Area("Students")]
+    [Area(StudentArea)]
     [Authorize(Roles = GuestRole)]
     public class BecomeStudentController : Controller
     {
@@ -39,7 +40,7 @@
             {
                 this.TempData[ErrorNotification] = AlreadyAppliedErrorMessage;
 
-                return this.RedirectToAction(nameof(HomeController.Index), "Home", new { area = "" });
+                return this.RedirectToAction(nameof(HomeController.Index), HomeControllerName, new { area = "" });
             }
 
             var model = new BecomeStudentBindingModel()
@@ -54,13 +55,11 @@
         [ModelStateValidation]
         public async Task<IActionResult> Apply(BecomeStudentBindingModel model)
         {
-            var result = await this.studentService.CreateAsync(model);
+            await this.studentService.CreateAsync(model);
 
-            var (notificationType, message) = this.notificationHelper.GenerateNotification(result, SuccessfullyAppliedMessage);
+            this.TempData[SuccessNotification] = SuccessfullyAppliedMessage;
 
-            this.TempData[notificationType] = message;
-
-            return this.RedirectToAction(nameof(HomeController.Index), "Home", new { area = "" });
+            return this.RedirectToAction(nameof(HomeController.Index), HomeControllerName, new { area = "" });
         }
     }
 }

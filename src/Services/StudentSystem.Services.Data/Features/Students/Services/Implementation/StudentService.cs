@@ -7,7 +7,6 @@
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Abstaction.Services;
-    using StudentSystem.Services.Data.Common;
     using StudentSystem.Services.Data.Common.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
@@ -25,16 +24,15 @@
             this.currentUserService = currentUserService;
         }
 
-        public async Task<Result> CreateAsync(BecomeStudentBindingModel model)
+        public async Task CreateAsync(BecomeStudentBindingModel model)
         {
             var studentToCreate = this.Mapper.Map<Student>(model);
+
             studentToCreate.ApplicationUserId = this.currentUserService.GetUserId();
             studentToCreate.IsApplied = true;
 
             await this.Repository.AddAsync(studentToCreate);
             await this.Repository.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task<bool> IsAppliedAlreadyAsync()

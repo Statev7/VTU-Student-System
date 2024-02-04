@@ -14,12 +14,13 @@ namespace StudentSystem.Web
                 .Services
                 .ConfigureDataBase(connectionString, builder.Environment)
                 .ConfigureIdentity()
-                .AddHttpContextAccessor()
                 .RegisterServices()
                 .RegisterRepositories()
                 .RegisterHelpers()
                 .RegisterAutoMapper()
                 .RegisterEmailSender()
+                .AddHttpContextAccessor()
+                .AddMemoryCache()
                 .ConfigureApplicationSettings(builder.Configuration)
                 .ConfigureControllersWithViews();
 
