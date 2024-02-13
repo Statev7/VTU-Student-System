@@ -16,14 +16,13 @@
     using static StudentSystem.Common.Constants.NotificationConstants;
 
     [Area(StudentArea)]
-    [Authorize(Roles = GuestRole)]
-    public class BecomeStudentController : Controller
+    public class StudentApplicationController : Controller
     {
         private readonly IStudentService studentService;
         private readonly ICityService cityService;
         private readonly INotificationHelper notificationHelper;
 
-        public BecomeStudentController(
+        public StudentApplicationController(
             IStudentService studentService, 
             ICityService cityService,
             INotificationHelper notificationHelper)
@@ -34,6 +33,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = GuestRole)]
         public async Task<IActionResult> Apply()
         {
             if(await this.studentService.IsAppliedAlreadyAsync())
@@ -53,6 +53,7 @@
 
         [HttpPost]
         [ModelStateValidation]
+        [Authorize(Roles = GuestRole)]
         public async Task<IActionResult> Apply(BecomeStudentBindingModel model)
         {
             await this.studentService.CreateAsync(model);
@@ -60,6 +61,13 @@
             this.TempData[SuccessNotification] = SuccessfullyAppliedMessage;
 
             return this.RedirectToAction(nameof(HomeController.Index), HomeControllerName, new { area = "" });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = AdminRole)]
+        public IActionResult PendingStudents()
+        {
+            return this.View();
         }
     }
 }

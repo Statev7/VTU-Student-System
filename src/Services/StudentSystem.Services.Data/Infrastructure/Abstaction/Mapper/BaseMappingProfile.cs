@@ -1,4 +1,4 @@
-﻿namespace StudentSystem.Services.Data.Abstaction.Mapper
+﻿namespace StudentSystem.Services.Data.Infrastructure.Abstaction.Mapper
 {
     using AutoMapper;
 

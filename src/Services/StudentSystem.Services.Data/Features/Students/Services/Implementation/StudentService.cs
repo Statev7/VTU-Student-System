@@ -1,15 +1,21 @@
 ﻿namespace StudentSystem.Services.Data.Features.Students.Services.Implementation
 {
+    using System;
+    using System.Linq.Expressions;
+
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     using Microsoft.EntityFrameworkCore;
 
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
-    using StudentSystem.Services.Data.Abstaction.Services;
-    using StudentSystem.Services.Data.Common.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
+    using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Extensions;
+    using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
 
     public class StudentService : BaseService<Student>, IStudentService
     {
@@ -22,6 +28,17 @@
             : base(repository, mapper)
         {
             this.currentUserService = currentUserService;
+        }
+
+        public async Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector)
+        {
+            var students = await this.Repository
+                .AllAsNoTracking()
+                .Where(selector)
+                .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                .ToPagedAsync(1, 5);
+
+            return students;
         }
 
         public async Task CreateAsync(BecomeStudentBindingModel model)

@@ -1,4 +1,4 @@
-﻿namespace StudentSystem.Services.Data.Common
+﻿namespace StudentSystem.Services.Data.Infrastructure
 {
     public class Result
     {

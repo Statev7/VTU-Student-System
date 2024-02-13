@@ -114,7 +114,16 @@ footer {
     background-image: var(--purple-btn-color);
 }
 
-.btn:hover{
+.icon {
+    max-width: 64px; 
+    max-height: 64px; 
+}
+
+.btn, .admin-categories :hover {
     transform: translateY(-5px);
     transition: all 0.3s;
+}
+
+.admin-categories-content :hover {
+    transform: translateY(0px);
 }

@@ -8,8 +8,8 @@
 
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
-    using StudentSystem.Services.Data.Abstaction.Services;
     using StudentSystem.Services.Data.Features.City.Services.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
 
     public class CityService : BaseService<City>, ICityService
     {

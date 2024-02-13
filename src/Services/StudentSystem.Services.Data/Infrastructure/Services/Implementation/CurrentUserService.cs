@@ -1,9 +1,9 @@
-﻿namespace StudentSystem.Services.Data.Common.Services.Implementation
+﻿namespace StudentSystem.Services.Data.Infrastructure.Services.Implementation
 {
     using Microsoft.AspNetCore.Http;
 
     using StudentSystem.Common.Infrastructure;
-    using StudentSystem.Services.Data.Common.Services.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
 
     public class CurrentUserService : ICurrentUserService
     {
@@ -15,6 +15,6 @@
         }
 
         public string GetUserId()
-            => this.httpContextAccessor.HttpContext.User.GetUserId();
+            => httpContextAccessor.HttpContext.User.GetUserId();
     }
 }

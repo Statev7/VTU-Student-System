@@ -1,4 +1,4 @@
-﻿namespace StudentSystem.Services.Data.Abstaction.Services
+﻿namespace StudentSystem.Services.Data.Infrastructure.Abstaction.Services
 {
     using AutoMapper;
 
@@ -10,8 +10,8 @@
     {
         protected BaseService(IRepository<TEntity> repository, IMapper mapper)
         {
-            this.Repository = repository;
-            this.Mapper = mapper;
+            Repository = repository;
+            Mapper = mapper;
         }
 
         protected IRepository<TEntity> Repository { get; }

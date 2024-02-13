@@ -9,13 +9,13 @@
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Data.Repositories;
-    using StudentSystem.Services.Data.Abstaction.Mapper;
-    using StudentSystem.Services.Data.Common.Services.Contracts;
-    using StudentSystem.Services.Data.Common.Services.Implementation;
     using StudentSystem.Services.Data.Features.City.Services.Contracts;
     using StudentSystem.Services.Data.Features.City.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
+    using StudentSystem.Services.Data.Infrastructure.Abstaction.Mapper;
+    using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Services.Implementation;
     using StudentSystem.Services.Messaging;
     using StudentSystem.Services.Messaging.Senders;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;

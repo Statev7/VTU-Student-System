@@ -1,7 +1,6 @@
 ﻿namespace StudentSystem.Web.Infrastructure.Helpers.Contracts
 {
-
-    using StudentSystem.Services.Data.Common;
+    using StudentSystem.Services.Data.Infrastructure;
 
     public interface INotificationHelper
     {
