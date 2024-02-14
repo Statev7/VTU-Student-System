@@ -1,0 +1,43 @@
+﻿@model IPageList<PendingStudentViewModel>
+
+@{
+    this.ViewData["Title"] = "Peding Students";
+}
+
+@if (Model.HasEntities)
+{
+    <div class="row mt-5">
+        @foreach (var student in Model.Entities)
+        {
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="mb-3" style="font-size: 18px">
+                            <h5 class="card-title">
+                                <i class="fa-solid fa-user"></i> @student.FullName
+                            </h5>
+                            <p class="card-text">
+                                <i class="fa-solid fa-location-pin"></i> @student.CityName
+                            </p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-envelope"></i> @student.Email
+                            </p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-calendar-days"></i> @student.AppliedOn.ToString("dd/MM/yyyy")
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between gap-2">
+                            <a asp-action="ApproveStudent" asp-route-email="@student.Email" asp-route-isApproved="true" class="w-50 btn btn-success">Approve</a>
+                            <a asp-action="ApproveStudent" asp-route-email="@student.Email" asp-route-isApproved="false" class="w-50 btn btn-danger">Disapproval</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (Model.HasPagination)
+    {
+        @await Html.PartialAsync("_Pagination", Model)
+    }
+}

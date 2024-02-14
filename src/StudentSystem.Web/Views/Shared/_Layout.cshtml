@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using StudentSystem.Common.Infrastructure.Extensions
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,14 +29,19 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav d-flex align-items-center flex-grow-1">
+                    <ul class="navbar-nav align-items-center flex-grow-1">
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo.png" /></a>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo.svg" /></a>
                         </li>
 
-                       @*  <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Students" asp-controller="BecomeStudent" asp-action="Apply">Become a Student</a>
-                        </li> *@
+                        @if (this.User.IsAdmin())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">
+                                    <span>Administration</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                     <partial name="_LoginPartial" />
@@ -44,14 +50,13 @@
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container" style="min-height: 50vh;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer>
-
         <section class="offset-md-3 col-md-6 d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-sm-between gap-3 gap-md-0 mb-5">
 
             <div class="text-center">

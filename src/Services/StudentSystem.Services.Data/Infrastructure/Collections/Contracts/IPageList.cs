@@ -1,21 +1,13 @@
 ﻿namespace StudentSystem.Services.Data.Infrastructure.Collections.Contracts
 {
-    public interface IPageList<TEntity>
+    using StudentSystem.Common.Infrastructure.Contracts;
+
+    public interface IPageList<TEntity> : IHasPaging
     {
         IEnumerable<TEntity> Entities { get; }
 
         bool HasEntities { get; }
 
-        int CurrentPage { get; }
-
-        int EntitiesPerPage { get; }
-
-        int TotalPages { get; }
-
-        int TotalEntities { get; }
-
-        bool HasNextPage { get; }
-
-        bool HasPreviousPage { get; }
+        bool HasPagination { get; }
     }
 }

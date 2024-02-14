@@ -6,6 +6,7 @@
     using StudentSystem.Services.Data.Features.City.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.City.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Web.Controllers;
     using StudentSystem.Web.Infrastructure.Attributes;
@@ -38,7 +39,7 @@
         {
             if(await this.studentService.IsAppliedAlreadyAsync())
             {
-                this.TempData[ErrorNotification] = AlreadyAppliedErrorMessage;
+                this.TempData.Add(ErrorNotification, AlreadyAppliedErrorMessage);
 
                 return this.RedirectToAction(nameof(HomeController.Index), HomeControllerName, new { area = "" });
             }
@@ -58,16 +59,31 @@
         {
             await this.studentService.CreateAsync(model);
 
-            this.TempData[SuccessNotification] = SuccessfullyAppliedMessage;
+            this.TempData.Add(SuccessNotification, SuccessfullyAppliedMessage);
 
             return this.RedirectToAction(nameof(HomeController.Index), HomeControllerName, new { area = "" });
         }
 
         [HttpGet]
         [Authorize(Roles = AdminRole)]
-        public IActionResult PendingStudents()
+        public async Task<IActionResult> PendingStudents(int currentPage = 1)
         {
-            return this.View();
+            var pendingStudents = await this.studentService
+                .GetAllAsync<PendingStudentViewModel>(s => s.IsApplied && !s.IsApproved, currentPage);
+
+            return this.View(pendingStudents);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = AdminRole)]
+        public async Task<IActionResult> ApproveStudent(string email, bool isApproved)
+        {
+            var result = await this.studentService.ApproveStudentAsync(email, isApproved);
+
+            var (notificationType, message) = this.notificationHelper.GenerateNotification(result, SuccesfullyAprovedOperationMessage);
+            this.TempData.Add(notificationType, message);
+
+            return this.RedirectToAction(nameof(PendingStudents));
         }
     }
 }

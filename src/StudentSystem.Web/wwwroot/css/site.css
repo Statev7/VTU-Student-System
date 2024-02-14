@@ -95,23 +95,14 @@ footer {
     background-size: cover;
 
     color: white;
-    position: absolute;
     width: 100%;
     white-space: nowrap;
     padding: 220px 0px 25px 0px;
     margin-top: 100px;
 }
-
+    
 .copyrights {
     border-top: 1px solid #515DBB;
-}
-
-.btn-primary {
-    background-image: var(--blue-btn-color);
-}
-
-.btn-dark {
-    background-image: var(--purple-btn-color);
 }
 
 .icon {
@@ -119,7 +110,11 @@ footer {
     max-height: 64px; 
 }
 
-.btn, .admin-categories :hover {
+.nav-link {
+    font-size: 18px
+}
+
+.admin-categories:hover {
     transform: translateY(-5px);
     transition: all 0.3s;
 }

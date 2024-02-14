@@ -1,8 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Infrastructure.Services.Implementation
 {
     using Microsoft.AspNetCore.Http;
-
-    using StudentSystem.Common.Infrastructure;
+    using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
 
     public class CurrentUserService : ICurrentUserService

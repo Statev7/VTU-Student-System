@@ -35,6 +35,7 @@
             => new List<ISeeder>()
             {
                 new RoleSeeder(serviceScope, GetJsonContentAsync(Constants.RolesJson).GetAwaiter().GetResult()),
+                new UsersSeed(serviceScope, GetJsonContentAsync(Constants.UsersJson).GetAwaiter().GetResult()),
                 new CitiesSeed(serviceScope, GetJsonContentAsync(Constants.CitiesJson).GetAwaiter().GetResult()),
             };
 

@@ -32,7 +32,9 @@
 
         public bool HasNextPage => CurrentPage < TotalPages;
 
-        public bool HasEntities => Entities.Any();
+        public bool HasEntities => this.Entities != null && this.Entities.Any();
+
+        public bool HasPagination => this.TotalPages > 1;
 
         public static IPageList<TEntity> CreateModel(
             IEnumerable<TEntity> entities,
