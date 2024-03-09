@@ -6,6 +6,7 @@
 
         public const string AdminRole = "Admin";
         public const string StudentRole = "Student";
+        public const string TeacherRole = "Teacher";
         public const string GuestRole = "Guest";
 
         //Users

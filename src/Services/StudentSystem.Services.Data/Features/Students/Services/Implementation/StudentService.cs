@@ -13,6 +13,7 @@
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
     using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
@@ -27,18 +28,24 @@
     {
         private const int EntitiesPerPage = 9;
 
-        private readonly ICurrentUserService currentUserService;
+        private readonly string currentUserId;
         private readonly IEmailSender emailSender;
+        private readonly ILogger<StudentService> logger;
+        private readonly IUserService userService;
 
         public StudentService(
             IRepository<Student> repository, 
             IMapper mapper, 
             ICurrentUserService currentUserService,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ILogger<StudentService> logger,
+            IUserService userService)
             : base(repository, mapper)
         {
-            this.currentUserService = currentUserService;
+            this.currentUserId = currentUserService.GetUserId();
             this.emailSender = emailSender;
+            this.logger = logger;
+            this.userService = userService;
         }
 
         public async Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage)
@@ -52,18 +59,30 @@
         public async Task CreateAsync(BecomeStudentBindingModel model)
         {
             var studentToCreate = this.Mapper.Map<Student>(model);
+            studentToCreate.ApplicationUserId = this.currentUserId;
 
-            studentToCreate.ApplicationUserId = this.currentUserService.GetUserId();
-            studentToCreate.IsApplied = true;
+            using var transaction = await this.Repository.BeginTransactionAsync();
 
-            await this.Repository.AddAsync(studentToCreate);
-            await this.Repository.SaveChangesAsync();
+            try
+            {
+                await this.Repository.AddAsync(studentToCreate);
+                await userService.UpdateAsync(x => x.Id.Equals(this.currentUserId), model);
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+
+                this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateAsync)} method");
+            }
         }
 
         public async Task<Result> ApproveStudentAsync(string email, bool isApproved)
         {
             var student = await this.Repository
-                .AllAsNoTracking()
+                .All()
+                .Include(s => s.User)
                 .SingleOrDefaultAsync(s => s.User.Email == email);
 
             if (student == null)
@@ -71,30 +90,48 @@
                 return InvalidStudentErrorMessage;
             }
 
-            if (isApproved)
+            try
             {
-                student.IsApproved = true;
-                student.IsApplied = false;
+                await this.ProcessStudentApprovalAsync(isApproved, student);
 
-                this.Repository.Update(student);
+                var emailMessage = isApproved ? StudentApprovedMessage : StudentNotApprovedMessage;
+
+                await this.emailSender.SendEmailAsync(EmailSender, EmailSenderName, email, ApplicationResultSubject, emailMessage);
             }
-            else
+            catch (Exception ex)
             {
-                this.Repository.Delete(student);
+                this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.ApproveStudentAsync)} method");
+
+                return ErrorMesage;
             }
-
-            await this.Repository.SaveChangesAsync();
-
-            var emailMessage = isApproved ? StudentApprovedMessage : StudentNotApprovedMessage;
-
-            await this.emailSender.SendEmailAsync(EmailSender, EmailSenderName, email, ApplicationResultSubject, emailMessage);
 
             return true;
         }
 
         public async Task<bool> IsAppliedAlreadyAsync()
             => await this.Repository
-            .AllAsNoTracking()
-            .AnyAsync(s => s.ApplicationUserId == this.currentUserService.GetUserId() && s.IsApplied);
+                .AllAsNoTracking()
+                .AnyAsync(s => s.ApplicationUserId.Equals(this.currentUserId) && s.IsApplied);
+
+        private async Task ProcessStudentApprovalAsync(bool isApproved, Student student)
+        {
+            if (isApproved)
+            {
+                student.IsApproved = true;
+                student.IsApplied = false;
+
+                await this.userService.RemoveFromRoleAsync(student.User, GuestRole);
+                await this.userService.AddToRoleAsync(student.User, StudentRole);
+            }
+            else
+            {
+                student.User.FirstName = default;
+                student.User.LastName = default;
+
+                this.Repository.Delete(student);
+            }
+
+            await this.Repository.SaveChangesAsync();
+        }
     }
 }

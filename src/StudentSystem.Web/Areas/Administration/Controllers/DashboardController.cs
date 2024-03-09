@@ -2,14 +2,8 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    using static StudentSystem.Web.Infrastructure.Constants;
-
-    [Area(AdministrationArea)]
-    public class DashboardController : Controller
+    public class DashboardController : BaseAdminController
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => this.View();
     }
 }

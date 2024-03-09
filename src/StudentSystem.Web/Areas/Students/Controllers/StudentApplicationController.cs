@@ -16,7 +16,7 @@
     using static StudentSystem.Common.Constants.GlobalConstants;
     using static StudentSystem.Common.Constants.NotificationConstants;
 
-    [Area(StudentArea)]
+    [Area(StudentsArea)]
     public class StudentApplicationController : Controller
     {
         private readonly IStudentService studentService;
@@ -35,19 +35,10 @@
 
         [HttpGet]
         [Authorize(Roles = GuestRole)]
+        [CheckStudentApplicationStatusrAttribute]
         public async Task<IActionResult> Apply()
         {
-            if(await this.studentService.IsAppliedAlreadyAsync())
-            {
-                this.TempData.Add(ErrorNotification, AlreadyAppliedErrorMessage);
-
-                return this.RedirectToAction(nameof(HomeController.Index), HomeControllerName, new { area = "" });
-            }
-
-            var model = new BecomeStudentBindingModel()
-            {
-                Cities = await this.cityService.GetAllAsync<CityViewModel>(),
-            };
+            var model = new BecomeStudentBindingModel() { Cities = await this.cityService.GetAllAsync<CityViewModel>() };
 
             return this.View(model);
         }
@@ -68,8 +59,7 @@
         [Authorize(Roles = AdminRole)]
         public async Task<IActionResult> PendingStudents(int currentPage = 1)
         {
-            var pendingStudents = await this.studentService
-                .GetAllAsync<PendingStudentViewModel>(s => s.IsApplied && !s.IsApproved, currentPage);
+            var pendingStudents = await this.studentService.GetAllAsync<PendingStudentViewModel>(s => s.IsApplied && !s.IsApproved, currentPage);
 
             return this.View(pendingStudents);
         }

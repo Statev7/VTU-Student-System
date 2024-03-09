@@ -8,52 +8,19 @@
 
     <ul role="list" class="row row-gap-4">
 
-        <li class="col-4 col-md-3 p-2 admin-categories">
+        <li class="col-3 col-md-3 p-2 admin-categories">
+            <a asp-controller="Users" asp-action="All" class="text-decoration-none text-black">
+                <div class="d-flex flex-column align-items-center w-100 h-100 admin-categories-content">
+                    @Html.RenderPngIcon("users")
+                    <div class="mt-2">
+                        <h5 class="text-center">All Users</h5>
+                    </div>
+                </div>
+            </a>
+        </li>
+
+        <li class="col-3 col-md-3 p-2 admin-categories">
             <a asp-area="Students" asp-controller="StudentApplication" asp-action="PendingStudents" class="text-decoration-none text-black">
-                <div class="d-flex flex-column align-items-center w-100 h-100 admin-categories-content">
-                    @Html.RenderPngIcon("waiting")
-                    <div class="mt-2">
-                        <h5 class="text-center">Pending Students</h5>
-                    </div>
-                </div>
-            </a>
-        </li>
-
-        <li class="col-4 col-md-3 p-2 admin-categories">
-            <a asp-action="Pending" class="text-decoration-none text-black">
-                <div class="d-flex flex-column align-items-center w-100 h-100 admin-categories-content">
-                    @Html.RenderPngIcon("waiting")
-                    <div class="mt-2">
-                        <h5 class="text-center">Pending Students</h5>
-                    </div>
-                </div>
-            </a>
-        </li>
-
-        <li class="col-4 col-md-3 p-2 admin-categories">
-            <a asp-action="Pending" class="text-decoration-none text-black">
-                <div class="d-flex flex-column align-items-center w-100 h-100 admin-categories-content">
-                    @Html.RenderPngIcon("waiting")
-                    <div class="mt-2">
-                        <h5 class="text-center">Pending Students</h5>
-                    </div>
-                </div>
-            </a>
-        </li>
-
-        <li class="col-4 col-md-3 p-2 admin-categories">
-            <a asp-action="Pending" class="text-decoration-none text-black">
-                <div class="d-flex flex-column align-items-center w-100 h-100 admin-categories-content">
-                    @Html.RenderPngIcon("waiting")
-                    <div class="mt-2">
-                        <h5 class="text-center">Pending Students</h5>
-                    </div>
-                </div>
-            </a>
-        </li>
-
-        <li class="col-4 col-md-3 p-2 admin-categories">
-            <a asp-action="Pending" class="text-decoration-none text-black">
                 <div class="d-flex flex-column align-items-center w-100 h-100 admin-categories-content">
                     @Html.RenderPngIcon("waiting")
                     <div class="mt-2">

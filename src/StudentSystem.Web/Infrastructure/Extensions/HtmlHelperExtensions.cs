@@ -1,10 +1,7 @@
 ﻿namespace StudentSystem.Web.Infrastructure.Extensions
 {
-    using System.Drawing;
-
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
-
 
     public static class HtmlHelperExtensions
     {

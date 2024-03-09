@@ -1,6 +1,8 @@
 ﻿namespace StudentSystem.Data.Repositories
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
+    using Microsoft.EntityFrameworkCore.Storage;
 
     using StudentSystem.Data.Common.Models;
     using StudentSystem.Data.Common.Repositories;
@@ -40,6 +42,8 @@
         public virtual void Delete(TEntity entity) => this.DbSet.Remove(entity);
 
         public Task<int> SaveChangesAsync() => this.DbContext.SaveChangesAsync();
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync() => await this.DbContext.Database.BeginTransactionAsync();
 
         public void Dispose()
         {

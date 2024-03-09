@@ -5,6 +5,11 @@
     "normalizedName": "ADMIN"
   },
   {
+    "id": "1c643fa5-d146-4e0a-8346-c506da87efd6",
+    "name": "Teacher",
+    "normalizedName": "TEACHER"
+  },
+  {
     "id": "a61ddff5-bbf7-47f0-a998-e28c5839f21a",
     "name": "Student",
     "normalizedName": "STUDENT"

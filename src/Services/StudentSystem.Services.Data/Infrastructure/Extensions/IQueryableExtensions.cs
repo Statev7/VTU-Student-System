@@ -1,5 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Infrastructure.Extensions
 {
+    using System.Linq.Expressions;
+
     using Microsoft.EntityFrameworkCore;
 
     using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
@@ -7,10 +9,7 @@
 
     public static class IQueryableExtensions
     {
-        public static async Task<IPageList<TEntity>> ToPagedAsync<TEntity>(
-            this IQueryable<TEntity> source,
-            int currentPage,
-            int entitiesPerPage)
+        public static async Task<IPageList<TEntity>> ToPagedAsync<TEntity>(this IQueryable<TEntity> source, int currentPage, int entitiesPerPage)
         {
             if (source == null)
             {
@@ -30,6 +29,16 @@
             var pageList = PageList<TEntity>.CreateModel(entities, currentPage, entitiesPerPage, totalEntities);
 
             return pageList;
+        }
+
+        public static IQueryable<TEntity> WhereIf<TEntity>(this IQueryable<TEntity> source, bool condition, Expression<Func<TEntity, bool>> filter)
+        {
+            if (condition)
+            {
+                source = source.Where(filter);
+            }
+
+            return source;
         }
     }
 }
