@@ -4,7 +4,9 @@
     using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json;
 
-    public class RoleSeeder : BaseSeeder<IdentityRole>
+    using StudentSystem.Data.Models.Users;
+
+    public class RoleSeeder : BaseSeeder<ApplicationRole>
     {
         public RoleSeeder(IServiceScope serviceScope, string jsonData) 
             : base(serviceScope, jsonData)
@@ -19,7 +21,7 @@
                 return;
             }
 
-            var roles = JsonConvert.DeserializeObject<IEnumerable<IdentityRole>>(this.JsonData);
+            var roles = JsonConvert.DeserializeObject<IEnumerable<ApplicationRole>>(this.JsonData);
 
             await this.DbContext.Roles.AddRangeAsync(roles);
             await this.DbContext.SaveChangesAsync();

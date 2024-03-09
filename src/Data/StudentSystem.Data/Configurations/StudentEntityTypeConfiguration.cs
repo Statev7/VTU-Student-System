@@ -12,7 +12,8 @@
             builder
                 .HasOne(s => s.City)
                 .WithMany(c => c.Students)
-                .HasForeignKey(s => s.CityId);
+                .HasForeignKey(s => s.CityId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

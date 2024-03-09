@@ -1,3 +1,8 @@
+:root {
+    --purple-btn-color: linear-gradient(90deg, #6E1083 34%, #540B84 75%);
+    --blue-btn-color: linear-gradient(90deg, #1B2DBE 34%, #424f8d 75%);
+}
+
 /* Box sizing rules */
 *,
 *::before,
@@ -81,4 +86,39 @@ select {
 
 .error {
     font-size: 14px;
+}
+
+footer {
+    background-image: url("../images/footer.png");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    color: white;
+    width: 100%;
+    white-space: nowrap;
+    padding: 220px 0px 25px 0px;
+    margin-top: 100px;
+}
+    
+.copyrights {
+    border-top: 1px solid #515DBB;
+}
+
+.icon {
+    max-width: 64px; 
+    max-height: 64px; 
+}
+
+.nav-link {
+    font-size: 18px
+}
+
+.admin-categories:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s;
+}
+
+.admin-categories-content :hover {
+    transform: translateY(0px);
 }

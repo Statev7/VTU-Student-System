@@ -12,7 +12,19 @@
             builder
                 .HasOne(au => au.Student)
                 .WithOne(s => s.User)
-                .HasForeignKey<Student>(s => s.ApplicationUserId);
+                .HasForeignKey<Student>(s => s.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(au => au.Teacher)
+                .WithOne(t => t.User)
+                .HasForeignKey<Teacher>(s => s.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(e => e.UserRoles)
+                 .WithOne(e => e.User)
+                 .HasForeignKey(ur => ur.UserId)
+                 .IsRequired();
         }
     }
 }

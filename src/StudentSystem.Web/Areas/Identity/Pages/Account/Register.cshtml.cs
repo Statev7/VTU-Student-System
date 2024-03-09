@@ -16,6 +16,7 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
 
     using static StudentSystem.Data.Common.Constants.ApplicationUser;
     using static StudentSystem.Common.Constants.GlobalConstants;
+    using static StudentSystem.Common.Constants.NotificationConstants;
 
     public class RegisterModel : PageModel
     {
@@ -106,10 +107,15 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
                         return this.LocalRedirect(returnUrl);
                     }
                 }
-
-                foreach (var error in result.Errors)
+                else
                 {
-                    this.ModelState.AddModelError(string.Empty, error.Description);
+                    var errorMessage = result.Errors.Count() > 1 
+                        ? string.Join("<br>", result.Errors.Select(x => x.Description)) 
+                        : result.Errors.First().Description;
+
+                    errorMessage = errorMessage.Replace("'", "");
+
+                    this.TempData.Add(ErrorNotification, errorMessage);
                 }
             }
 

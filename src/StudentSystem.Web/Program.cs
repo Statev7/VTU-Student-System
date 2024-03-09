@@ -2,24 +2,27 @@ namespace StudentSystem.Web
 {
     using StudentSystem.Web.Infrastructure.Extensions;
 
+    using static StudentSystem.Web.Infrastructure.Constants;
+
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = builder.Configuration.GetConnectionString(DefaultConnectionString);
 
             builder
                 .Services
                 .ConfigureDataBase(connectionString, builder.Environment)
                 .ConfigureIdentity()
-                .AddHttpContextAccessor()
                 .RegisterServices()
                 .RegisterRepositories()
                 .RegisterHelpers()
                 .RegisterAutoMapper()
                 .RegisterEmailSender()
+                .AddHttpContextAccessor()
+                .AddMemoryCache()
                 .ConfigureApplicationSettings(builder.Configuration)
                 .ConfigureControllersWithViews();
 

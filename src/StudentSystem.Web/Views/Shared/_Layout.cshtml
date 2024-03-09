@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using StudentSystem.Common.Infrastructure.Extensions
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,44 +15,75 @@
     <link rel="stylesheet" href="~/fonts/Lato-Bold.ttf" />
     <link rel="stylesheet" href="~/fonts/Lato-Light.ttf" />
     <link rel="stylesheet" href="~/fonts/Lato-Regular.ttf" />
+
+    @await RenderSectionAsync("Styles", required: false)
+
+    <script src="https://kit.fontawesome.com/ddc00cf9b8.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+            <div class="offset-md-3 col-md-6">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav align-items-center flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo.svg" /></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Students" asp-controller="BecomeStudent" asp-action="Apply">Become a Student</a>
-                        </li>
+
+                        @if (this.User.IsAdmin())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">
+                                    <span>Administration</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
+
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container" style="min-height: 50vh;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - StudentSystem.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer>
+        <section class="offset-md-3 col-md-6 d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-sm-between gap-3 gap-md-0 mb-5">
+
+            <div class="text-center">
+                <h4>Contact Us</h4>
+                <br />
+                <p>Bul. Sankt Petersburg</p>
+                <p>Trakia</p>
+                <p>Plovdiv</p>
+                <p>Bulgaria</p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+            </div>
+
+            <div>
+                <h4>Social Media</h4>
+            </div>
+
+        </section>
+
+        <section class="offset-3 col-6 text-center p-2 copyrights">
+            <p>&copy; 2024 StudentSystem</p>
+        </section>
+
     </footer>
 
     <script type="text/javascript">

@@ -1,6 +1,6 @@
 ﻿namespace StudentSystem.Web.Infrastructure.Helpers.Implementation
 {
-    using StudentSystem.Services.Data.Common;
+    using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
     using static StudentSystem.Common.Constants.NotificationConstants;

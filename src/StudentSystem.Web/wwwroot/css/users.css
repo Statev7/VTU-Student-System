@@ -1,0 +1,25 @@
+﻿.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+
+.avatar-md {
+    height: 5rem;
+    width: 5rem;
+}
+
+.fs-19 {
+    font-size: 19px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.bg-soft-secondary {
+    background-color: rgba(116,120,141,.15) !important;
+    color: #74788d !important;
+}
+
+.mt-1 {
+    margin-top: 0.25rem !important;
+}

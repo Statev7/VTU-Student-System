@@ -9,13 +9,17 @@
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Data.Repositories;
-    using StudentSystem.Services.Data.Abstaction.Mapper;
-    using StudentSystem.Services.Data.Common.Services.Contracts;
-    using StudentSystem.Services.Data.Common.Services.Implementation;
     using StudentSystem.Services.Data.Features.City.Services.Contracts;
     using StudentSystem.Services.Data.Features.City.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Teachers.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Users.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Users.Services.Implementation;
+    using StudentSystem.Services.Data.Infrastructure.Abstaction.Mapper;
+    using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Services.Implementation;
     using StudentSystem.Services.Messaging;
     using StudentSystem.Services.Messaging.Senders;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
@@ -59,7 +63,7 @@
                     options.Password.RequireUppercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                 })
-                .AddRoles<IdentityRole>()
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -70,7 +74,9 @@
             => services
                 .AddTransient<ICityService, CityService>()
                 .AddTransient<IStudentService, StudentService>()
-                .AddTransient<ICurrentUserService, CurrentUserService>();
+                .AddTransient<ICurrentUserService, CurrentUserService>()
+                .AddTransient<IUserService, UserService>()
+                .AddTransient<ITeacherService, TeacherService>();
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));

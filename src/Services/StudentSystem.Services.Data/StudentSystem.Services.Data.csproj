@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Data\StudentSystem.Data.Common\StudentSystem.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\StudentSystem.Data\StudentSystem.Data.csproj" />
     <ProjectReference Include="..\..\StudentSystem.Common\StudentSystem.Common.csproj" />
+    <ProjectReference Include="..\StudentSystem.Services.Messaging\StudentSystem.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>

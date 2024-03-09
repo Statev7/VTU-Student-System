@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using StudentSystem.Services.Data.Features.City.DTOs.ViewModels;
 
-    using static StudentSystem.Data.Common.Constants.Student;
+    using static StudentSystem.Data.Common.Constants.ApplicationUser;
 
     public class BecomeStudentBindingModel
     {
