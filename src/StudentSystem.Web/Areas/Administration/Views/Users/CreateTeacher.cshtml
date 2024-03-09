@@ -7,11 +7,19 @@
         </h2>
         <form method="post">
             <div class="form-group mb-3">
+                @if (!string.IsNullOrEmpty(Model.FirstName))
+                {
+                    <input id="hiddenFName" type="hidden" asp-for="FirstName" />
+                }
                 <input asp-for="FirstName" type="text" class="form-control p-2" placeholder="First Name">
                 <span asp-validation-for="FirstName" class="text-danger error"></span>
             </div>
             <div class="form-group mb-3">
-                <input asp-for="LastName" type="text" class="form-control p-2" placeholder="Last Name">
+                @if (!string.IsNullOrEmpty(Model.LastName))
+                {
+                    <input id="hiddenLName" type="hidden" asp-for="LastName" />
+                }
+                <input asp-for="LastName" type="text" class="form-control p-2" placeholder="Last Name" />
                 <span asp-validation-for="LastName" class="text-danger error"></span>
             </div>
             <div class="form-group mb-3">
@@ -26,5 +34,17 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const firstNameInput = document.getElementById('FirstName');
+        const lastNameInput = document.getElementById('LastName');
+
+        if (firstNameInput.value !== '') {
+            firstNameInput.disabled = true;
+            lastNameInput.disabled = true;
+        };
+    </script>
 }
