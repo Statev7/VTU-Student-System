@@ -32,6 +32,10 @@
 
         public const string SuccessfullyCreatedCourseMessage = $"{SuccessfulyCreatedMessage} course!";
 
+        public const string SuccessfillyUpdatedCourseMessage = $"Successfully updated!";
+
+        public const string InvalidCourseErrorMessage = "Such a course not exist!";
+
         private const string SuccessfulyCreatedMessage = "Successfully created a new";
     }
 }

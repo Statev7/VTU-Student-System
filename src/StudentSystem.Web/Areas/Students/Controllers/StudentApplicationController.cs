@@ -10,7 +10,7 @@
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Web.Controllers;
     using StudentSystem.Web.Infrastructure.Attributes;
-    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
+    using StudentSystem.Web.Infrastructure.Extensions;
 
     using static StudentSystem.Web.Infrastructure.Constants;
     using static StudentSystem.Common.Constants.GlobalConstants;
@@ -21,16 +21,13 @@
     {
         private readonly IStudentService studentService;
         private readonly ICityService cityService;
-        private readonly INotificationHelper notificationHelper;
 
         public StudentApplicationController(
             IStudentService studentService, 
-            ICityService cityService,
-            INotificationHelper notificationHelper)
+            ICityService cityService)
         {
             this.studentService = studentService;
             this.cityService = cityService;
-            this.notificationHelper = notificationHelper;
         }
 
         [HttpGet]
@@ -68,10 +65,7 @@
         [Authorize(Roles = AdminRole)]
         public async Task<IActionResult> ApproveStudent(string email, bool isApproved)
         {
-            var result = await this.studentService.ApproveStudentAsync(email, isApproved);
-
-            var (notificationType, message) = this.notificationHelper.GenerateNotification(result, SuccesfullyAprovedOperationMessage);
-            this.TempData.Add(notificationType, message);
+            this.TempData.Add(await this.studentService.ApproveStudentAsync(email, isApproved));
 
             return this.RedirectToAction(nameof(PendingStudents));
         }

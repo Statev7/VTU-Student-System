@@ -7,24 +7,19 @@
     using StudentSystem.Services.Data.Features.Users.DTOs.RequestDataModels;
     using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Attributes;
-    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
-
-    using static StudentSystem.Common.Constants.NotificationConstants;
+    using StudentSystem.Web.Infrastructure.Extensions;
 
     public class UsersController : BaseAdminController
     {
         private readonly IUserService userService;
         private readonly ITeacherService teacherService;
-        private readonly INotificationHelper notificationHelper;
 
         public UsersController(
             IUserService userService,
-            ITeacherService teacherService,
-            INotificationHelper notificationHelper)
+            ITeacherService teacherService)
         {
             this.userService = userService;
             this.teacherService = teacherService;
-            this.notificationHelper = notificationHelper;
         }
 
         [HttpGet]
@@ -49,10 +44,7 @@
         [RedirectIfTeacherExistsAttribute]
         public async Task<IActionResult> CreateTeacher(string email, BecomeTeacherBindingModel model)
         {
-            var result = await this.teacherService.CreateTeacherAsync(email, model);
-
-            var (notificationType, message) = this.notificationHelper.GenerateNotification(result, SuccessfullyCreatedTeacherMessage);
-            this.TempData.Add(notificationType, message);
+            this.TempData.Add(await this.teacherService.CreateTeacherAsync(email, model));
 
             return this.RedirectToAction(nameof(All));
         }

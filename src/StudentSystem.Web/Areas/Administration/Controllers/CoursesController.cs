@@ -7,24 +7,19 @@
     using StudentSystem.Services.Data.Features.Teachers.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Attributes;
-    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
-
-    using static StudentSystem.Common.Constants.NotificationConstants;
+    using StudentSystem.Web.Infrastructure.Extensions;
 
     public class CoursesController : BaseAdminController
     {
         private readonly ICourseService courseService;
         private readonly ITeacherService teacherService;
-        private readonly INotificationHelper notificationHelper;
 
         public CoursesController(
             ICourseService courseService, 
-            ITeacherService teacherService, 
-            INotificationHelper notificationHelper)
+            ITeacherService teacherService)
         {
             this.courseService = courseService;
             this.teacherService = teacherService;
-            this.notificationHelper = notificationHelper;
         }
 
         [HttpGet]
@@ -48,10 +43,7 @@
         [ModelStateValidation]
         public async Task<IActionResult> Create(CourseFormBidningModel model)
         {
-            var result = await this.courseService.CreateAsync(model);
-
-            var (notificationType, message) = this.notificationHelper.GenerateNotification(result, SuccessfullyCreatedCourseMessage);
-            this.TempData.Add(notificationType, message);
+            this.TempData.Add(await this.courseService.CreateAsync(model));
 
             return this.RedirectToAction(nameof(this.Index));
         }
