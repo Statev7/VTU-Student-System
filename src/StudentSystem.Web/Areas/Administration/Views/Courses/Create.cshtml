@@ -1,0 +1,68 @@
+﻿@model CourseFormBidningModel
+
+@section HeadScripts
+{
+    @{
+        await Html.RenderPartialAsync("_TinymceScriptsPartial");
+    }
+}
+
+<div class="container mt-5">
+    <div class="col-md-8 offset-md-2 bg-white p-4 shadow rounded">
+        <h2 class="text-center mb-4">
+            <span class="border-bottom border-info">Create Course</span>
+        </h2>
+        <form method="post">
+            <div class="form-group mb-3">
+                <input asp-for="Name" class="form-control p-2" placeholder="Course name">
+                <span asp-validation-for="Name" class="error"></span>
+            </div>
+            <div class="form-group mb-3">
+                <textarea asp-for="Description" class="p-2" placeholder="Course description"> </textarea>
+                <span asp-validation-for="Description" class="error"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Complexity"></label>
+                <select asp-for="Complexity" class="form-select">
+                    @foreach (var complexity in Enum.GetNames(typeof(ComplexityLevel)))
+                    {
+                        <option value=@complexity>@complexity</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Credits"></label>
+                <input asp-for="Credits" class="form-control p-2">
+                <span asp-validation-for="Credits" class="error"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="StartDate"></label>
+                <input asp-for="StartDate" type="date" class="form-control p-2">
+                <span asp-validation-for="StartDate" class="error"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="EndDate"></label>
+                <input asp-for="EndDate" type="date" class="form-control p-2">
+                <span asp-validation-for="EndDate" class="error"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="TeacherId"></label>
+                <select asp-for="TeacherId" class="form-select">
+                    @foreach (var teacher in Model.Teachers)
+                    {
+                        <option value=@teacher.Id>@teacher.FullName</option>
+                    }
+                </select>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="w-50 btn btn-primary shadow p-2">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

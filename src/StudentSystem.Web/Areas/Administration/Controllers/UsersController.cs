@@ -1,6 +1,7 @@
 ﻿namespace StudentSystem.Web.Areas.Administration.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+
     using StudentSystem.Services.Data.Features.Teachers.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
     using StudentSystem.Services.Data.Features.Users.DTOs.RequestDataModels;
@@ -8,7 +9,6 @@
     using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
-    using static StudentSystem.Common.Constants.GlobalConstants;
     using static StudentSystem.Common.Constants.NotificationConstants;
 
     public class UsersController : BaseAdminController

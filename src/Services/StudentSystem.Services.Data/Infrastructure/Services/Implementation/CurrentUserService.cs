@@ -14,6 +14,6 @@
         }
 
         public string GetUserId()
-            => httpContextAccessor.HttpContext.User.GetUserId();
+            => this.httpContextAccessor.HttpContext.User.GetUserId();
     }
 }

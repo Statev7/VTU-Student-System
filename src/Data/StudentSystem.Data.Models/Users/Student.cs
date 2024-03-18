@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using StudentSystem.Data.Common.Models;
+    using StudentSystem.Data.Models.Courses;
 
     public class Student : BaseModel
     {
@@ -18,5 +19,7 @@
         public string ApplicationUserId { get; set; } = null!;
 
         public ApplicationUser User { get; set; }
+
+        public ICollection<CourseStudentMap> Courses { get; set; } = new List<CourseStudentMap>();
     }
 }

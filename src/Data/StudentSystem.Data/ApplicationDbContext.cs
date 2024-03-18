@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using StudentSystem.Data.Common.Models;
+    using StudentSystem.Data.Models.Courses;
     using StudentSystem.Data.Models.Users;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, 
@@ -18,6 +19,10 @@
         public DbSet<Teacher> Teachers { get; set; }
 
         public DbSet<Student> Students { get; set; }
+
+        public DbSet<Course> Courses { get; set; }
+
+        public DbSet<CourseStudentMap> CourseStudents { get; set; }
 
         public DbSet<City> Cities { get; set; }
 
