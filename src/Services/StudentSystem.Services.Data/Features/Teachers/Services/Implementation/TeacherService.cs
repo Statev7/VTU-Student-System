@@ -1,19 +1,23 @@
 ﻿namespace StudentSystem.Services.Data.Features.Teachers.Services.Implementation
 {
-    using AutoMapper;
+    using System.Collections.Generic;
 
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
+    using StudentSystem.Services.Data.Features.Teachers.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
     using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
 
-    using static StudentSystem.Common.Constants.NotificationConstants;
     using static StudentSystem.Common.Constants.GlobalConstants;
-    using StudentSystem.Services.Data.Features.Teachers.DTOs.BindingModels;
+    using static StudentSystem.Common.Constants.NotificationConstants;
 
     public class TeacherService : BaseService<Teacher>, ITeacherService
     {
@@ -30,6 +34,12 @@
             this.userService = userService;
             this.logger = logger;
         }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
+            => await this.Repository
+                .AllAsNoTracking()
+                .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                .ToListAsync();
 
         public async Task<Result> CreateTeacherAsync(string userEmail, BecomeTeacherBindingModel model)
         {

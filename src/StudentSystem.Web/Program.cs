@@ -18,7 +18,6 @@ namespace StudentSystem.Web
                 .ConfigureIdentity()
                 .RegisterServices()
                 .RegisterRepositories()
-                .RegisterHelpers()
                 .RegisterAutoMapper()
                 .RegisterEmailSender()
                 .AddHttpContextAccessor()

@@ -1,8 +1,11 @@
 ﻿namespace StudentSystem.Web.Infrastructure.Extensions
 {
+    using Ganss.Xss;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
 
     using StudentSystem.Common;
     using StudentSystem.Data;
@@ -11,6 +14,8 @@
     using StudentSystem.Data.Repositories;
     using StudentSystem.Services.Data.Features.City.Services.Contracts;
     using StudentSystem.Services.Data.Features.City.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Courses.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
@@ -22,8 +27,6 @@
     using StudentSystem.Services.Data.Infrastructure.Services.Implementation;
     using StudentSystem.Services.Messaging;
     using StudentSystem.Services.Messaging.Senders;
-    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
-    using StudentSystem.Web.Infrastructure.Helpers.Implementation;
 
     public static class IServiceCollectionExtensions
     {
@@ -76,13 +79,11 @@
                 .AddTransient<IStudentService, StudentService>()
                 .AddTransient<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IUserService, UserService>()
-                .AddTransient<ITeacherService, TeacherService>();
+                .AddTransient<ITeacherService, TeacherService>()
+                .AddTransient<ICourseService, CourseService>();
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
-
-        public static IServiceCollection RegisterHelpers(this IServiceCollection services)
-            => services.AddTransient<INotificationHelper, NotificationHelper>();
 
         public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
             => services.AddAutoMapper(typeof(BaseMappingProfile).Assembly);

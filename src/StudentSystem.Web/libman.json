@@ -23,6 +23,10 @@
       "provider": "cdnjs",
       "library": "toastr.js@2.1.4",
       "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "library": "tinymce@6.7.0",
+      "destination": "wwwroot/lib/tinymce/"
     }
   ]
 }
