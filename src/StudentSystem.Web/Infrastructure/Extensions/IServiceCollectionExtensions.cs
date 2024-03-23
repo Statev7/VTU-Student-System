@@ -1,7 +1,5 @@
 ﻿namespace StudentSystem.Web.Infrastructure.Extensions
 {
-    using Ganss.Xss;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -92,8 +90,7 @@
             => services.AddTransient<IEmailSender, SendGridEmailSender>();
 
         public static IServiceCollection ConfigureApplicationSettings(this IServiceCollection services, ConfigurationManager configuration)
-            => services
-                .Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
+            => services.Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
 
         public static void ConfigureControllersWithViews(this IServiceCollection services)
             => services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));

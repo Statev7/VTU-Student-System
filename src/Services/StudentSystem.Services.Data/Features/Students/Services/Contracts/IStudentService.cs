@@ -2,10 +2,10 @@
 {
     using System.Linq.Expressions;
 
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
     using StudentSystem.Services.Data.Infrastructure;
-    using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
 
     public interface IStudentService
     {

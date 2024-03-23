@@ -6,7 +6,7 @@
     public class DateLessThanAttribute : ValidationAttribute
     {
         private const string PropertyNotExistErrorMessage = "{0} property don't exist";
-        private const string InvalidDateRangeErrorMessage = "The '{0}' cannot be before '{1}'";
+        private const string InvalidDateRangeErrorMessage = "The {0} cannot be before {1}";
 
         private readonly string comparisonProperty;
 
@@ -41,7 +41,7 @@
                     ? secondDate.Name
                     : secondDateDisplayAttribute.Name;
 
-            var errorMessage = string.Format(InvalidDateRangeErrorMessage, context.DisplayName, secondDateName);
+            var errorMessage = string.Format(InvalidDateRangeErrorMessage, secondDateName, context.DisplayName);
 
             return errorMessage;
         }

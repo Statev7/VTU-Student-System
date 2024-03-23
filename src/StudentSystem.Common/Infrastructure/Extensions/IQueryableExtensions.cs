@@ -1,11 +1,11 @@
-﻿namespace StudentSystem.Services.Data.Infrastructure.Extensions
+﻿namespace StudentSystem.Common.Infrastructure.Extensions
 {
     using System.Linq.Expressions;
 
     using Microsoft.EntityFrameworkCore;
 
-    using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
-    using StudentSystem.Services.Data.Infrastructure.Collections.Implementation;
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
+    using StudentSystem.Common.Infrastructure.Collections.Implementation;
 
     public static class IQueryableExtensions
     {

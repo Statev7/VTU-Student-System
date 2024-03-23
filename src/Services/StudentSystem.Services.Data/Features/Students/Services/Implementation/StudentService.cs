@@ -9,6 +9,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
+    using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
@@ -16,8 +18,6 @@
     using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
-    using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
-    using StudentSystem.Services.Data.Infrastructure.Extensions;
     using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
     using StudentSystem.Services.Messaging;
 

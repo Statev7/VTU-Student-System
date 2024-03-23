@@ -47,5 +47,35 @@
 
             return this.RedirectToAction(nameof(this.Index));
         }
+
+        [HttpGet]
+        [ModelOrBadRequestAttribute]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var courseToUpdate = await this.courseService.GetByIdAsync<CourseFormBidningModel>(id);
+            if (courseToUpdate != null)
+            {
+                courseToUpdate.Teachers = await this.teacherService.GetAllAsync<TeacherSelectionItemViewModel>();
+            }
+
+            return this.View(courseToUpdate);
+        }
+
+        [HttpPost]
+        [ModelStateValidation]
+        public async Task<IActionResult> Update(Guid id, CourseFormBidningModel model)
+        {
+            this.TempData.Add(await this.courseService.UpdateAsync(id, model));
+
+            return this.RedirectToAction(nameof(this.Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            this.TempData.Add(await this.courseService.DeleteAsync(id));
+
+            return this.RedirectToAction(nameof(this.Index));
+        }
     }
 }

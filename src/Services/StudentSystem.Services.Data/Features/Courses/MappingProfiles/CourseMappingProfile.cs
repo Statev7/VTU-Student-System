@@ -12,6 +12,8 @@
 
             this.CreateMap<CourseFormBidningModel, Course>()
                 .ForMember(d => d.Description, conf => conf.MapFrom(s => HtmlHelper.Sanitize(s.Description)));
+
+            this.CreateMap<Course, CourseFormBidningModel>();
         }
     }
 }

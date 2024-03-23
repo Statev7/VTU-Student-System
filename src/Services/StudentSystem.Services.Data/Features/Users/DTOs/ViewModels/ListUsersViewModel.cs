@@ -1,7 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Features.Users.DTOs.ViewModels
 {
     using StudentSystem.Common.Enums;
-    using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
 
     public class ListUsersViewModel
     {

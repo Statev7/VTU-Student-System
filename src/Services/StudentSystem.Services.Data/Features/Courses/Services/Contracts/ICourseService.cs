@@ -5,6 +5,12 @@
 
     public interface ICourseService
     {
+        Task<TEntity> GetByIdAsync<TEntity>(Guid id);
+
         Task<Result> CreateAsync(CourseFormBidningModel model);
+
+        Task<Result> UpdateAsync(Guid id, CourseFormBidningModel model);
+
+        Task<Result> DeleteAsync(Guid id);
     }
 }

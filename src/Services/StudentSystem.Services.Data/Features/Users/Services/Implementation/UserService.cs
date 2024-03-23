@@ -16,7 +16,6 @@
     using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
-    using StudentSystem.Services.Data.Infrastructure.Extensions;
 
     using static StudentSystem.Common.Constants.NotificationConstants;
 

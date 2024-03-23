@@ -1,6 +1,6 @@
-﻿namespace StudentSystem.Services.Data.Infrastructure.Collections.Implementation
+﻿namespace StudentSystem.Common.Infrastructure.Collections.Implementation
 {
-    using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
 
     public class PageList<TEntity> : IPageList<TEntity>
     {

@@ -34,6 +34,8 @@
 
         public const string SuccessfillyUpdatedCourseMessage = $"Successfully updated!";
 
+        public const string SuccessfillyDeletedCourseMessage = $"Successfully deleted!";
+
         public const string InvalidCourseErrorMessage = "Such a course not exist!";
 
         private const string SuccessfulyCreatedMessage = "Successfully created a new";
