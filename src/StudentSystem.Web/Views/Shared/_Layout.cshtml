@@ -36,6 +36,11 @@
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo.svg" /></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Trainings" asp-action="Index">
+                                <span>Courses</span>
+                            </a>
+                        </li>
 
                         @if (this.User.IsAdmin())
                         {

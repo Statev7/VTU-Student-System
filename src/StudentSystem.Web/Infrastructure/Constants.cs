@@ -12,6 +12,8 @@
 
         public const string UserControllerName = "Users";
 
+        public const string TrainingsControllerName = "Trainings";
+
         public const string DefaultConnectionString = "DefaultConnection";
     }
 }

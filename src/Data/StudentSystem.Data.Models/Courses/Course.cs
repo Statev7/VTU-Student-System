@@ -14,6 +14,10 @@
         public string Name { get; set; } = null!;
 
         [Required]
+        [StringLength(TeaserDescriptionMaxLength)]
+        public string TeaserDescription { get; set; } = null!;
+
+        [Required]
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 

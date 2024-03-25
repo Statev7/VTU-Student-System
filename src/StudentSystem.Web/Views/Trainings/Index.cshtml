@@ -1,0 +1,49 @@
+﻿@model ListCoursesViewModel<CourseViewModel>
+
+@{
+    this.ViewData["Title"] = "All Courses";
+}
+
+<div>
+
+    @await Html.PartialAsync("_CoursesFiltrationSectionPartial", Model.RequestData)
+
+    <section class="row mt-5">
+
+        @foreach (var course in Model.PageList.Entities)
+        {
+            <a asp-action="Details" asp-route-id="" class="col-lg-4 col-md-6 mb-4 text-decoration-none">
+                <div class="card course-card">
+                    <img src="https://preview.colorlib.com/theme/clever/img/bg-img/c1.jpg.webp" class="card-img-top" alt="Card Image">
+                    <div class="card-body p-4">
+                        <h5>@course.Name</h5>
+                        <p class="card-text mt-1 d-flex justify-content-between">
+                            <small class="card-meta-data"><i class="fa-solid fa-tag"></i> Categories</small>
+                            <small class="card-meta-data">@course.Complexity</small>
+                        </p>
+                        <p class="card-text mt-2 text-muted">
+                            @Html.Raw(course.TeaserDescription)
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between">
+                            <strong><i class="fa-solid fa-circle-play"></i> @course.StartDate</strong>
+                            <strong><i class="fa-regular fa-clock"></i> @course.DurationText</strong>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+
+        @if (Model.PageList.HasPagination)
+        {
+            <div class="row">
+                <div class="mt-4 pt-2 col-lg-12">
+                    @await Html.PartialAsync("_Pagination", Model.PageList)
+                </div>
+            </div>
+        }
+
+    </section>
+
+</div>

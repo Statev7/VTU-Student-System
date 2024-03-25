@@ -8,11 +8,15 @@
 
     using static StudentSystem.Data.Common.Constants.Course;
 
-    public class CourseFormBidningModel
+    public class CourseFormBindingModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; } = null!;
+
+        [Required]
+        [StringLength(TeaserDescriptionMaxLength)]
+        public string TeaserDescription { get; set; } = null!;
 
         [Required]
         [StringLength(DescriptionMaxLength)]
@@ -24,7 +28,7 @@
         public int Credits { get; set; }
 
         [Display(Name = "Start Date")]
-        [DateLessThanAttribute(nameof(EndDate))]
+        [DateLessThan(nameof(EndDate))]
         public DateTime StartDate { get; set; } = DateTime.Now;
 
         [Display(Name = "End Date")]

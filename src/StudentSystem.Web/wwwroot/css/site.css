@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     --purple-btn-color: linear-gradient(90deg, #6E1083 34%, #540B84 75%);
     --blue-btn-color: linear-gradient(90deg, #1B2DBE 34%, #424f8d 75%);
 }
@@ -20,6 +20,7 @@ h1,
 h2,
 h3,
 h4,
+h5,
 p,
 figure,
 blockquote,
@@ -122,4 +123,22 @@ footer {
 
 .admin-categories-content :hover {
     transform: translateY(0px);
+}
+
+.course-card {
+    height: 450px;
+    overflow: hidden;
+}
+
+.cards-section .card {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    max-height: 177px;
+    object-fit: cover;
+}
+
+.card-meta-data {
+    color: rgba(0, 0, 0, 0.4);
 }

@@ -28,7 +28,7 @@
                                 <select asp-for=@Model.Role class="form-select">
                                     @foreach (var roleName in Enum.GetNames(typeof(Roles)))
                                     {
-                                        var value = ((Roles)Enum.Parse(typeof(Roles), roleName, true)).GetEnumValue();
+                                        var value = ((Roles)Enum.Parse(typeof(Roles), roleName, true)).GetEnumDescription();
 
                                         <option value=@value>@roleName</option>
                                     }

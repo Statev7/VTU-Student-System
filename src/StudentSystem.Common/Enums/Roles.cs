@@ -1,19 +1,19 @@
 ﻿namespace StudentSystem.Common.Enums
 {
-    using System.ComponentModel;
+    using StudentSystem.Common.Infrastructure.Attributes;
 
     using static StudentSystem.Common.Constants.GlobalConstants;
 
     public enum Roles
     {
         All,
-        [Description(AdminRole)]
+        [CustomizeEnum(AdminRole)]
         Admin,
-        [Description(TeacherRole)]
+        [CustomizeEnum(TeacherRole)]
         Teacher,
-        [Description(StudentRole)]
+        [CustomizeEnum(StudentRole)]
         Student,
-        [Description(GuestRole)]
+        [CustomizeEnum(GuestRole)]
         Guest
     }
 }

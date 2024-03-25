@@ -25,13 +25,11 @@
         private readonly UserManager<ApplicationUser> userManager;
 
         public UserService(
-            IRepository<ApplicationUser> repository, 
+            IRepository<ApplicationUser> repository,
             IMapper mapper,
-            UserManager<ApplicationUser> userManager) 
+            UserManager<ApplicationUser> userManager)
             : base(repository, mapper)
-        {
-            this.userManager = userManager;
-        }
+                => this.userManager = userManager;
 
         public async Task<ApplicationUser> GetByEmailAsync(string email)
             => await this.Repository
@@ -50,7 +48,7 @@
 
         public async Task<ListUsersViewModel> GetAllAsync(UsersRequestDataModel requestModel)
         {
-            var roleName = requestModel.Role.GetEnumValue();
+            var roleName = requestModel.Role.GetEnumDescription();
 
             var pageList = await this.Repository
                 .AllAsNoTracking()

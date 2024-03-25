@@ -1,4 +1,4 @@
-﻿@model CourseFormBidningModel
+﻿@model CourseFormBindingModel
 
 @{
     var title = this.ViewData["Title"]?.ToString();
@@ -13,6 +13,10 @@
         <div class="form-group mb-3">
             <input asp-for="Name" class="form-control p-2" placeholder="Course name">
             <span asp-validation-for="Name" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <textarea asp-for="TeaserDescription" class="p-2" placeholder="Teaser description"> </textarea>
+            <span asp-validation-for="TeaserDescription" class="error"></span>
         </div>
         <div class="form-group mb-3">
             <textarea asp-for="Description" class="p-2" placeholder="Course description"> </textarea>

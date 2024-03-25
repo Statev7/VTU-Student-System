@@ -1,6 +1,7 @@
 ﻿namespace StudentSystem.Common.Infrastructure.Collections.Implementation
 {
     using StudentSystem.Common.Infrastructure.Collections.Contracts;
+    using StudentSystem.Common.Infrastructure.Extensions;
 
     public class PageList<TEntity> : IPageList<TEntity>
     {
@@ -32,7 +33,7 @@
 
         public bool HasNextPage => CurrentPage < TotalPages;
 
-        public bool HasEntities => this.Entities != null && this.Entities.Any();
+        public bool HasEntities => !this.Entities.IsNullOrEmpty();
 
         public bool HasPagination => this.TotalPages > 1;
 

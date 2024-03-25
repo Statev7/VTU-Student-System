@@ -1,17 +1,22 @@
 ﻿namespace StudentSystem.Common.Infrastructure.Extensions
 {
-    using System.ComponentModel;
+    using System.Reflection;
+
+    using StudentSystem.Common.Infrastructure.Attributes;
 
     public static class EnumExtensions
     {
         public static string GetEnumValue(this Enum value)
-        {
-            var attributes = (DescriptionAttribute[])value
-               .GetType()
-               .GetField(value.ToString())
-               .GetCustomAttributes(typeof(DescriptionAttribute), false);
+            => GetCustomizeEnumAttribute(value).Value;
 
-            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
-        }
+        public static string GetEnumDescription(this Enum value)
+            => GetCustomizeEnumAttribute(value).Description;
+
+        private static CustomizeEnumAttribute GetCustomizeEnumAttribute(Enum value) 
+            => value
+                ?.GetType()
+                ?.GetField(value.ToString())
+                ?.GetCustomAttribute(typeof(CustomizeEnumAttribute)) as CustomizeEnumAttribute
+                ?? new CustomizeEnumAttribute(string.Empty, string.Empty);
     }
 }

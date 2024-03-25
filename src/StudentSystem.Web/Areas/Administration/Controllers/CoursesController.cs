@@ -6,8 +6,11 @@
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Teachers.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
+    using StudentSystem.Web.Controllers;
     using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Extensions;
+
+    using static StudentSystem.Web.Infrastructure.Constants;
 
     public class CoursesController : BaseAdminController
     {
@@ -23,15 +26,9 @@
         }
 
         [HttpGet]
-        public IActionResult Index()
-        {
-            return this.Ok();
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = new CourseFormBidningModel()
+            var model = new CourseFormBindingModel()
             {
                 Teachers = await this.teacherService.GetAllAsync<TeacherSelectionItemViewModel>(),
             };
@@ -41,18 +38,18 @@
 
         [HttpPost]
         [ModelStateValidation]
-        public async Task<IActionResult> Create(CourseFormBidningModel model)
+        public async Task<IActionResult> Create(CourseFormBindingModel model)
         {
             this.TempData.Add(await this.courseService.CreateAsync(model));
 
-            return this.RedirectToAction(nameof(this.Index));
+            return this.RedirectToAction(nameof(TrainingsController.Index), TrainingsControllerName, new { area = "" });
         }
 
         [HttpGet]
-        [ModelOrBadRequestAttribute]
+        [ModelOrBadRequest]
         public async Task<IActionResult> Update(Guid id)
         {
-            var courseToUpdate = await this.courseService.GetByIdAsync<CourseFormBidningModel>(id);
+            var courseToUpdate = await this.courseService.GetByIdAsync<CourseFormBindingModel>(id);
             if (courseToUpdate != null)
             {
                 courseToUpdate.Teachers = await this.teacherService.GetAllAsync<TeacherSelectionItemViewModel>();
@@ -63,11 +60,11 @@
 
         [HttpPost]
         [ModelStateValidation]
-        public async Task<IActionResult> Update(Guid id, CourseFormBidningModel model)
+        public async Task<IActionResult> Update(Guid id, CourseFormBindingModel model)
         {
             this.TempData.Add(await this.courseService.UpdateAsync(id, model));
 
-            return this.RedirectToAction(nameof(this.Index));
+            return this.RedirectToAction(nameof(TrainingsController.Index), TrainingsControllerName, new { area = "" });
         }
 
         [HttpGet]
@@ -75,7 +72,7 @@
         {
             this.TempData.Add(await this.courseService.DeleteAsync(id));
 
-            return this.RedirectToAction(nameof(this.Index));
+            return this.RedirectToAction(nameof(TrainingsController.Index), TrainingsControllerName, new { area = "" });
         }
     }
 }
