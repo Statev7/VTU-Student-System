@@ -7,6 +7,6 @@
     {
         Task<IEnumerable<TEntity>> GetAllAsync<TEntity>();
 
-        Task<Result> CreateTeacherAsync(string userEmail, BecomeTeacherBindingModel model);
+        Task<Result> CreateTeacherAsync(string userEmail, BecomeTeacherBindingModel bindingModel);
     }
 }

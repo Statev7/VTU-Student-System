@@ -11,28 +11,32 @@
     using StudentSystem.Web.Controllers;
     using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Extensions;
+    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
-    using static StudentSystem.Web.Infrastructure.Constants;
     using static StudentSystem.Common.Constants.GlobalConstants;
     using static StudentSystem.Common.Constants.NotificationConstants;
+    using static StudentSystem.Web.Infrastructure.Constants;
 
     [Area(StudentsArea)]
     public class StudentApplicationController : Controller
     {
         private readonly IStudentService studentService;
         private readonly ICityService cityService;
+        private readonly IControllerHelper controllerHelper;
 
         public StudentApplicationController(
             IStudentService studentService, 
-            ICityService cityService)
+            ICityService cityService,
+            IControllerHelper controllerHelper)
         {
             this.studentService = studentService;
             this.cityService = cityService;
+            this.controllerHelper = controllerHelper;
         }
 
         [HttpGet]
         [Authorize(Roles = GuestRole)]
-        [CheckStudentApplicationStatusrAttribute]
+        [CheckStudentApplicationStatusr]
         public async Task<IActionResult> Apply()
         {
             var model = new BecomeStudentBindingModel() { Cities = await this.cityService.GetAllAsync<CityViewModel>() };
@@ -49,7 +53,7 @@
 
             this.TempData.Add(SuccessNotification, SuccessfullyAppliedMessage);
 
-            return this.RedirectToAction(nameof(HomeController.Index), HomeControllerName, new { area = "" });
+            return this.RedirectToAction(nameof(HomeController.Index), this.controllerHelper.GetName(nameof(HomeController)), new { area = "" });
         }
 
         [HttpGet]

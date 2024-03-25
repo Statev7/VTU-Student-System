@@ -28,8 +28,7 @@
             IRepository<ApplicationUser> repository,
             IMapper mapper,
             UserManager<ApplicationUser> userManager)
-            : base(repository, mapper)
-                => this.userManager = userManager;
+            : base(repository, mapper) => this.userManager = userManager;
 
         public async Task<ApplicationUser> GetByEmailAsync(string email)
             => await this.Repository
@@ -60,9 +59,9 @@
                 .ProjectTo<UserViewModel>(this.Mapper.ConfigurationProvider)
                 .ToPagedAsync(requestModel.CurrentPage, EntitiesPerPage);
 
-            var model = new ListUsersViewModel() { PageList = pageList, SearchTerm = requestModel.SearchTerm, Role = requestModel.Role };
+            var resultModel = new ListUsersViewModel() { PageList = pageList, SearchTerm = requestModel.SearchTerm, Role = requestModel.Role };
 
-            return model;
+            return resultModel;
         }
 
         public async Task<Result> UpdateAsync<TEntity>(Expression<Func<ApplicationUser, bool>> select, TEntity model)

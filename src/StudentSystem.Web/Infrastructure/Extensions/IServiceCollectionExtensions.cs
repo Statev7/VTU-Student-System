@@ -25,6 +25,8 @@
     using StudentSystem.Services.Data.Infrastructure.Services.Implementation;
     using StudentSystem.Services.Messaging;
     using StudentSystem.Services.Messaging.Senders;
+    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
+    using StudentSystem.Web.Infrastructure.Helpers.Implementation;
 
     public static class IServiceCollectionExtensions
     {
@@ -82,6 +84,9 @@
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+
+        public static IServiceCollection RegisterHelpers(this IServiceCollection services)
+            => services.AddTransient<IControllerHelper, ControllerHelper>();
 
         public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
             => services.AddAutoMapper(typeof(BaseMappingProfile).Assembly);

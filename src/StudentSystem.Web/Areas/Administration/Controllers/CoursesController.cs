@@ -9,20 +9,22 @@
     using StudentSystem.Web.Controllers;
     using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Extensions;
-
-    using static StudentSystem.Web.Infrastructure.Constants;
+    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
     public class CoursesController : BaseAdminController
     {
         private readonly ICourseService courseService;
         private readonly ITeacherService teacherService;
+        private readonly IControllerHelper controllerHelper;
 
         public CoursesController(
             ICourseService courseService, 
-            ITeacherService teacherService)
+            ITeacherService teacherService,
+            IControllerHelper controllerHelper)
         {
             this.courseService = courseService;
             this.teacherService = teacherService;
+            this.controllerHelper = controllerHelper;
         }
 
         [HttpGet]
@@ -42,7 +44,7 @@
         {
             this.TempData.Add(await this.courseService.CreateAsync(model));
 
-            return this.RedirectToAction(nameof(TrainingsController.Index), TrainingsControllerName, new { area = "" });
+            return this.RedirectToAction(nameof(TrainingsController.Index), this.controllerHelper.GetName(nameof(TrainingsController)), new { area = "" });
         }
 
         [HttpGet]
@@ -64,7 +66,7 @@
         {
             this.TempData.Add(await this.courseService.UpdateAsync(id, model));
 
-            return this.RedirectToAction(nameof(TrainingsController.Index), TrainingsControllerName, new { area = "" });
+            return this.RedirectToAction(nameof(TrainingsController.Index), this.controllerHelper.GetName(nameof(TrainingsController)), new { area = "" });
         }
 
         [HttpGet]
@@ -72,7 +74,7 @@
         {
             this.TempData.Add(await this.courseService.DeleteAsync(id));
 
-            return this.RedirectToAction(nameof(TrainingsController.Index), TrainingsControllerName, new { area = "" });
+            return this.RedirectToAction(nameof(TrainingsController.Index), this.controllerHelper.GetName(nameof(TrainingsController)), new { area = "" });
         }
     }
 }

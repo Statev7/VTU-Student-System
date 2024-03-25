@@ -19,13 +19,10 @@
         private readonly IMemoryCache memoryCache;
 
         public CityService(
-            IRepository<City> repository, 
+            IRepository<City> repository,
             IMapper mapper,
             IMemoryCache memoryCache)
-            : base(repository, mapper)
-        {
-            this.memoryCache = memoryCache;
-        }
+            : base(repository, mapper) => this.memoryCache = memoryCache;
 
         public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
         {

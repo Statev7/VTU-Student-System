@@ -31,7 +31,7 @@
         }
 
         [HttpGet]
-        [RedirectIfTeacherExistsAttribute]
+        [RedirectIfTeacherExists]
         public async Task<IActionResult> CreateTeacher(string email)
         {
             var model = await this.userService.GetByEmailAsync<BecomeTeacherBindingModel>(email);
@@ -41,7 +41,7 @@
 
         [HttpPost]
         [ModelStateValidation]
-        [RedirectIfTeacherExistsAttribute]
+        [RedirectIfTeacherExists]
         public async Task<IActionResult> CreateTeacher(string email, BecomeTeacherBindingModel model)
         {
             this.TempData.Add(await this.teacherService.CreateTeacherAsync(email, model));

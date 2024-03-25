@@ -56,9 +56,9 @@
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                 .ToPagedAsync(currentPage, EntitiesPerPage);
 
-        public async Task CreateAsync(BecomeStudentBindingModel model)
+        public async Task CreateAsync(BecomeStudentBindingModel bindingModel)
         {
-            var studentToCreate = this.Mapper.Map<Student>(model);
+            var studentToCreate = this.Mapper.Map<Student>(bindingModel);
             studentToCreate.ApplicationUserId = this.currentUserId;
 
             using var transaction = await this.Repository.BeginTransactionAsync();
@@ -66,7 +66,7 @@
             try
             {
                 await this.Repository.AddAsync(studentToCreate);
-                await userService.UpdateAsync(x => x.Id.Equals(this.currentUserId), model);
+                await userService.UpdateAsync(x => x.Id.Equals(this.currentUserId), bindingModel);
 
                 await transaction.CommitAsync();
             }
