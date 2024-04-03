@@ -42,9 +42,9 @@
 
             if (loadedImage.Width > resizeWidth)
             {
-                var newHeigth = (int)((double) resizeWidth / loadedImage.Width * loadedImage.Height);
+                var resizedHeight = (int)((double) resizeWidth / loadedImage.Width * loadedImage.Height);
 
-                loadedImage.Mutate(options => options.Resize(resizeWidth, newHeigth));
+                loadedImage.Mutate(options => options.Resize(resizeWidth, resizedHeight));
             }
 
             await loadedImage.SaveAsJpegAsync($"{storagePath}/{name}", new JpegEncoder() { Quality = 85 });
