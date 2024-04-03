@@ -9,7 +9,7 @@
     <h2 class="text-center mb-4">
         <span class="border-bottom border-info">@title</span>
     </h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="form-group mb-3">
             <input asp-for="Name" class="form-control p-2" placeholder="Course name">
             <span asp-validation-for="Name" class="error"></span>
@@ -21,6 +21,10 @@
         <div class="form-group mb-3">
             <textarea asp-for="Description" class="p-2" placeholder="Course description"> </textarea>
             <span asp-validation-for="Description" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <input asp-for="Image" class="form-control"/>
+            <span asp-validation-for="Image" class="error"></span>
         </div>
         <div class="form-group mb-3">
             <label asp-for="Complexity"></label>

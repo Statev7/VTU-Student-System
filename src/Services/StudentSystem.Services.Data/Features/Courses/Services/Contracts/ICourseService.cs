@@ -9,7 +9,7 @@
     {
         Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData);
 
-        Task<TEntity> GetByIdAsync<TEntity>(Guid id);
+        Task<TEntity?> GetByIdAsync<TEntity>(Guid id);
 
         Task<Result> CreateAsync(CourseFormBindingModel bindingModel);
 

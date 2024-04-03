@@ -6,7 +6,7 @@
 
         public const string ErrorNotification = "Error";
 
-        public const string ErrorMesage = "Error!";
+        public const string ErrorMesage = "An error occurred!";
 
         // Users
 

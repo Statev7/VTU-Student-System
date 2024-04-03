@@ -31,7 +31,7 @@ namespace StudentSystem.Web
             app
                 .ConfigureEnvironments(app.Environment)
                 .UseHttpsRedirection()
-                .UseStaticFiles()
+                .ConfigureStaticFiles()
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()

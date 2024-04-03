@@ -34,6 +34,10 @@
 
         public Teacher Teacher { get; set; }
 
+        public Guid ImageFileId { get; set; }
+
+        public ImageFile ImageFile { get; set; }
+
         public ICollection<CourseStudentMap> Students { get; set; } = new HashSet<CourseStudentMap>();
     }
 }

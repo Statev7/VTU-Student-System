@@ -2,6 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     using StudentSystem.Common.Attributes;
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Teachers.DTOs.ViewModels;
@@ -33,6 +35,8 @@
 
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; } = DateTime.Now;
+
+        public IFormFile Image { get; set; }
 
         [Display(Name = "Teacher")]
         public Guid TeacherId { get; set; }

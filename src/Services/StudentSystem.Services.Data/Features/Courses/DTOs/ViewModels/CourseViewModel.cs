@@ -16,6 +16,8 @@
 
         public ComplexityLevel Complexity { get; set; }
 
+        public string ImageUrl { get; set; } = null!;
+
         public string DurationText => this.Duration > 1 ? $"{this.Duration} weeks" : $"{this.Duration} week";
     }
 }

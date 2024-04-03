@@ -33,5 +33,10 @@
 
             public const int DescriptionMaxLength = 50000;
         }
+
+        public static class ImageFile
+        {
+            public const int FolderMaxLength = 1024;
+        }
     }
 }
