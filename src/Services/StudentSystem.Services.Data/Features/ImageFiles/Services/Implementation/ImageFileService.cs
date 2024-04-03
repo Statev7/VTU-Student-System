@@ -32,7 +32,11 @@
             var path = $"/{FilesFolder}/{folder}/";
             var name = $"{id}.jpg";
 
-            var storagePath = this.GenerateFileSystemStoragePath(path);
+            var storagePath = this.GetStoragePath(path);
+            if (!Directory.Exists(storagePath))
+            {
+                Directory.CreateDirectory(storagePath);
+            }
 
             loadedImage.Metadata.ExifProfile = null;
 
@@ -56,9 +60,8 @@
         public void DeleteFromFileSystem(Guid id, string folder)
         {
             var path = $"/{FilesFolder}/{folder}/{id}.jpg";
-            var webRootPath = this.environment.WebRootPath;
 
-            var storagePath = Path.Combine(Directory.GetCurrentDirectory(), $"{webRootPath}{path}".Replace("/", "\\"));
+            var storagePath = this.GetStoragePath(path);
 
             if (File.Exists(storagePath))
             {
@@ -66,16 +69,11 @@
             }
         }
 
-        private string GenerateFileSystemStoragePath(string path)
+        private string GetStoragePath(string path)
         {
             var webRootPath = this.environment.WebRootPath;
 
             var storagePath = Path.Combine(Directory.GetCurrentDirectory(), $"{webRootPath}{path}".Replace("/", "\\"));
-
-            if (!Directory.Exists(storagePath))
-            {
-                Directory.CreateDirectory(storagePath);
-            }
 
             return storagePath;
         }
