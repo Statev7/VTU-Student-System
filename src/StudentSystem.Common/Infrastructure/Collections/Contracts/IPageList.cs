@@ -1,4 +1,4 @@
-﻿namespace StudentSystem.Services.Data.Infrastructure.Collections.Contracts
+﻿namespace StudentSystem.Common.Infrastructure.Collections.Contracts
 {
     using StudentSystem.Common.Infrastructure.Contracts;
 

@@ -6,7 +6,7 @@
 
         public const string ErrorNotification = "Error";
 
-        public const string ErrorMesage = "Error!";
+        public const string ErrorMesage = "An error occurred!";
 
         // Users
 
@@ -33,6 +33,8 @@
         public const string SuccessfullyCreatedCourseMessage = $"{SuccessfulyCreatedMessage} course!";
 
         public const string SuccessfillyUpdatedCourseMessage = $"Successfully updated!";
+
+        public const string SuccessfillyDeletedCourseMessage = $"Successfully deleted!";
 
         public const string InvalidCourseErrorMessage = "Such a course not exist!";
 

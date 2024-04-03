@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Storage;
 
+    using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Models;
     using StudentSystem.Data.Common.Repositories;
 
@@ -20,9 +21,9 @@
 
         protected ApplicationDbContext DbContext { get; set; }
 
-        public virtual IQueryable<TEntity> All() => this.DbSet;
+        public virtual IQueryable<TEntity> All(bool includeDeleted = false) => this.DbSet.Where(x => x.IsDeleted.Equals(includeDeleted));
 
-        public virtual IQueryable<TEntity> AllAsNoTracking() => this.DbSet.AsNoTracking();
+        public virtual IQueryable<TEntity> AllAsNoTracking(bool includeDeleted = false) => this.DbSet.AsNoTracking().Where(x => x.IsDeleted.Equals(includeDeleted));
 
         public virtual Task AddAsync(TEntity entity) => this.DbSet.AddAsync(entity).AsTask();
 
@@ -39,7 +40,19 @@
             entry.State = EntityState.Modified;
         }
 
-        public virtual void Delete(TEntity entity) => this.DbSet.Remove(entity);
+        public void Delete(TEntity entity)
+        {
+            entity.IsDeleted = true;
+            entity.DeletedOn = DateTime.UtcNow;
+            this.Update(entity);
+        }
+
+        public void Undelete(TEntity entity)
+        {
+            entity.IsDeleted = false;
+            entity.DeletedOn = null;
+            this.Update(entity);
+        }
 
         public Task<int> SaveChangesAsync() => this.DbContext.SaveChangesAsync();
 

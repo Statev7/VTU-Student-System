@@ -7,15 +7,17 @@
     public interface IRepository<TEntity> : IDisposable
          where TEntity : class, IAuditInfo
     {
-        IQueryable<TEntity> All();
+        IQueryable<TEntity> All(bool includeDeleted = false);
 
-        IQueryable<TEntity> AllAsNoTracking();
+        IQueryable<TEntity> AllAsNoTracking(bool includeDeleted = false);
 
         Task AddAsync(TEntity entity);
 
         void Update(TEntity entity);
 
         void Delete(TEntity entity);
+
+        void Undelete(TEntity entity);
 
         Task<TEntity> FindAsync<T>(T id);
 

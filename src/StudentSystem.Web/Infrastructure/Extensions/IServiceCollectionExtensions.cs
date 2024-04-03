@@ -1,7 +1,5 @@
 ﻿namespace StudentSystem.Web.Infrastructure.Extensions
 {
-    using Ganss.Xss;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -16,6 +14,8 @@
     using StudentSystem.Services.Data.Features.City.Services.Implementation;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Courses.Services.Implementation;
+    using StudentSystem.Services.Data.Features.ImageFiles.Services.Contracts;
+    using StudentSystem.Services.Data.Features.ImageFiles.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
@@ -27,6 +27,8 @@
     using StudentSystem.Services.Data.Infrastructure.Services.Implementation;
     using StudentSystem.Services.Messaging;
     using StudentSystem.Services.Messaging.Senders;
+    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
+    using StudentSystem.Web.Infrastructure.Helpers.Implementation;
 
     public static class IServiceCollectionExtensions
     {
@@ -80,10 +82,14 @@
                 .AddTransient<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<ITeacherService, TeacherService>()
-                .AddTransient<ICourseService, CourseService>();
+                .AddTransient<ICourseService, CourseService>()
+                .AddTransient<IImageFileService, ImageFileService>();
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+
+        public static IServiceCollection RegisterHelpers(this IServiceCollection services)
+            => services.AddTransient<IControllerHelper, ControllerHelper>();
 
         public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
             => services.AddAutoMapper(typeof(BaseMappingProfile).Assembly);
@@ -92,8 +98,7 @@
             => services.AddTransient<IEmailSender, SendGridEmailSender>();
 
         public static IServiceCollection ConfigureApplicationSettings(this IServiceCollection services, ConfigurationManager configuration)
-            => services
-                .Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
+            => services.Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
 
         public static void ConfigureControllersWithViews(this IServiceCollection services)
             => services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));

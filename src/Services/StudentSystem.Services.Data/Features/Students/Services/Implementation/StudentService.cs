@@ -9,6 +9,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
+    using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
@@ -16,8 +18,6 @@
     using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
-    using StudentSystem.Services.Data.Infrastructure.Collections.Contracts;
-    using StudentSystem.Services.Data.Infrastructure.Extensions;
     using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
     using StudentSystem.Services.Messaging;
 
@@ -56,9 +56,9 @@
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                 .ToPagedAsync(currentPage, EntitiesPerPage);
 
-        public async Task CreateAsync(BecomeStudentBindingModel model)
+        public async Task CreateAsync(BecomeStudentBindingModel bindingModel)
         {
-            var studentToCreate = this.Mapper.Map<Student>(model);
+            var studentToCreate = this.Mapper.Map<Student>(bindingModel);
             studentToCreate.ApplicationUserId = this.currentUserId;
 
             using var transaction = await this.Repository.BeginTransactionAsync();
@@ -66,7 +66,7 @@
             try
             {
                 await this.Repository.AddAsync(studentToCreate);
-                await userService.UpdateAsync(x => x.Id.Equals(this.currentUserId), model);
+                await userService.UpdateAsync(x => x.Id.Equals(this.currentUserId), bindingModel);
 
                 await transaction.CommitAsync();
             }

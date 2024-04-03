@@ -8,10 +8,6 @@
 
         public const string StudentsArea = "Students";
 
-        public const string HomeControllerName = "Home";
-
-        public const string UserControllerName = "Users";
-
         public const string DefaultConnectionString = "DefaultConnection";
     }
 }

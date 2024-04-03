@@ -29,7 +29,14 @@
             public const int NameMaxLength = 128;
             public const int NameMinLength = 2;
 
+            public const int TeaserDescriptionMaxLength = 200;
+
             public const int DescriptionMaxLength = 50000;
+        }
+
+        public static class ImageFile
+        {
+            public const int FolderMaxLength = 1024;
         }
     }
 }

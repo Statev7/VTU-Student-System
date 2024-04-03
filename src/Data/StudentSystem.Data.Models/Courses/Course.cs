@@ -14,6 +14,10 @@
         public string Name { get; set; } = null!;
 
         [Required]
+        [StringLength(TeaserDescriptionMaxLength)]
+        public string TeaserDescription { get; set; } = null!;
+
+        [Required]
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
@@ -29,6 +33,10 @@
         public Guid TeacherId { get; set; }
 
         public Teacher Teacher { get; set; }
+
+        public Guid ImageFileId { get; set; }
+
+        public ImageFile ImageFile { get; set; }
 
         public ICollection<CourseStudentMap> Students { get; set; } = new HashSet<CourseStudentMap>();
     }

@@ -18,6 +18,7 @@ namespace StudentSystem.Web
                 .ConfigureIdentity()
                 .RegisterServices()
                 .RegisterRepositories()
+                .RegisterHelpers()
                 .RegisterAutoMapper()
                 .RegisterEmailSender()
                 .AddHttpContextAccessor()
@@ -30,7 +31,7 @@ namespace StudentSystem.Web
             app
                 .ConfigureEnvironments(app.Environment)
                 .UseHttpsRedirection()
-                .UseStaticFiles()
+                .ConfigureStaticFiles()
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()

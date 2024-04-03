@@ -10,8 +10,8 @@
     {
         protected BaseService(IRepository<TEntity> repository, IMapper mapper)
         {
-            Repository = repository;
-            Mapper = mapper;
+            this.Repository = repository;
+            this.Mapper = mapper;
         }
 
         protected IRepository<TEntity> Repository { get; }

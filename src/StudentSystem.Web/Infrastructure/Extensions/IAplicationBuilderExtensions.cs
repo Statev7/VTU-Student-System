@@ -2,12 +2,15 @@
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Net.Http.Headers;
 
     using StudentSystem.Data;
     using StudentSystem.Data.Seed;
 
     public static class IAplicationBuilderExtensions
     {
+        private const double StaticFilesCacheTimeInDays = 7;
+
         public static IApplicationBuilder ConfigureEnvironments(this IApplicationBuilder applicationBuilder, IWebHostEnvironment environment)
         {
             if (environment.IsDevelopment())
@@ -23,6 +26,24 @@
 
             return applicationBuilder;
         }
+
+        public static IApplicationBuilder ConfigureStaticFiles(this IApplicationBuilder applicationBuilder)
+            => applicationBuilder
+                .UseStaticFiles(new StaticFileOptions
+                {
+                    OnPrepareResponse = options =>
+                    {
+                        var headers = options.Context.Response.GetTypedHeaders();
+
+                        headers.CacheControl = new CacheControlHeaderValue
+                        {
+                            Public = true,
+                            MaxAge = TimeSpan.FromDays(StaticFilesCacheTimeInDays),
+                        };
+
+                        headers.Expires = new DateTimeOffset(DateTime.UtcNow.AddDays(StaticFilesCacheTimeInDays));
+                    }
+                });
 
         public static IApplicationBuilder ConfigureEndPoints(this IApplicationBuilder applicationBuilder)
             => applicationBuilder.UseEndpoints(endpoints =>
@@ -40,12 +61,11 @@
 
         public static async Task MigrateDatabaseAsync(this IApplicationBuilder app)
         {
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            using var serviceScope = app.ApplicationServices.CreateScope();
 
-                await dbContext.Database.MigrateAsync();
-            }
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            await dbContext.Database.MigrateAsync();
         }
 
         public static async Task SeedDataBaseAsync(this IApplicationBuilder app)

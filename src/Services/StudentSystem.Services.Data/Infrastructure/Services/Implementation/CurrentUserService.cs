@@ -8,10 +8,8 @@
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
-        {
-            this.httpContextAccessor = httpContextAccessor;
-        }
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor) 
+            => this.httpContextAccessor = httpContextAccessor;
 
         public string GetUserId()
             => this.httpContextAccessor.HttpContext.User.GetUserId();

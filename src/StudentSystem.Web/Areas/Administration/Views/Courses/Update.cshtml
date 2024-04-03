@@ -1,0 +1,24 @@
+﻿@model CourseFormBindingModel
+
+@{
+    this.ViewData["Title"] = "Update Course";
+}
+
+@section HeadScripts
+{
+    @{
+        await Html.RenderPartialAsync("_TinymceScriptsPartial");
+    }
+}
+
+<div class="container mt-5">
+    @{
+        await Html.RenderPartialAsync("_CourseFormPartial");
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

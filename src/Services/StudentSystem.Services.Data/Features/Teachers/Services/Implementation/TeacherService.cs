@@ -41,7 +41,7 @@
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                 .ToListAsync();
 
-        public async Task<Result> CreateTeacherAsync(string userEmail, BecomeTeacherBindingModel model)
+        public async Task<Result> CreateTeacherAsync(string userEmail, BecomeTeacherBindingModel bindingModel)
         {
             var user = await this.userService.GetByEmailAsync(userEmail);
 
@@ -59,14 +59,14 @@
 
             try
             {
-                var teacher = new Teacher() { AboutМe = model.AboutMe, User = user };
+                var teacher = new Teacher() { AboutМe = bindingModel.AboutMe, User = user };
 
                 await this.Repository.AddAsync(teacher);
                 await this.userService.AddToRoleAsync(user, TeacherRole);
 
                 if (user.Student == null)
                 {
-                    await userService.UpdateAsync(x => x.Email.Equals(userEmail), model);
+                    await userService.UpdateAsync(x => x.Email.Equals(userEmail), bindingModel);
 
                     await this.userService.RemoveFromRoleAsync(user, GuestRole);
                 }

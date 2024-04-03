@@ -12,7 +12,7 @@
             this.CreateMap<ApplicationUser, UserViewModel>()
                 .ForMember(d => d.RolesNames, conf => conf.MapFrom(s => s.UserRoles.Select(x => x.Role.Name)));
 
-            this.CreateMap<ApplicationUser, BecomeTeacherBindingModel>();
+            this.CreateMap<ApplicationUser, BecomeTeacherBindingModel>().ReverseMap();
         }
     }
 }

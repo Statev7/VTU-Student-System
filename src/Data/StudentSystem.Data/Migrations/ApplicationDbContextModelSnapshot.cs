@@ -17,7 +17,7 @@ namespace StudentSystem.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -143,6 +143,9 @@ namespace StudentSystem.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("ImageFileId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -160,7 +163,15 @@ namespace StudentSystem.Data.Migrations
                     b.Property<Guid>("TeacherId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("TeaserDescription")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageFileId")
+                        .IsUnique();
 
                     b.HasIndex("TeacherId");
 
@@ -200,6 +211,34 @@ namespace StudentSystem.Data.Migrations
                     b.HasIndex("StudentId1");
 
                     b.ToTable("CourseStudents");
+                });
+
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.ImageFile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Folder")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Users.ApplicationRole", b =>
@@ -472,11 +511,19 @@ namespace StudentSystem.Data.Migrations
 
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Course", b =>
                 {
+                    b.HasOne("StudentSystem.Data.Models.Courses.ImageFile", "ImageFile")
+                        .WithOne("Course")
+                        .HasForeignKey("StudentSystem.Data.Models.Courses.Course", "ImageFileId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("StudentSystem.Data.Models.Users.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ImageFile");
 
                     b.Navigation("Teacher");
                 });
@@ -552,6 +599,12 @@ namespace StudentSystem.Data.Migrations
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Course", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.ImageFile", b =>
+                {
+                    b.Navigation("Course")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Users.ApplicationRole", b =>
