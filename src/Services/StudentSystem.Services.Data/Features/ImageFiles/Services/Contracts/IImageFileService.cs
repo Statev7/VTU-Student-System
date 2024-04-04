@@ -4,8 +4,8 @@
 
     public interface IImageFileService
     {
-        Task<Guid> CreateAsync(IFormFile imageFile, string folder, int resizeWidth);
+        Task<string> CreateToFileSystemAsync(IFormFile imageFile, string folder, int resizeWidth);
 
-        void DeleteFromFileSystem(Guid id, string folder);
+        void DeleteFromFileSystem(string path);
     }
 }

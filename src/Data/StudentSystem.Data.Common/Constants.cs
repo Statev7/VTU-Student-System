@@ -32,6 +32,8 @@
             public const int TeaserDescriptionMaxLength = 200;
 
             public const int DescriptionMaxLength = 50000;
+
+            public const int ImageFolderMaxLength = 512;
         }
 
         public static class ImageFile

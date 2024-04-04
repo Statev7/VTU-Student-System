@@ -30,13 +30,13 @@
         public DateTime EndDate { get; set; }
 
         [Required]
+        [StringLength(ImageFolderMaxLength)]
+        public string ImageFolder { get; set; } = null!;
+
+        [Required]
         public Guid TeacherId { get; set; }
 
         public Teacher Teacher { get; set; }
-
-        public Guid ImageFileId { get; set; }
-
-        public ImageFile ImageFile { get; set; }
 
         public ICollection<CourseStudentMap> Students { get; set; } = new HashSet<CourseStudentMap>();
     }

@@ -26,8 +26,6 @@
 
         public DbSet<City> Cities { get; set; }
 
-        public DbSet<ImageFile> Images { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

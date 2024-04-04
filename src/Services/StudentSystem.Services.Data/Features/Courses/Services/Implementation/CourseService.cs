@@ -66,26 +66,19 @@
         {
             var courseToCreate = this.Mapper.Map<Course>(bindingModel);
 
-            using var transaction = await this.Repository.BeginTransactionAsync();
-
             try
             {
-                courseToCreate.ImageFileId =
-                     await this.imageFileService.CreateAsync(bindingModel.Image, ImagesFolder, ImagesWitdhInPexels);
+                courseToCreate.ImageFolder = await this.imageFileService.CreateToFileSystemAsync(bindingModel.Image, ImagesFolder, ImagesWitdhInPexels);
 
                 await this.Repository.AddAsync(courseToCreate);
                 await this.Repository.SaveChangesAsync();
-
-                await transaction.CommitAsync();
             }
             catch (Exception ex)
             {
-                if (courseToCreate.ImageFileId != Guid.Empty)
+                if (!string.IsNullOrEmpty(courseToCreate.ImageFolder))
                 {
-                    this.imageFileService.DeleteFromFileSystem(courseToCreate.ImageFileId, ImagesFolder);
+                    this.imageFileService.DeleteFromFileSystem(courseToCreate.ImageFolder);
                 }
-
-                await transaction.RollbackAsync();
 
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateAsync)} method");
 
