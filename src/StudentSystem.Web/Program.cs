@@ -24,6 +24,7 @@ namespace StudentSystem.Web
                 .AddHttpContextAccessor()
                 .AddMemoryCache()
                 .ConfigureApplicationSettings(builder.Configuration)
+                .ConfigureStripe(builder.Configuration)
                 .ConfigureControllersWithViews();
 
             var app = builder.Build();

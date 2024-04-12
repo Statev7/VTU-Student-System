@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\StudentSystem.Common\StudentSystem.Common.csproj" />
     <ProjectReference Include="..\StudentSystem.Data.Common\StudentSystem.Data.Common.csproj" />
   </ItemGroup>
 

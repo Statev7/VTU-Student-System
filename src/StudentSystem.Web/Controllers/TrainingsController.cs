@@ -20,5 +20,8 @@
 
             return this.View(courses);
         }
+
+        [HttpGet]
+        public IActionResult Details() => this.View();
     }
 }

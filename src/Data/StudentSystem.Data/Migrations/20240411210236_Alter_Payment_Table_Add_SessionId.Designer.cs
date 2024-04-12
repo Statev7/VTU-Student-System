@@ -12,8 +12,8 @@ using StudentSystem.Data;
 namespace StudentSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240402204830_Add_Image_Table")]
-    partial class Add_Image_Table
+    [Migration("20240411210236_Alter_Payment_Table_Add_SessionId")]
+    partial class Alter_Payment_Table_Add_SessionId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -145,8 +145,10 @@ namespace StudentSystem.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ImageFileId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ImageFolder")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -158,6 +160,9 @@ namespace StudentSystem.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -172,9 +177,6 @@ namespace StudentSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageFileId")
-                        .IsUnique();
-
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Courses");
@@ -182,13 +184,10 @@ namespace StudentSystem.Data.Migrations
 
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.CourseStudentMap", b =>
                 {
-                    b.Property<string>("CourseId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<Guid>("CourseId1")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
@@ -203,22 +202,19 @@ namespace StudentSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("StudentId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("CourseId", "StudentId");
 
-                    b.HasIndex("CourseId1");
-
-                    b.HasIndex("StudentId1");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("CourseStudents");
                 });
 
-            modelBuilder.Entity("StudentSystem.Data.Models.Courses.ImageFile", b =>
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Payment", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
@@ -227,25 +223,25 @@ namespace StudentSystem.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Folder")
-                        .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("SessionId")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.ToTable("Images");
+                    b.HasKey("StudentId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Users.ApplicationRole", b =>
@@ -518,19 +514,11 @@ namespace StudentSystem.Data.Migrations
 
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Course", b =>
                 {
-                    b.HasOne("StudentSystem.Data.Models.Courses.ImageFile", "ImageFile")
-                        .WithOne("Course")
-                        .HasForeignKey("StudentSystem.Data.Models.Courses.Course", "ImageFileId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("StudentSystem.Data.Models.Users.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ImageFile");
 
                     b.Navigation("Teacher");
                 });
@@ -539,13 +527,32 @@ namespace StudentSystem.Data.Migrations
                 {
                     b.HasOne("StudentSystem.Data.Models.Courses.Course", "Course")
                         .WithMany("Students")
-                        .HasForeignKey("CourseId1")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StudentSystem.Data.Models.Users.Student", "Student")
                         .WithMany("Courses")
-                        .HasForeignKey("StudentId1")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Payment", b =>
+                {
+                    b.HasOne("StudentSystem.Data.Models.Courses.Course", "Course")
+                        .WithMany("Payments")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudentSystem.Data.Models.Users.Student", "Student")
+                        .WithMany("Payments")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -605,13 +612,9 @@ namespace StudentSystem.Data.Migrations
 
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Course", b =>
                 {
-                    b.Navigation("Students");
-                });
+                    b.Navigation("Payments");
 
-            modelBuilder.Entity("StudentSystem.Data.Models.Courses.ImageFile", b =>
-                {
-                    b.Navigation("Course")
-                        .IsRequired();
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Users.ApplicationRole", b =>
@@ -636,6 +639,8 @@ namespace StudentSystem.Data.Migrations
             modelBuilder.Entity("StudentSystem.Data.Models.Users.Student", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Users.Teacher", b =>

@@ -40,5 +40,10 @@
         {
             public const int FolderMaxLength = 1024;
         }
+
+        public static class Payment
+        {
+            public const int SessionMaxLength = 1024;
+        }
     }
 }

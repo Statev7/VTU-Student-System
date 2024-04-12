@@ -16,5 +16,7 @@
         Task<Result> ApproveStudentAsync(string email, bool isApproved);
 
         Task<bool> IsAppliedAlreadyAsync();
+
+        Task<Guid> GetIdByUserIdAsync(string userId);
     }
 }

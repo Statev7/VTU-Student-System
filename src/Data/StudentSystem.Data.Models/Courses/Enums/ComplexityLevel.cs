@@ -1,4 +1,4 @@
-﻿namespace StudentSystem.Data.Models.Courses
+﻿namespace StudentSystem.Data.Models.Courses.Enums
 {
     public enum ComplexityLevel
     {

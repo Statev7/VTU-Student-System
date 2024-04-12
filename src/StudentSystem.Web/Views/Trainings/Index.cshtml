@@ -12,7 +12,11 @@
 
         @foreach (var course in Model.PageList.Entities)
         {
-            <a asp-action="Details" asp-route-id="" class="col-lg-4 col-md-6 mb-4 text-decoration-none">
+            <a 
+                asp-action="Details" 
+                asp-route-Id="@course.Id" 
+                class="col-lg-4 col-md-6 mb-4 text-decoration-none">
+
                 <div class="card course-card">
                     <img src="@course.ImageUrl" class="card-img-top" alt="Card Image">
                     <div class="card-body p-4">
@@ -32,6 +36,7 @@
                         </div>
                     </div>
                 </div>
+
             </a>
         }
 

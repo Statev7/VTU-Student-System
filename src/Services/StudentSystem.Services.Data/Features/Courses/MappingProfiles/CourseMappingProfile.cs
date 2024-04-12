@@ -19,6 +19,9 @@
                 .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString("dd MMMM yyyy")))
                 .ForMember(d => d.Duration, conf => conf.MapFrom(s => (int)Math.Ceiling((s.EndDate - s.StartDate).TotalDays / 7)))
                 .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
+
+            this.CreateMap<Course, CoursePaymentDetailsViewModel>()
+                .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
         }
     }
 }

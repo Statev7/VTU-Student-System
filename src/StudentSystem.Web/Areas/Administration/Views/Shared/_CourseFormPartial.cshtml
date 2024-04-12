@@ -27,6 +27,10 @@
             <span asp-validation-for="Image" class="error"></span>
         </div>
         <div class="form-group mb-3">
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
             <label asp-for="Complexity"></label>
             <select asp-for="Complexity" class="form-select">
                 @foreach (var complexity in Enum.GetNames(typeof(ComplexityLevel)))

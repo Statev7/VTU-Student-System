@@ -21,5 +21,7 @@
         public ApplicationUser User { get; set; }
 
         public ICollection<CourseStudentMap> Courses { get; set; } = new List<CourseStudentMap>();
+
+        public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
     }
 }

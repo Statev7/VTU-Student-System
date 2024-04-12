@@ -28,24 +28,24 @@
     {
         private const int EntitiesPerPage = 9;
 
-        private readonly string currentUserId;
+        private readonly ICurrentUserService currentUserService;
         private readonly IEmailSender emailSender;
-        private readonly ILogger<StudentService> logger;
         private readonly IUserService userService;
+        private readonly ILogger<StudentService> logger;
 
         public StudentService(
             IRepository<Student> repository, 
             IMapper mapper, 
             ICurrentUserService currentUserService,
             IEmailSender emailSender,
-            ILogger<StudentService> logger,
-            IUserService userService)
+            IUserService userService,
+            ILogger<StudentService> logger)
             : base(repository, mapper)
         {
-            this.currentUserId = currentUserService.GetUserId();
+            this.currentUserService = currentUserService;
             this.emailSender = emailSender;
-            this.logger = logger;
             this.userService = userService;
+            this.logger = logger;
         }
 
         public async Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage)
@@ -56,17 +56,26 @@
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                 .ToPagedAsync(currentPage, EntitiesPerPage);
 
+        public async Task<Guid> GetIdByUserIdAsync(string userId)
+            => await this.Repository
+                .AllAsNoTracking()
+                .Where(x => x.ApplicationUserId.Equals(userId))
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+
         public async Task CreateAsync(BecomeStudentBindingModel bindingModel)
         {
+            var currentUserId = this.currentUserService.GetUserId();
+
             var studentToCreate = this.Mapper.Map<Student>(bindingModel);
-            studentToCreate.ApplicationUserId = this.currentUserId;
+            studentToCreate.ApplicationUserId = currentUserId;
 
             using var transaction = await this.Repository.BeginTransactionAsync();
 
             try
             {
                 await this.Repository.AddAsync(studentToCreate);
-                await userService.UpdateAsync(x => x.Id.Equals(this.currentUserId), bindingModel);
+                await userService.UpdateAsync(x => x.Id.Equals(currentUserId), bindingModel);
 
                 await transaction.CommitAsync();
             }
@@ -111,7 +120,7 @@
         public async Task<bool> IsAppliedAlreadyAsync()
             => await this.Repository
                 .AllAsNoTracking()
-                .AnyAsync(s => s.ApplicationUserId.Equals(this.currentUserId) && s.IsApplied);
+                .AnyAsync(s => s.ApplicationUserId.Equals(this.currentUserService.GetUserId()) && s.IsApplied);
 
         private async Task ProcessStudentApprovalAsync(bool isApproved, Student student)
         {

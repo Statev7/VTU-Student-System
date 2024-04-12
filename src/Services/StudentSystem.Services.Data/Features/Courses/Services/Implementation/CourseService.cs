@@ -56,7 +56,8 @@
             return resultModel;
         }
 
-        public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
+        public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
+            where TEntity : class
             => await this.Repository.AllAsNoTracking()
                 .Where(x => x.Id.Equals(id))
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
@@ -119,5 +120,10 @@
 
             return Result.Success(SuccessfillyDeletedCourseMessage);
         }
+
+        public async Task<bool> IsExistAsync(Guid id)
+            => await this.Repository
+            .AllAsNoTracking()
+            .AnyAsync(x => x.Id.Equals(id));
     }
 }
