@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Data.Models.Courses.Enums;
-    using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
+    using StudentSystem.Services.Data.Features.Courses.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Payments.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
@@ -106,15 +107,24 @@
             var paymentValue = paymentStatus.GetEnumValue();
             var isPaymentSuccess = paymentValue.Equals(PaymentStatus.Paid.GetEnumValue());
 
-            return isPaymentSuccess ? Result.Success(SuccessfullyPaymentMessage) : UnsuccessfullyPaymentMessage; 
+            var result = isPaymentSuccess
+                ? Result.Success(SuccessfullyPaymentMessage)
+                : UnsuccessfullyPaymentMessage;
+
+            return result; 
         }
 
         private async Task<SessionCreateOptions> CreateSessionOptionsAsync(Guid courseId)
         {
-            var course = await this.courseService.GetByIdAsync<CoursePaymentDetailsViewModel>(courseId);
+            var course = await this.courseService.GetByIdAsync<CoursePaymentDetailsServiceModel>(courseId);
 
             var orderConfirmationUrl = this.GenerateOrderConfirmationUrl(courseId);
             var hostUrl = this.GenerateHostUrl();
+
+            if (string.IsNullOrEmpty(orderConfirmationUrl) || string.IsNullOrEmpty(hostUrl))
+            {
+                return new SessionCreateOptions();
+            }
 
             var options = new SessionCreateOptions
             {
@@ -135,7 +145,6 @@
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name = course.Name,
-                                Images = new List<string> { $"{hostUrl}/{course.ImageUrl}" }
                             },
                         },
                         Quantity = 1,
@@ -149,7 +158,12 @@
 
         private string GenerateOrderConfirmationUrl(Guid courseId)
         {
-            var fullPath = this.httpContextAccessor.HttpContext.Request.GetEncodedUrl();
+            var fullPath = this.httpContextAccessor?.HttpContext?.Request.GetEncodedUrl();
+
+            if (string.IsNullOrEmpty(fullPath))
+            {
+                return string.Empty;
+            }
 
             var lastSlashIndex = fullPath.LastIndexOf('/');
 
@@ -161,6 +175,6 @@
         }
 
         private string GenerateHostUrl()
-            => $"{this.httpContextAccessor.HttpContext.Request.Scheme}://{this.httpContextAccessor.HttpContext.Request.Host}";
+            => $"{this.httpContextAccessor?.HttpContext?.Request.Scheme}://{this.httpContextAccessor?.HttpContext?.Request.Host}";
     }
 }

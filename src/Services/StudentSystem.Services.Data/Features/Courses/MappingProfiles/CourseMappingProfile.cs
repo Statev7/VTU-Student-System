@@ -2,6 +2,7 @@
 {
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Courses.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Courses.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Mapper;
     using StudentSystem.Services.Data.Infrastructure.StaticHelpers;
@@ -20,7 +21,7 @@
                 .ForMember(d => d.Duration, conf => conf.MapFrom(s => (int)Math.Ceiling((s.EndDate - s.StartDate).TotalDays / 7)))
                 .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
 
-            this.CreateMap<Course, CoursePaymentDetailsViewModel>()
+            this.CreateMap<Course, CoursePaymentDetailsServiceModel>()
                 .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
         }
     }
