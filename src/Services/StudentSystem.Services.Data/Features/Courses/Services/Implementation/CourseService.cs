@@ -71,7 +71,7 @@
 
             var course = await this.memoryCache.GetOrCreateAsync(key, async factory =>
             {
-                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHourse));
+                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHours));
 
                 return await this.Repository.AllAsNoTracking()
                     .Where(x => x.Id.Equals(id))
@@ -163,7 +163,7 @@
 
             var courses = await this.memoryCache.GetOrCreateAsync(key, async factory =>
             {
-                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHourse));
+                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHours));
 
                 return await this.GetCoursesAsync<TEntity>(requestData);
             });
