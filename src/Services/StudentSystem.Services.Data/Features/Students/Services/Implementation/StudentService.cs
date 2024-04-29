@@ -63,7 +63,7 @@
                 .Select(x => x.Id)
                 .FirstOrDefaultAsync();
 
-        public async Task CreateAsync(BecomeStudentBindingModel bindingModel)
+        public async Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel)
         {
             var currentUserId = this.currentUserService.GetUserId();
 
@@ -84,7 +84,11 @@
                 await transaction.RollbackAsync();
 
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateAsync)} method");
+
+                return ErrorMesage;
             }
+
+            return SuccessfullyAppliedMessage;
         }
 
         public async Task<Result> ApproveStudentAsync(string email, bool isApproved)

@@ -11,7 +11,7 @@
     {
         Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage);
 
-        Task CreateAsync(BecomeStudentBindingModel bindingModel);
+        Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel);
 
         Task<Result> ApproveStudentAsync(string email, bool isApproved);
 
