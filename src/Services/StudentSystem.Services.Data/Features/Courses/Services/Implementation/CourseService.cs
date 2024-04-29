@@ -28,7 +28,7 @@
     {
         private const int CoursesPerPage = 6;
         private const int ImagesWitdhInPexels = 400;
-        private const int CacheTimeInHourse = 8;
+        private const int CacheTimeInHours = 8;
 
         private readonly string ImagesFolder = $"courses/{DateTime.Now:MMMM}-{DateTime.Now:yyyy}";
 
