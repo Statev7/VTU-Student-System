@@ -28,6 +28,7 @@
     {
         private const int CoursesPerPage = 6;
         private const int ImagesWitdhInPexels = 400;
+        private const int CacheTimeInHourse = 8;
 
         private readonly string ImagesFolder = $"courses/{DateTime.Now:MMMM}-{DateTime.Now:yyyy}";
 
@@ -70,7 +71,7 @@
 
             var course = await this.memoryCache.GetOrCreateAsync(key, async factory =>
             {
-                factory.SetAbsoluteExpiration(TimeSpan.FromHours(8));
+                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHourse));
 
                 return await this.Repository.AllAsNoTracking()
                     .Where(x => x.Id.Equals(id))
@@ -162,7 +163,7 @@
 
             var courses = await this.memoryCache.GetOrCreateAsync(key, async factory =>
             {
-                factory.SetAbsoluteExpiration(TimeSpan.FromHours(8));
+                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHourse));
 
                 return await this.GetCoursesAsync<TEntity>(requestData);
             });
