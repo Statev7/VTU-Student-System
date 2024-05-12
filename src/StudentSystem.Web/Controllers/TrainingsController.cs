@@ -8,6 +8,8 @@
 
     public class TrainingsController : Controller
     {
+        private const int CoursesPerPage = 6;
+
         private readonly ICourseService courseService;
 
         public TrainingsController(ICourseService courseService) 
@@ -16,7 +18,7 @@
         [HttpGet]
         public async Task<IActionResult> Index(CoursesRequestDataModel requestData)
         {
-            var courses = await this.courseService.GetAllAsync<CourseViewModel>(requestData);
+            var courses = await this.courseService.GetAllAsync<CourseViewModel>(requestData, CoursesPerPage);
 
             return this.View(courses);
         }

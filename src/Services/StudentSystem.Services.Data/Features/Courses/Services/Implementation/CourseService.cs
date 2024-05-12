@@ -1,6 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.Services.Implementation
 {
     using System;
+    using System.Collections.Generic;
 
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
@@ -26,7 +27,6 @@
 
     public class CourseService : BaseService<Course>, ICourseService
     {
-        private const int CoursesPerPage = 6;
         private const int ImagesWitdhInPexels = 400;
         private const int CacheTimeInHours = 8;
 
@@ -36,7 +36,8 @@
         private readonly IImageFileService imageFileService;
         private readonly ILogger<CourseService> logger;
 
-        private readonly string cacheRegion;
+        private readonly string cacheRegionKey;
+        private const string cacheCollectionKey = "Courses-Collection";
 
         public CourseService(
             IRepository<Course> repository,
@@ -50,14 +51,14 @@
             this.imageFileService = imageFileService;
             this.logger = logger;
 
-            this.cacheRegion = typeof(Course).Name;
+            this.cacheRegionKey = typeof(Course).Name;
         }
 
-        public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData)
+        public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
         {
             var pagedCourses = string.IsNullOrWhiteSpace(requestData.SearchTerm)
-                ? await this.GetCoursesFromCacheAsync<TEntity>(requestData)
-                : await this.GetCoursesAsync<TEntity>(requestData);
+                ? await this.GetCoursesFromCacheAsync<TEntity>(requestData, entitiesPerPage)
+                : await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
 
             var resultModel = new ListCoursesViewModel<TEntity>() { PageList = pagedCourses, RequestData = requestData };
 
@@ -67,7 +68,7 @@
         public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
             where TEntity : class
         {
-            var key = CacheKeyGenerator.GenerateKey(this.cacheRegion, id, typeof(TEntity));
+            var key = CacheKeyGenerator.GenerateKey(this.cacheRegionKey, id, typeof(TEntity));
 
             var course = await this.memoryCache.GetOrCreateAsync(key, async factory =>
             {
@@ -124,7 +125,7 @@
             this.Repository.Update(courseToUpdate);
             await this.Repository.SaveChangesAsync();
 
-            this.memoryCache.ClearRegionFromCache(CacheKeyGenerator.GenerateRegionKey(this.cacheRegion, id), nameof(this.GetAllAsync));
+            this.memoryCache.ClearRegionFromCache(CacheKeyGenerator.GenerateRegionKey(this.cacheRegionKey, id), cacheCollectionKey);
 
             return Result.Success(SuccessfillyUpdatedCourseMessage);
         }
@@ -141,7 +142,7 @@
             this.Repository.Delete(courseToDelete);
             await this.Repository.SaveChangesAsync();
 
-            this.memoryCache.ClearRegionFromCache(CacheKeyGenerator.GenerateRegionKey(this.cacheRegion, id), nameof(this.GetAllAsync));
+            this.memoryCache.ClearRegionFromCache(CacheKeyGenerator.GenerateRegionKey(this.cacheRegionKey, id), cacheCollectionKey);
 
             return Result.Success(SuccessfillyDeletedCourseMessage);
         }
@@ -153,9 +154,9 @@
 
         #region Private Methods
 
-        private async Task<IPageList<TEntity>> GetCoursesFromCacheAsync<TEntity>(CoursesRequestDataModel requestData)
+        private async Task<IPageList<TEntity>> GetCoursesFromCacheAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
         {
-            var key = CacheKeyGenerator.GenerateKey(nameof(this.GetAllAsync), typeof(TEntity), new CacheParameter[]
+            var key = CacheKeyGenerator.GenerateKey(cacheCollectionKey, typeof(TEntity), new CacheParameter[]
             {
                 new (nameof(requestData.CurrentPage), requestData.CurrentPage),
                 new (nameof(requestData.OrderBy).ToString(), requestData.OrderBy.GetEnumValue()),
@@ -165,19 +166,19 @@
             {
                 factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHours));
 
-                return await this.GetCoursesAsync<TEntity>(requestData);
+                return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
             });
 
             return courses;
         }
 
-        private async Task<IPageList<TEntity>> GetCoursesAsync<TEntity>(CoursesRequestDataModel requestData)
+        private async Task<IPageList<TEntity>> GetCoursesAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
             => await this.Repository
                 .AllAsNoTracking()
                 .WhereIf(!string.IsNullOrEmpty(requestData.SearchTerm), x => x.Name.Contains(requestData.SearchTerm))
                 .OrderBy(requestData.OrderBy.GetEnumValue())
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
-                .ToPagedAsync(requestData.CurrentPage, CoursesPerPage);
+                .ToPagedAsync(requestData.CurrentPage, entitiesPerPage);
 
         #endregion
     }

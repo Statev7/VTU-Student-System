@@ -4,9 +4,9 @@
     this.ViewData["Title"] = "All Courses";
 }
 
-<div>
+<div class="container">
 
-    @await Html.PartialAsync("_CoursesFiltrationSectionPartial", Model.RequestData)
+    @await Html.PartialAsync("~/Views/Shared/Partials/Courses/_CoursesFiltrationSectionPartial.cshtml", Model.RequestData)
 
     <section class="row mt-5">
 

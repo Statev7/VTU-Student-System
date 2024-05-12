@@ -1,5 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.MappingProfiles
 {
+    using AutoMapper;
+
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Courses.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
@@ -15,9 +17,14 @@
                 .ForMember(d => d.Description, conf => conf.MapFrom(s => HtmlHelper.Sanitize(s.Description)));
 
             this.CreateMap<Course, CourseFormBindingModel>();
+
             this.CreateMap<Course, CourseViewModel>()
                 .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString("dd MMMM yyyy")))
                 .ForMember(d => d.Duration, conf => conf.MapFrom(s => (int)Math.Ceiling((s.EndDate - s.StartDate).TotalDays / 7)))
+                .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
+
+            this.CreateMap<Course, LatestCourseViewModel>()
+                .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString("dd MMMM yyyy")))
                 .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
         }
     }
