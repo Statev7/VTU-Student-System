@@ -1,7 +1,18 @@
 ﻿@model BecomeTeacherBindingModel
 
+@{
+    this.ViewData["Title"] = "Create Teacher";
+}
+
+@section HeadScripts
+{
+    @{
+        await Html.RenderPartialAsync("_TinymceScriptsPartial");
+    }
+}
+
 <div class="container mt-5">
-    <div class="col-md-4 offset-md-4 bg-white p-4 shadow rounded">
+    <div class="col-md-6 offset-md-3 bg-white p-4 shadow rounded">
         <h2 class="text-center mb-4">
             <span class="border-bottom border-info">Create a teacher</span>
         </h2>
@@ -23,7 +34,7 @@
                 <span asp-validation-for="LastName" class="text-danger error"></span>
             </div>
             <div class="form-group mb-3">
-                <input asp-for="AboutMe" type="text" class="form-control p-2">
+                <textarea asp-for="AboutMe" type="text" class="form-control p-2" placeholder="About Me"> </textarea>
                 <span asp-validation-for="AboutMe" class="text-danger error"></span>
             </div>
             <div class="text-center">

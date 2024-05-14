@@ -88,7 +88,7 @@
                 return ErrorMesage;
             }
 
-            return SuccessfullyAppliedMessage;
+            return Result.Success(SuccessfullyAppliedMessage);
         }
 
         public async Task<Result> ApproveStudentAsync(string email, bool isApproved)
@@ -96,7 +96,7 @@
             var student = await this.Repository
                 .All()
                 .Include(s => s.User)
-                .SingleOrDefaultAsync(s => s.User.Email == email);
+                .FirstOrDefaultAsync(s => s.User.Email.Equals(email));
 
             if (student == null)
             {
@@ -141,10 +141,30 @@
                 student.User.FirstName = default;
                 student.User.LastName = default;
 
-                this.Repository.Delete(student);
+                this.Repository.HardDelete(student);
             }
 
             await this.Repository.SaveChangesAsync();
+        }
+
+        public async Task<Result> SetActiveStatus(Guid id, bool isActive)
+        {
+            var student = await this.Repository.FindAsync(id);
+
+            if (student == null)
+            {
+                return InvalidStudentErrorMessage;
+            }
+
+            if (student.IsActive != isActive) 
+            {
+                student.IsActive = isActive;
+
+                this.Repository.Update(student);
+                await this.Repository.SaveChangesAsync();
+            }
+
+            return true;
         }
     }
 }

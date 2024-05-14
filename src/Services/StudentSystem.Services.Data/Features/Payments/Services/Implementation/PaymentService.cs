@@ -107,6 +107,11 @@
             var paymentValue = paymentStatus.GetEnumValue();
             var isPaymentSuccess = paymentValue.Equals(PaymentStatus.Paid.GetEnumValue());
 
+            if (isPaymentSuccess)
+            {
+                await this.studentService.SetActiveStatus(studentId, true);
+            }
+
             var result = isPaymentSuccess
                 ? Result.Success(SuccessfullyPaymentMessage)
                 : UnsuccessfullyPaymentMessage;

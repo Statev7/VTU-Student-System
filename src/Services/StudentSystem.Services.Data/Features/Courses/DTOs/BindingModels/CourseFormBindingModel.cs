@@ -16,6 +16,7 @@
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; } = null!;
 
+        [Display(Name = "Teaser Description")]
         [Required]
         [StringLength(TeaserDescriptionMaxLength)]
         public string TeaserDescription { get; set; } = null!;

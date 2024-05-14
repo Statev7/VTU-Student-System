@@ -1,0 +1,66 @@
+﻿<section class="section main-banner" id="top">
+    <video autoplay muted loop id="bg-video">
+        <source src="~/images/home/course-video.mp4" type="video/mp4" />
+    </video>
+
+    <div class="video-overlay header-text">
+        <div class="caption">
+            <h6>The digital development system</h6>
+            <h2><em>Students</em> System</h2>
+            <div class="main-button">
+                <div class="scroll-to-section">
+                    <a asp-area="Students" asp-controller="StudentApplication" asp-action="Apply">Become a student</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="features-post">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4><i class="fa fa-pencil"></i>All Courses</h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>We offer a variety of courses that will help you get started in the IT industry.</p>
+                            <p>Course resources are well selected and structured.</p>
+                            <div class="scroll-to-section">
+                                <a asp-controller="Trainings" asp-action="Index">All active courses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="features-post second-features">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4><i class="fa fa-graduation-cap"></i>Virtual Courses</h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>All courses are conducted online, which is very convenient and flexible.</p>
+                            <p>This allows students to access the materials and lectures from anywhere with an internet connection, fitting seamlessly into their busy schedules.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="features-post third-features">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4><i class="fa fa-book"></i>Communication</h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>Although courses are online, the system provides real time communication.</p>
+                            <p>Before, during and after each lecture, questions can be asked via Slido to the lecturer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

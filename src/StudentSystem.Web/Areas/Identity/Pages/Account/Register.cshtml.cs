@@ -17,6 +17,7 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
     using static StudentSystem.Data.Common.Constants.ApplicationUser;
     using static StudentSystem.Common.Constants.GlobalConstants;
     using static StudentSystem.Common.Constants.NotificationConstants;
+    using Microsoft.EntityFrameworkCore;
 
     public class RegisterModel : PageModel
     {
@@ -82,6 +83,17 @@ namespace StudentSystem.Web.Areas.Identity.Pages.Account
 
             if (this.ModelState.IsValid)
             {
+                var isEmailAlreadyInUse = await this.userManager.Users
+                    .AsNoTracking()
+                    .AnyAsync(u => u.Email.Equals(Input.Email));
+
+                if (isEmailAlreadyInUse)
+                {
+                    this.TempData.Add(ErrorNotification, $"{Input.Email} already in use!");
+
+                    return this.Page();
+                }
+
                 var user = this.CreateUser();
 
                 await this.userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);

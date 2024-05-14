@@ -15,6 +15,8 @@
 
         public bool IsApplied { get; set; }
 
+        public bool IsActive { get; set; }
+
         [Required]
         public string ApplicationUserId { get; set; } = null!;
 

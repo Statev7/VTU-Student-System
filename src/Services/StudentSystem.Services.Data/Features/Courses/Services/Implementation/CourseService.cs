@@ -94,7 +94,7 @@
                 await this.Repository.AddAsync(courseToCreate);
                 await this.Repository.SaveChangesAsync();
 
-                this.memoryCache.ClearRegionFromCache(nameof(this.GetAllAsync));
+                this.memoryCache.ClearRegionFromCache(cacheCollectionKey);
             }
             catch (Exception ex)
             {

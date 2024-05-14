@@ -4,6 +4,7 @@
 
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Courses.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Courses.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Mapper;
     using StudentSystem.Services.Data.Infrastructure.StaticHelpers;
@@ -26,6 +27,8 @@
             this.CreateMap<Course, LatestCourseViewModel>()
                 .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString("dd MMMM yyyy")))
                 .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
+
+            this.CreateMap<Course, CoursePaymentDetailsServiceModel>();
         }
     }
 }

@@ -18,5 +18,7 @@
         Task<bool> IsAppliedAlreadyAsync();
 
         Task<Guid> GetIdByUserIdAsync(string userId);
+
+        Task<Result> SetActiveStatus(Guid id, bool isActive);
     }
 }
