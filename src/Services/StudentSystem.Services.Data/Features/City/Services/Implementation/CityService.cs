@@ -4,8 +4,8 @@
     using AutoMapper.QueryableExtensions;
 
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.Memory;
 
+    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.City.Services.Contracts;
@@ -14,30 +14,28 @@
     public class CityService : BaseService<City>, ICityService
     {
         private const string CacheKey = nameof(City);
-        private readonly TimeSpan CacheTime = TimeSpan.FromDays(30);
+        private readonly TimeSpan CacheTimeInDays = TimeSpan.FromDays(30);
 
-        private readonly IMemoryCache memoryCache;
+        private readonly ICacheService cacheService;
 
         public CityService(
             IRepository<City> repository,
             IMapper mapper,
-            IMemoryCache memoryCache)
-            : base(repository, mapper) => this.memoryCache = memoryCache;
+            ICacheService cacheService)
+            : base(repository, mapper) 
+            => this.cacheService = cacheService;
 
         public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
         {
-            var cities = (IEnumerable<TEntity>)this.memoryCache.Get(CacheKey);
-
-            if (cities == null)
+            var cities = await this.cacheService.GetAsync(CacheKey, async () =>
             {
-                cities = await Repository
+                return await Repository
                     .AllAsNoTracking()
                     .OrderBy(c => c.Name)
                     .ProjectTo<TEntity>(Mapper.ConfigurationProvider)
                     .ToListAsync();
 
-                this.memoryCache.Set(CacheKey, cities, CacheTime);
-            }
+            }, CacheTimeInDays);
 
             return cities;
         }

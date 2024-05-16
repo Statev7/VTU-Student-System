@@ -1,15 +1,14 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.Services.Implementation
 {
     using System;
-    using System.Collections.Generic;
 
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Logging;
 
+    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
     using StudentSystem.Common.Infrastructure.Cache.Settings;
     using StudentSystem.Common.Infrastructure.Collections.Contracts;
     using StudentSystem.Common.Infrastructure.Extensions;
@@ -28,36 +27,32 @@
     public class CourseService : BaseService<Course>, ICourseService
     {
         private const int ImagesWitdhInPexels = 400;
-        private const int CacheTimeInHours = 8;
+        private const string CachePrefix = "Courses";
 
         private readonly string ImagesFolder = $"courses/{DateTime.Now:MMMM}-{DateTime.Now:yyyy}";
+        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(8);
 
-        private readonly IMemoryCache memoryCache;
+        private readonly ICacheService cacheService;
         private readonly IImageFileService imageFileService;
         private readonly ILogger<CourseService> logger;
-
-        private readonly string cacheRegionKey;
-        private const string cacheCollectionKey = "Courses-Collection";
 
         public CourseService(
             IRepository<Course> repository,
             IMapper mapper,
-            IMemoryCache memoryCache,
+            ICacheService cacheService,
             IImageFileService imageFileService,
             ILogger<CourseService> logger)
             : base(repository, mapper)
         {
-            this.memoryCache = memoryCache;
+            this.cacheService = cacheService;
             this.imageFileService = imageFileService;
             this.logger = logger;
-
-            this.cacheRegionKey = typeof(Course).Name;
         }
 
         public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
         {
             var pagedCourses = string.IsNullOrWhiteSpace(requestData.SearchTerm)
-                ? await this.GetCoursesFromCacheAsync<TEntity>(requestData, entitiesPerPage)
+                ? await this.GetCoursesFromCache<TEntity>(requestData, entitiesPerPage)
                 : await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
 
             var resultModel = new ListCoursesViewModel<TEntity>() { PageList = pagedCourses, RequestData = requestData };
@@ -68,17 +63,17 @@
         public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
             where TEntity : class
         {
-            var key = CacheKeyGenerator.GenerateKey(this.cacheRegionKey, id, typeof(TEntity));
+            var key = CacheKeyGenerator.GenerateKey(CachePrefix, id, typeof(TEntity));
 
-            var course = await this.memoryCache.GetOrCreateAsync(key, async factory =>
+            var course = await this.cacheService.GetAsync<TEntity>(key, async () =>
             {
-                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHours));
-
-                return await this.Repository.AllAsNoTracking()
+                return await this.Repository
+                    .AllAsNoTracking()
                     .Where(x => x.Id.Equals(id))
                     .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync();
-            });
+
+            }, CacheTimeInHours);
 
             return course;
         }
@@ -94,7 +89,7 @@
                 await this.Repository.AddAsync(courseToCreate);
                 await this.Repository.SaveChangesAsync();
 
-                this.memoryCache.ClearRegionFromCache(cacheCollectionKey);
+                this.cacheService.RemoveByPrefix(CachePrefix);
             }
             catch (Exception ex)
             {
@@ -125,7 +120,7 @@
             this.Repository.Update(courseToUpdate);
             await this.Repository.SaveChangesAsync();
 
-            this.memoryCache.ClearRegionFromCache(CacheKeyGenerator.GenerateRegionKey(this.cacheRegionKey, id), cacheCollectionKey);
+            this.cacheService.RemoveByPrefix(CachePrefix);
 
             return Result.Success(SuccessfillyUpdatedCourseMessage);
         }
@@ -142,7 +137,7 @@
             this.Repository.Delete(courseToDelete);
             await this.Repository.SaveChangesAsync();
 
-            this.memoryCache.ClearRegionFromCache(CacheKeyGenerator.GenerateRegionKey(this.cacheRegionKey, id), cacheCollectionKey);
+            this.cacheService.RemoveByPrefix(CachePrefix);
 
             return Result.Success(SuccessfillyDeletedCourseMessage);
         }
@@ -154,20 +149,19 @@
 
         #region Private Methods
 
-        private async Task<IPageList<TEntity>> GetCoursesFromCacheAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
+        private async Task<IPageList<TEntity>> GetCoursesFromCache<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
         {
-            var key = CacheKeyGenerator.GenerateKey(cacheCollectionKey, typeof(TEntity), new CacheParameter[]
+            var key = CacheKeyGenerator.GenerateKey(CachePrefix, typeof(TEntity), new CacheParameter[]
             {
                 new (nameof(requestData.CurrentPage), requestData.CurrentPage),
                 new (nameof(requestData.OrderBy).ToString(), requestData.OrderBy.GetEnumValue()),
             });
 
-            var courses = await this.memoryCache.GetOrCreateAsync(key, async factory =>
+            var courses = await this.cacheService.GetAsync<IPageList<TEntity>>(key, async () =>
             {
-                factory.SetAbsoluteExpiration(TimeSpan.FromHours(CacheTimeInHours));
-
                 return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
-            });
+            }, 
+            CacheTimeInHours);
 
             return courses;
         }

@@ -8,6 +8,8 @@
     using Stripe;
 
     using StudentSystem.Common;
+    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
+    using StudentSystem.Common.Infrastructure.Cache.Services.Implementation;
     using StudentSystem.Data;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
@@ -81,6 +83,7 @@
 
         public static IServiceCollection RegisterServices(this IServiceCollection services)
             => services
+                .AddSingleton<ICacheService, CacheService>()
                 .AddTransient<ICityService, CityService>()
                 .AddTransient<IStudentService, StudentService>()
                 .AddTransient<ICurrentUserService, CurrentUserService>()
