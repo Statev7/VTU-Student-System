@@ -8,6 +8,9 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
+    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
+    using StudentSystem.Common.Infrastructure.Cache.Settings;
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
     using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Courses;
@@ -23,69 +26,77 @@
 
     public class CourseService : BaseService<Course>, ICourseService
     {
-        private const int CoursesPerPage = 6;
         private const int ImagesWitdhInPexels = 400;
+        private const string CachePrefix = "Courses";
 
-        private readonly string ImagesFolder = $"courses/{DateTime.Now.ToString("MMMM")}-{DateTime.Now.ToString("yyyy")}";
+        private readonly string ImagesFolder = $"courses/{DateTime.Now:MMMM}-{DateTime.Now:yyyy}";
+        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(8);
 
+        private readonly ICacheService cacheService;
         private readonly IImageFileService imageFileService;
         private readonly ILogger<CourseService> logger;
 
         public CourseService(
             IRepository<Course> repository,
             IMapper mapper,
+            ICacheService cacheService,
             IImageFileService imageFileService,
             ILogger<CourseService> logger)
             : base(repository, mapper)
         {
+            this.cacheService = cacheService;
             this.imageFileService = imageFileService;
             this.logger = logger;
         }
 
-        public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData)
+        public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
         {
-            var pagedCourses = await this.Repository
-                .AllAsNoTracking()
-                .WhereIf(!string.IsNullOrEmpty(requestData.SearchTerm), x => x.Name.Contains(requestData.SearchTerm))
-                .OrderBy(requestData.OrderBy.GetEnumValue())
-                .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
-                .ToPagedAsync(requestData.CurrentPage, CoursesPerPage);
+            var pagedCourses = string.IsNullOrWhiteSpace(requestData.SearchTerm)
+                ? await this.GetCoursesFromCache<TEntity>(requestData, entitiesPerPage)
+                : await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
 
             var resultModel = new ListCoursesViewModel<TEntity>() { PageList = pagedCourses, RequestData = requestData };
 
             return resultModel;
         }
 
-        public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
-            => await this.Repository.AllAsNoTracking()
-                .Where(x => x.Id.Equals(id))
-                .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync();
+        public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
+            where TEntity : class
+        {
+            var key = CacheKeyGenerator.GenerateKey(CachePrefix, id, typeof(TEntity));
+
+            var course = await this.cacheService.GetAsync<TEntity>(key, async () =>
+            {
+                return await this.Repository
+                    .AllAsNoTracking()
+                    .Where(x => x.Id.Equals(id))
+                    .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+
+            }, CacheTimeInHours);
+
+            return course;
+        }
 
         public async Task<Result> CreateAsync(CourseFormBindingModel bindingModel)
         {
             var courseToCreate = this.Mapper.Map<Course>(bindingModel);
 
-            using var transaction = await this.Repository.BeginTransactionAsync();
-
             try
             {
-                courseToCreate.ImageFileId =
-                     await this.imageFileService.CreateAsync(bindingModel.Image, ImagesFolder, ImagesWitdhInPexels);
+                courseToCreate.ImageFolder = await this.imageFileService.CreateToFileSystemAsync(bindingModel.Image, ImagesFolder, ImagesWitdhInPexels);
 
                 await this.Repository.AddAsync(courseToCreate);
                 await this.Repository.SaveChangesAsync();
 
-                await transaction.CommitAsync();
+                this.cacheService.RemoveByPrefix(CachePrefix);
             }
             catch (Exception ex)
             {
-                if (courseToCreate.ImageFileId != Guid.Empty)
+                if (!string.IsNullOrEmpty(courseToCreate.ImageFolder))
                 {
-                    this.imageFileService.DeleteFromFileSystem(courseToCreate.ImageFileId, ImagesFolder);
+                    this.imageFileService.DeleteFromFileSystem(courseToCreate.ImageFolder);
                 }
-
-                await transaction.RollbackAsync();
 
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateAsync)} method");
 
@@ -109,6 +120,8 @@
             this.Repository.Update(courseToUpdate);
             await this.Repository.SaveChangesAsync();
 
+            this.cacheService.RemoveByPrefix(CachePrefix);
+
             return Result.Success(SuccessfillyUpdatedCourseMessage);
         }
 
@@ -124,7 +137,43 @@
             this.Repository.Delete(courseToDelete);
             await this.Repository.SaveChangesAsync();
 
+            this.cacheService.RemoveByPrefix(CachePrefix);
+
             return Result.Success(SuccessfillyDeletedCourseMessage);
         }
+
+        public async Task<bool> IsExistAsync(Guid id)
+            => await this.Repository
+                .AllAsNoTracking()
+                .AnyAsync(x => x.Id.Equals(id));
+
+        #region Private Methods
+
+        private async Task<IPageList<TEntity>> GetCoursesFromCache<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
+        {
+            var key = CacheKeyGenerator.GenerateKey(CachePrefix, typeof(TEntity), new CacheParameter[]
+            {
+                new (nameof(requestData.CurrentPage), requestData.CurrentPage),
+                new (nameof(requestData.OrderBy).ToString(), requestData.OrderBy.GetEnumValue()),
+            });
+
+            var courses = await this.cacheService.GetAsync<IPageList<TEntity>>(key, async () =>
+            {
+                return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
+            }, 
+            CacheTimeInHours);
+
+            return courses;
+        }
+
+        private async Task<IPageList<TEntity>> GetCoursesAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
+            => await this.Repository
+                .AllAsNoTracking()
+                .WhereIf(!string.IsNullOrEmpty(requestData.SearchTerm), x => x.Name.Contains(requestData.SearchTerm))
+                .OrderBy(requestData.OrderBy.GetEnumValue())
+                .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                .ToPagedAsync(requestData.CurrentPage, entitiesPerPage);
+
+        #endregion
     }
 }

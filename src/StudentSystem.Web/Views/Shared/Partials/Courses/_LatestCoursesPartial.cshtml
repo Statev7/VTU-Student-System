@@ -1,0 +1,27 @@
+﻿@model IEnumerable<LatestCourseViewModel>
+
+<section class="section courses mt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="owl-carousel owl-theme">
+                @foreach (var course in Model)
+                {
+                    <a asp-controller="Trainings" asp-action="Details" asp-route-Id="@course.Id">
+                        <div class="card border-0">
+                            <img src="@course.ImageUrl" class="card-img-top" alt="Card Image">
+                            <div class="card-body p-4">
+                                <h5>@course.Name</h5>
+                                <p>dsadsadsasds</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-flex justify-content-between">
+                                    <strong><i class="fa-solid fa-circle-play"></i> @course.StartDate</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</section>

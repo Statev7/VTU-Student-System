@@ -7,14 +7,17 @@
 
     public interface ICourseService
     {
-        Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData);
+        Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage);
 
-        Task<TEntity?> GetByIdAsync<TEntity>(Guid id);
+        Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
+            where TEntity : class;
 
         Task<Result> CreateAsync(CourseFormBindingModel bindingModel);
 
         Task<Result> UpdateAsync(Guid id, CourseFormBindingModel bindingModel);
 
         Task<Result> DeleteAsync(Guid id);
+
+        Task<bool> IsExistAsync(Guid id);
     }
 }

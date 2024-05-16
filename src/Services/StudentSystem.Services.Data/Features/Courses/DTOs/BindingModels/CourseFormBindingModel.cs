@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Http;
 
     using StudentSystem.Common.Attributes;
-    using StudentSystem.Data.Models.Courses;
+    using StudentSystem.Data.Models.Courses.Enums;
     using StudentSystem.Services.Data.Features.Teachers.DTOs.ViewModels;
 
     using static StudentSystem.Data.Common.Constants.Course;
@@ -16,6 +16,7 @@
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; } = null!;
 
+        [Display(Name = "Teaser Description")]
         [Required]
         [StringLength(TeaserDescriptionMaxLength)]
         public string TeaserDescription { get; set; } = null!;
@@ -23,6 +24,11 @@
         [Required]
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
+
+        public IFormFile Image { get; set; }
+
+        [Range(typeof(decimal), "0.00", "10000")]
+        public decimal Price { get; set; }
 
         public ComplexityLevel Complexity { get; set; }
 
@@ -35,8 +41,6 @@
 
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; } = DateTime.Now;
-
-        public IFormFile Image { get; set; }
 
         [Display(Name = "Teacher")]
         public Guid TeacherId { get; set; }

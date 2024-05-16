@@ -21,10 +21,15 @@
                 .HasForeignKey<Teacher>(s => s.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasMany(e => e.UserRoles)
+            builder
+                 .HasMany(e => e.UserRoles)
                  .WithOne(e => e.User)
                  .HasForeignKey(ur => ur.UserId)
                  .IsRequired();
+
+            builder
+                .HasIndex(u => u.Email)
+                .IsUnique(true);
         }
     }
 }

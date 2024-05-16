@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using StudentSystem.Data.Common.Models;
+    using StudentSystem.Data.Models.Courses.Enums;
     using StudentSystem.Data.Models.Users;
 
     using static StudentSystem.Data.Common.Constants.Course;
@@ -30,14 +31,18 @@
         public DateTime EndDate { get; set; }
 
         [Required]
+        [StringLength(ImageFolderMaxLength)]
+        public string ImageFolder { get; set; } = null!;
+
+        public decimal Price { get; set; }
+
+        [Required]
         public Guid TeacherId { get; set; }
 
         public Teacher Teacher { get; set; }
 
-        public Guid ImageFileId { get; set; }
-
-        public ImageFile ImageFile { get; set; }
-
         public ICollection<CourseStudentMap> Students { get; set; } = new HashSet<CourseStudentMap>();
+
+        public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
     }
 }

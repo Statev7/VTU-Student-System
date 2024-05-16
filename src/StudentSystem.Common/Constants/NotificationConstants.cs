@@ -12,7 +12,7 @@
 
         public const string InvalidUserErrorMessage = "Such a user not exist!";
 
-        public const string SuccessfullyCreatedTeacherMessage = $"{SuccessfulyCreatedMessage} teacher!";
+        public const string SuccessfullyCreatedTeacherMessage = $"Successfully created a new teacher!";
 
         public const string AlreadyATeacherErrorMessage = "This user is already a teacher!";
 
@@ -30,7 +30,7 @@
 
         public const string UnsuccessfullyCourseCreationErrorMessage = "Unsuccessfully creation!";
 
-        public const string SuccessfullyCreatedCourseMessage = $"{SuccessfulyCreatedMessage} course!";
+        public const string SuccessfullyCreatedCourseMessage = $"Successfully created a new course!";
 
         public const string SuccessfillyUpdatedCourseMessage = $"Successfully updated!";
 
@@ -38,6 +38,12 @@
 
         public const string InvalidCourseErrorMessage = "Such a course not exist!";
 
-        private const string SuccessfulyCreatedMessage = "Successfully created a new";
+        public const string StudentAlreadyInCourseMessage = "You are already in this course!";
+
+        // Payments 
+
+        public const string SuccessfullyPaymentMessage = "The payment was successful!";
+
+        public const string UnsuccessfullyPaymentMessage = "The payment was unsuccessful!";
     }
 }

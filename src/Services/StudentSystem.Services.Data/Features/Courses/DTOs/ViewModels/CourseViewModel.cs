@@ -1,6 +1,6 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels
 {
-    using StudentSystem.Data.Models.Courses;
+    using StudentSystem.Data.Models.Courses.Enums;
 
     public class CourseViewModel
     {

@@ -15,11 +15,15 @@
 
         public bool IsApplied { get; set; }
 
+        public bool IsActive { get; set; }
+
         [Required]
         public string ApplicationUserId { get; set; } = null!;
 
         public ApplicationUser User { get; set; }
 
         public ICollection<CourseStudentMap> Courses { get; set; } = new List<CourseStudentMap>();
+
+        public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
     }
 }

@@ -1,10 +1,8 @@
 ﻿namespace StudentSystem.Data.Repositories
 {
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Storage;
 
-    using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Models;
     using StudentSystem.Data.Common.Repositories;
 
@@ -46,6 +44,8 @@
             entity.DeletedOn = DateTime.UtcNow;
             this.Update(entity);
         }
+
+        public void HardDelete(TEntity entity) => this.DbSet.Remove(entity);
 
         public void Undelete(TEntity entity)
         {

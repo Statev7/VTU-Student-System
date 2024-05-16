@@ -32,11 +32,18 @@
             public const int TeaserDescriptionMaxLength = 200;
 
             public const int DescriptionMaxLength = 50000;
+
+            public const int ImageFolderMaxLength = 512;
         }
 
         public static class ImageFile
         {
             public const int FolderMaxLength = 1024;
+        }
+
+        public static class Payment
+        {
+            public const int SessionMaxLength = 1024;
         }
     }
 }

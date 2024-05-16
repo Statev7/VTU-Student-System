@@ -5,7 +5,11 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
 
+    using Stripe;
+
     using StudentSystem.Common;
+    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
+    using StudentSystem.Common.Infrastructure.Cache.Services.Implementation;
     using StudentSystem.Data;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
@@ -16,6 +20,8 @@
     using StudentSystem.Services.Data.Features.Courses.Services.Implementation;
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Contracts;
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Payments.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
@@ -77,13 +83,16 @@
 
         public static IServiceCollection RegisterServices(this IServiceCollection services)
             => services
+                .AddSingleton<ICacheService, CacheService>()
                 .AddTransient<ICityService, CityService>()
                 .AddTransient<IStudentService, StudentService>()
                 .AddTransient<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IUserService, UserService>()
                 .AddTransient<ITeacherService, TeacherService>()
                 .AddTransient<ICourseService, CourseService>()
-                .AddTransient<IImageFileService, ImageFileService>();
+                .AddTransient<IImageFileService, ImageFileService>()
+                .AddTransient<IPaymentService, PaymentService>()
+                .AddTransient<IStudentCourseService, StudentCourseService>();
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
@@ -99,6 +108,13 @@
 
         public static IServiceCollection ConfigureApplicationSettings(this IServiceCollection services, ConfigurationManager configuration)
             => services.Configure<ApplicationSettings>(configuration.GetSection(nameof(ApplicationSettings)));
+
+        public static IServiceCollection ConfigureStripe(this IServiceCollection services, ConfigurationManager configuration)
+        {
+            StripeConfiguration.ApiKey = configuration["ApplicationSettings:StripeSecretKey"];
+
+            return services;
+        }
 
         public static void ConfigureControllersWithViews(this IServiceCollection services)
             => services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));

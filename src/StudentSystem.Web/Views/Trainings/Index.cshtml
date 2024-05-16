@@ -4,15 +4,19 @@
     this.ViewData["Title"] = "All Courses";
 }
 
-<div>
+<div class="container">
 
-    @await Html.PartialAsync("_CoursesFiltrationSectionPartial", Model.RequestData)
+    @await Html.PartialAsync("~/Views/Shared/Partials/Courses/_CoursesFiltrationSectionPartial.cshtml", Model.RequestData)
 
     <section class="row mt-5">
 
         @foreach (var course in Model.PageList.Entities)
         {
-            <a asp-action="Details" asp-route-id="" class="col-lg-4 col-md-6 mb-4 text-decoration-none">
+            <a 
+                asp-action="Details" 
+                asp-route-Id="@course.Id" 
+                class="col-lg-4 col-md-6 mb-4 text-decoration-none">
+
                 <div class="card course-card">
                     <img src="@course.ImageUrl" class="card-img-top" alt="Card Image">
                     <div class="card-body p-4">
@@ -32,6 +36,7 @@
                         </div>
                     </div>
                 </div>
+
             </a>
         }
 

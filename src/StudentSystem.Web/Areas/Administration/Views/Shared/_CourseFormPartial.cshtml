@@ -11,20 +11,29 @@
     </h2>
     <form method="post" enctype="multipart/form-data">
         <div class="form-group mb-3">
-            <input asp-for="Name" class="form-control p-2" placeholder="Course name">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control p-2">
             <span asp-validation-for="Name" class="error"></span>
         </div>
         <div class="form-group mb-3">
-            <textarea asp-for="TeaserDescription" class="p-2" placeholder="Teaser description"> </textarea>
+            <label asp-for="TeaserDescription"></label>
+            <textarea asp-for="TeaserDescription" class="p-2"> </textarea>
             <span asp-validation-for="TeaserDescription" class="error"></span>
         </div>
         <div class="form-group mb-3">
-            <textarea asp-for="Description" class="p-2" placeholder="Course description"> </textarea>
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="p-2"> </textarea>
             <span asp-validation-for="Description" class="error"></span>
         </div>
         <div class="form-group mb-3">
+            <label asp-for="Image"></label>
             <input asp-for="Image" class="form-control"/>
             <span asp-validation-for="Image" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="error"></span>
         </div>
         <div class="form-group mb-3">
             <label asp-for="Complexity"></label>
@@ -60,7 +69,7 @@
             </select>
         </div>
         <div class="text-center">
-            <button type="submit" class="w-50 btn btn-primary shadow p-2">@buttonLabel</button>
+            <button type="submit" class="w-50 btn btn-success shadow p-2">@buttonLabel</button>
         </div>
     </form>
 </div>

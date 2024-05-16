@@ -17,6 +17,8 @@
 
         void Delete(TEntity entity);
 
+        void HardDelete(TEntity entity);
+
         void Undelete(TEntity entity);
 
         Task<TEntity> FindAsync<T>(T id);

@@ -54,26 +54,23 @@
                     <div class="card mt-4">
                         <div class="p-4 card-body">
                             <div class="align-items-center row">
-                                <div class="col-auto">
-                                    <div>
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="" class="avatar-md img-thumbnail rounded-circle" />
-                                    </div>
-                                </div>
                                 <div class="col-lg-5">
                                     <div class="mt-3 mt-lg-0">
                                         <h5 class="fs-19 mb-0">
-                                            @user.UserName
+                                            <i class="fa-solid fa-user"></i> @user.UserName
                                         </h5>
-                                        <p class="text-muted mb-2">@user.FormatedRoles</p>
+                                        <p class="text-muted mb-2">Roles: @user.FormatedRoles</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
-                                        <span class="badge bg-soft-secondary fs-14 mt-1">Buttons</span>
-                                        @if (!user.IsTeacher)
-                                        {
-                                            <a asp-action="CreateTeacher" asp-route-email="@user.Email">Create teacher</a>
-                                        }
+                                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-3">
+                                        <span class="badge bg-soft-secondary fs-14 mt-1">Actions</span>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            @if (!user.IsTeacher)
+                                            {
+                                                <a class="btn btn-success" asp-action="CreateTeacher" asp-route-email="@user.Email">Create teacher</a>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>

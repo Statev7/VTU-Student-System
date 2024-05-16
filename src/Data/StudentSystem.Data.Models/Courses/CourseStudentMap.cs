@@ -5,11 +5,11 @@
 
     public class CourseStudentMap : IAuditInfo
     {
-        public string CourseId { get; set; }
+        public Guid CourseId { get; set; }
 
         public Course Course { get; set; }
 
-        public string StudentId { get; set; }
+        public Guid StudentId { get; set; }
 
         public Student Student { get; set; }
 

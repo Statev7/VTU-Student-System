@@ -14,7 +14,6 @@
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
     using static StudentSystem.Common.Constants.GlobalConstants;
-    using static StudentSystem.Common.Constants.NotificationConstants;
     using static StudentSystem.Web.Infrastructure.Constants;
 
     [Area(StudentsArea)]
@@ -49,9 +48,7 @@
         [Authorize(Roles = GuestRole)]
         public async Task<IActionResult> Apply(BecomeStudentBindingModel model)
         {
-            await this.studentService.CreateAsync(model);
-
-            this.TempData.Add(SuccessNotification, SuccessfullyAppliedMessage);
+            this.TempData.Add(await this.studentService.CreateAsync(model));
 
             return this.RedirectToAction(nameof(HomeController.Index), this.controllerHelper.GetName(nameof(HomeController)), new { area = "" });
         }

@@ -26,7 +26,7 @@
 
         public DbSet<City> Cities { get; set; }
 
-        public DbSet<ImageFile> Images { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

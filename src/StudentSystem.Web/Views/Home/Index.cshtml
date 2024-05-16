@@ -1,8 +1,36 @@
-﻿@{
+﻿@model HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<section>
-    Become a Student
-    <a class="btn btn-dark" asp-area="Students" asp-controller="StudentApplication" asp-action="Apply">Apply</a>
-</section>
+@section Styles {
+    <link rel="stylesheet" href="~/css/home/flex-slider.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home/owl.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home/templatemo-grad-school.css" asp-append-version="true" />
+}
+
+@await Html.PartialAsync("~/Views/Shared/Partials/Home/_BannerPartial.cshtml")
+
+@await Html.PartialAsync("~/Views/Shared/Partials/Home/_AboutUsPartial.cshtml")
+
+@if (Model.HasCoureses)
+{
+    @await Html.PartialAsync("~/Views/Shared/Partials/Courses/_LatestCoursesPartial.cshtml", Model.LatestCourses)
+}
+
+@section Scripts {
+    <script src="~/js/home/isotope.min.js"></script>
+    <script src="~/js/home/owl-carousel.js"></script>
+    <script src="~/js/home/lightbox.js"></script>
+    <script src="~/js/home/tabs.js"></script>
+    <script src="~/js/home/video.js"></script>
+    <script src="~/js/home/slick-slider.js"></script>
+    <script src="~/js/home/custom.js"></script>
+    <script src="~/js/layout.js"></script>
+    <script src="~/js/card-slider.js"></script>
+    <script>
+        const body = document.getElementsByTagName('body')[0];
+        body.style.backgroundColor = "#172238"
+    </script>
+}
