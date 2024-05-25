@@ -6,8 +6,8 @@
 
     public static class ClaimsPrincipalExtensions
     {
-        public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
-            => claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
+        public static string? GetUserId(this ClaimsPrincipal claimsPrincipal)
+            => claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         public static bool IsAdmin(this ClaimsPrincipal claimsPrincipal)
             => claimsPrincipal.IsInRole(AdminRole);

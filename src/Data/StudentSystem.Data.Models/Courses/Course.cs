@@ -44,5 +44,7 @@
         public ICollection<CourseStudentMap> Students { get; set; } = new HashSet<CourseStudentMap>();
 
         public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
+
+        public ICollection<Lesson> Lessons { get; set; } = new HashSet<Lesson>();
     }
 }

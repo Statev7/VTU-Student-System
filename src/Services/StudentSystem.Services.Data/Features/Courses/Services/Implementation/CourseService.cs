@@ -1,6 +1,8 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.Services.Implementation
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
@@ -49,34 +51,53 @@
             this.logger = logger;
         }
 
-        public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
+        public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(
+            CoursesRequestDataModel requestData, 
+            int entitiesPerPage,
+            bool includeExpiredCourses)
+            where TEntity : class
         {
             var pagedCourses = string.IsNullOrWhiteSpace(requestData.SearchTerm)
-                ? await this.GetCoursesFromCache<TEntity>(requestData, entitiesPerPage)
-                : await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
+                ? await this.GetCoursesFromCache<TEntity>(requestData, entitiesPerPage, includeExpiredCourses)
+                : await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage, includeExpiredCourses);
 
             var resultModel = new ListCoursesViewModel<TEntity>() { PageList = pagedCourses, RequestData = requestData };
 
             return resultModel;
         }
 
-        public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
-            where TEntity : class
-        {
-            var key = CacheKeyGenerator.GenerateKey(CachePrefix, id, typeof(TEntity));
+        public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
+            where TEntity : class 
+            => await this.cacheService.GetAsync<IEnumerable<TEntity>>(
+                CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix),
+                async () =>
+                {
+                    var courses = await this.Repository
+                        .AllAsNoTracking()
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                        .ToListAsync();
 
-            var course = await this.cacheService.GetAsync<TEntity>(key, async () =>
-            {
-                return await this.Repository
-                    .AllAsNoTracking()
-                    .Where(x => x.Id.Equals(id))
-                    .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync();
+                    return courses;
 
-            }, CacheTimeInHours);
+                },
+                CacheTimeInHours);
 
-            return course;
-        }
+        public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
+            where TEntity : class 
+            => await this.cacheService.GetAsync<TEntity>(
+                CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix, id), 
+                async () =>
+                {
+                    var course = await this.Repository
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                        .FirstOrDefaultAsync();
+
+                    return course;
+
+                }, 
+                CacheTimeInHours);
 
         public async Task<Result> CreateAsync(CourseFormBindingModel bindingModel)
         {
@@ -103,7 +124,7 @@
                 return ErrorMesage;
             }
 
-            return Result.Success(SuccessfullyCreatedCourseMessage);
+            return Result.Success(SuccessfullyCreatedMessage);
         }
 
         public async Task<Result> UpdateAsync(Guid id, CourseFormBindingModel bindingModel)
@@ -122,7 +143,7 @@
 
             this.cacheService.RemoveByPrefix(CachePrefix);
 
-            return Result.Success(SuccessfillyUpdatedCourseMessage);
+            return Result.Success(SuccessfullyUpdatedMessage);
         }
 
         public async Task<Result> DeleteAsync(Guid id)
@@ -139,19 +160,23 @@
 
             this.cacheService.RemoveByPrefix(CachePrefix);
 
-            return Result.Success(SuccessfillyDeletedCourseMessage);
+            return Result.Success(SuccessfullyDeletedMessage);
         }
 
-        public async Task<bool> IsExistAsync(Guid id)
+        public async Task<bool> IsExistAsync(Expression<Func<Course, bool>> selector)
             => await this.Repository
                 .AllAsNoTracking()
-                .AnyAsync(x => x.Id.Equals(id));
+                .AnyAsync(selector);
 
         #region Private Methods
 
-        private async Task<IPageList<TEntity>> GetCoursesFromCache<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
+        private async Task<IPageList<TEntity>> GetCoursesFromCache<TEntity>(
+            CoursesRequestDataModel requestData, 
+            int entitiesPerPage, 
+            bool includeExpiredCourses)
+            where TEntity : class
         {
-            var key = CacheKeyGenerator.GenerateKey(CachePrefix, typeof(TEntity), new CacheParameter[]
+            var key = CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix, new CacheParameter[]
             {
                 new (nameof(requestData.CurrentPage), requestData.CurrentPage),
                 new (nameof(requestData.OrderBy).ToString(), requestData.OrderBy.GetEnumValue()),
@@ -159,17 +184,22 @@
 
             var courses = await this.cacheService.GetAsync<IPageList<TEntity>>(key, async () =>
             {
-                return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage);
+                return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage, includeExpiredCourses);
             }, 
             CacheTimeInHours);
 
             return courses;
         }
 
-        private async Task<IPageList<TEntity>> GetCoursesAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage)
+        private async Task<IPageList<TEntity>> GetCoursesAsync<TEntity>(
+            CoursesRequestDataModel requestData, 
+            int entitiesPerPage, 
+            bool includeExpiredCourses)
+            where TEntity : class
             => await this.Repository
                 .AllAsNoTracking()
                 .WhereIf(!string.IsNullOrEmpty(requestData.SearchTerm), x => x.Name.Contains(requestData.SearchTerm))
+                .WhereIf(!includeExpiredCourses, x => x.EndDate >= DateTime.UtcNow)
                 .OrderBy(requestData.OrderBy.GetEnumValue())
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                 .ToPagedAsync(requestData.CurrentPage, entitiesPerPage);

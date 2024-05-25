@@ -12,8 +12,6 @@
 
         public const string InvalidUserErrorMessage = "Such a user not exist!";
 
-        public const string SuccessfullyCreatedTeacherMessage = $"Successfully created a new teacher!";
-
         public const string AlreadyATeacherErrorMessage = "This user is already a teacher!";
 
         // Students
@@ -30,12 +28,6 @@
 
         public const string UnsuccessfullyCourseCreationErrorMessage = "Unsuccessfully creation!";
 
-        public const string SuccessfullyCreatedCourseMessage = $"Successfully created a new course!";
-
-        public const string SuccessfillyUpdatedCourseMessage = $"Successfully updated!";
-
-        public const string SuccessfillyDeletedCourseMessage = $"Successfully deleted!";
-
         public const string InvalidCourseErrorMessage = "Such a course not exist!";
 
         public const string StudentAlreadyInCourseMessage = "You are already in this course!";
@@ -45,5 +37,18 @@
         public const string SuccessfullyPaymentMessage = "The payment was successful!";
 
         public const string UnsuccessfullyPaymentMessage = "The payment was unsuccessful!";
+
+        // Lessons 
+
+        public const string InvalidDatesErrorMessage = "The lesson start time cannot be earlier than the course start date, and the lesson end time cannot be later than the course end date";
+
+        // CRUD
+
+        public const string SuccessfullyCreatedMessage = $"Successfully created!";
+
+        public const string SuccessfullyUpdatedMessage = $"Successfully updated!";
+
+        public const string SuccessfullyDeletedMessage = $"Successfully deleted!";
+
     }
 }

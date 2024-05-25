@@ -1,5 +1,8 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.Services.Contracts
 {
+    using System.Linq.Expressions;
+
+    using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Courses.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.RequestDataModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
@@ -7,7 +10,14 @@
 
     public interface ICourseService
     {
-        Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(CoursesRequestDataModel requestData, int entitiesPerPage);
+        Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(
+            CoursesRequestDataModel requestData, 
+            int entitiesPerPage, 
+            bool includeExpiredCourses = false)
+            where TEntity : class;
+
+        Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
+            where TEntity : class;
 
         Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
             where TEntity : class;
@@ -18,6 +28,6 @@
 
         Task<Result> DeleteAsync(Guid id);
 
-        Task<bool> IsExistAsync(Guid id);
+        Task<bool> IsExistAsync(Expression<Func<Course, bool>> selector);
     }
 }

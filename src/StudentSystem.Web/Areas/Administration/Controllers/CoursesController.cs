@@ -3,6 +3,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using StudentSystem.Services.Data.Features.Courses.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Courses.DTOs.RequestDataModels;
+    using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Teachers.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
@@ -13,6 +15,8 @@
 
     public class CoursesController : BaseAdminController
     {
+        private const int CoursesPerPage = 5;
+
         private readonly ICourseService courseService;
         private readonly ITeacherService teacherService;
         private readonly IControllerHelper controllerHelper;
@@ -26,6 +30,15 @@
             this.teacherService = teacherService;
             this.controllerHelper = controllerHelper;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> All(CoursesRequestDataModel requestData)
+        {
+            var courses = await this.courseService.GetAllAsync<CourseManagementViewModel>(requestData, CoursesPerPage, true);
+
+            return this.View(courses);
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Create()

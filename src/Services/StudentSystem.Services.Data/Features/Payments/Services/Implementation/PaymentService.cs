@@ -59,7 +59,7 @@
 
         public async Task<Result<SessionServiceModel>> CheckOutAsync(Guid courseId)
         {
-            var isCourseNotExist = !await this.courseService.IsExistAsync(courseId);
+            var isCourseNotExist = !await this.courseService.IsExistAsync(x => x.Id.Equals(courseId));
             if (isCourseNotExist)
             {
                 return Result<SessionServiceModel>.Failure(InvalidCourseErrorMessage);
@@ -109,7 +109,7 @@
 
             if (isPaymentSuccess)
             {
-                await this.studentService.SetActiveStatus(studentId, true);
+                await this.studentService.SetActiveStatusAsync(studentId, true);
             }
 
             var result = isPaymentSuccess

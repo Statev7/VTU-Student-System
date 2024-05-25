@@ -1,0 +1,47 @@
+﻿@model LessonFormBindingModel
+
+@{
+    var title = this.ViewData["Title"]?.ToString();
+    var buttonLabel = title?.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
+}
+
+<div class="col-md-8 offset-md-2 bg-white p-4 shadow rounded">
+    <h2 class="text-center mb-4">
+        <span class="border-bottom border-info">@title</span>
+    </h2>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control p-2">
+            <span asp-validation-for="Name" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="p-2"> </textarea>
+            <span asp-validation-for="Description" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="StartTime"></label>
+            <input asp-for="StartTime" class="form-control">
+            <span asp-validation-for="StartTime" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="EndTime"></label>
+            <input asp-for="EndTime" class="form-control" />
+            <span asp-validation-for="EndTime" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="CourseId"></label>
+            <select asp-for="CourseId" class="form-select">
+                @foreach (var course in Model.Courses)
+                {
+                    <option value=@course.Id>@course.Name</option>
+                }
+            </select>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="w-25 btn btn-success shadow p-2">@buttonLabel</button>
+        </div>
+    </form>
+</div>
+

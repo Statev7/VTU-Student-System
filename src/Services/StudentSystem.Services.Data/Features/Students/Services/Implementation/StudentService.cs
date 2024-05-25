@@ -147,7 +147,7 @@
             await this.Repository.SaveChangesAsync();
         }
 
-        public async Task<Result> SetActiveStatus(Guid id, bool isActive)
+        public async Task<Result> SetActiveStatusAsync(Guid id, bool isActive)
         {
             var student = await this.Repository.FindAsync(id);
 
@@ -166,5 +166,10 @@
 
             return true;
         }
+
+        public async Task<bool> IsActiveAsync(string userId)
+            => await this.Repository
+                .AllAsNoTracking()
+                .AnyAsync(s => s.ApplicationUserId.Equals(userId) && s.IsActive);
     }
 }

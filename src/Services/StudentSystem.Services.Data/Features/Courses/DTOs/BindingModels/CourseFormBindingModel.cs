@@ -37,9 +37,11 @@
 
         [Display(Name = "Start Date")]
         [DateLessThan(nameof(EndDate))]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; } = DateTime.Now;
 
         [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Teacher")]

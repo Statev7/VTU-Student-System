@@ -35,7 +35,7 @@
 
         [HttpGet]
         [Authorize(Roles = GuestRole)]
-        [CheckStudentApplicationStatusr]
+        [CheckStudentApplicationStatus]
         public async Task<IActionResult> Apply()
         {
             var model = new BecomeStudentBindingModel() { Cities = await this.cityService.GetAllAsync<CityViewModel>() };

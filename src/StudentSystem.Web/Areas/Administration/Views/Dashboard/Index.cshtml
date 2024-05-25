@@ -1,4 +1,5 @@
 ﻿@using StudentSystem.Web.Infrastructure.Extensions
+
 @{
     this.ViewData["Title"] = "Admin Dashbourd";
 }
@@ -31,11 +32,11 @@
         </li>
 
         <li class="col-3 col-md-3 p-2 admin-categories">
-            <a asp-controller="Courses" asp-action="Create" class="text-decoration-none text-black">
+            <a asp-controller="Courses" asp-action="All" class="text-decoration-none text-black">
                 <div class="d-flex flex-column align-items-center w-100 h-100 admin-categories-content">
-                    @Html.RenderPngIcon("waiting")
+                    @Html.RenderPngIcon("content")
                     <div class="mt-2">
-                        <h5 class="text-center">Pending Students</h5>
+                        <h5 class="text-center">Manage Content</h5>
                     </div>
                 </div>
             </a>

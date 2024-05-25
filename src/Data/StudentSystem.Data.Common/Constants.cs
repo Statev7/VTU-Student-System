@@ -45,5 +45,12 @@
         {
             public const int SessionMaxLength = 1024;
         }
+
+        public static class Lesson
+        {
+            public const int NameMaxLength = 256;
+
+            public const int DescriptionMaxLength = 2000;
+        }
     }
 }

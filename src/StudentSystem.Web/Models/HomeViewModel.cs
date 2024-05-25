@@ -5,8 +5,10 @@
 
     public class HomeViewModel
     {
-        public IEnumerable<LatestCourseViewModel> LatestCourses { get; set; }
+        public bool IsActiveStudent { get; set; }
 
-        public bool HasCoureses => !this.LatestCourses.IsNullOrEmpty();
+        public IEnumerable<LatestCourseViewModel> CoursesSlider { get; set; }
+
+        public bool HasCoureses => !this.CoursesSlider.IsNullOrEmpty();
     }
 }

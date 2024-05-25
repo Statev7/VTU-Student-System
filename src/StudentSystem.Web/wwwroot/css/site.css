@@ -155,3 +155,16 @@ footer p {
     background-color: white;
     margin-right: 12px;
 }
+
+.list-group {
+    cursor: pointer;
+}
+
+.list-group :hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.list-group-item :hover {
+    transform: none;
+}

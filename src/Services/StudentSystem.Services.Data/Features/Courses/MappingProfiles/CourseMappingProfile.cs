@@ -1,8 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.MappingProfiles
 {
-    using AutoMapper;
-
     using StudentSystem.Data.Models.Courses;
+    using StudentSystem.Services.Data.Features.Courses.Constants;
     using StudentSystem.Services.Data.Features.Courses.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
@@ -20,15 +19,20 @@
             this.CreateMap<Course, CourseFormBindingModel>();
 
             this.CreateMap<Course, CourseViewModel>()
-                .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString("dd MMMM yyyy")))
+                .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString(CourseConstants.DateFormat)))
                 .ForMember(d => d.Duration, conf => conf.MapFrom(s => (int)Math.Ceiling((s.EndDate - s.StartDate).TotalDays / 7)))
                 .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
 
             this.CreateMap<Course, LatestCourseViewModel>()
-                .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString("dd MMMM yyyy")))
+                .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString(CourseConstants.DateFormat)))
                 .ForMember(d => d.ImageUrl, conf => conf.MapFrom(s => s.ImageFolder));
 
             this.CreateMap<Course, CoursePaymentDetailsServiceModel>();
+
+            this.CreateMap<Course, CourseManagementViewModel>()
+                .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString(CourseConstants.DateFormat)));
+
+            this.CreateMap<Course, CourseSelectionItemViewModel>();
         }
     }
 }

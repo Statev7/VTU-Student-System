@@ -11,7 +11,7 @@
 
     using static StudentSystem.Common.Constants.NotificationConstants;
 
-    public class CheckStudentApplicationStatusrAttribute : ActionFilterAttribute
+    public class CheckStudentApplicationStatusAttribute : ActionFilterAttribute
     {
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {

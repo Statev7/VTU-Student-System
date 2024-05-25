@@ -4,35 +4,22 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using StudentSystem.Services.Data.Features.Courses.DTOs.RequestDataModels;
-    using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
-    using StudentSystem.Services.Data.Features.Courses.Enums;
-    using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
+    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
     using StudentSystem.Web.Models;
 
     public class HomeController : Controller
     {
-        private const int CoursesToDisplay = 8;
+        private readonly IHomeHelper homeHelper;
 
-        private readonly ICourseService courseService;
-
-        public HomeController(ICourseService courseService) 
-            => this.courseService = courseService;
+        public HomeController(IHomeHelper homeHelper)
+            => this.homeHelper = homeHelper;
 
         public async Task<IActionResult> Index()
         {
-            var requestData = new CoursesRequestDataModel() { CurrentPage = 1, OrderBy = CoursesOrderOptions.DescStartDate };
-
-            var coursesPageList = await this.courseService.GetAllAsync<LatestCourseViewModel>(requestData, CoursesToDisplay);
-
-            var model = new HomeViewModel()
-            {
-                LatestCourses = coursesPageList?.PageList?.Entities,
-            };
+            var model = await this.homeHelper.CreateViewModelAsync();
 
             return this.View(model);
         }
-         
 
         public IActionResult Privacy() 
             => this.View();

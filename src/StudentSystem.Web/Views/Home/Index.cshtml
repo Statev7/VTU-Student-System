@@ -12,11 +12,18 @@
 
 @await Html.PartialAsync("~/Views/Shared/Partials/Home/_BannerPartial.cshtml")
 
-@await Html.PartialAsync("~/Views/Shared/Partials/Home/_AboutUsPartial.cshtml")
+@if (Model.IsActiveStudent)
+{
+    // TODO: Display Schedule
+}
+else
+{
+    @await Html.PartialAsync("~/Views/Shared/Partials/Home/_AboutUsPartial.cshtml")
+}
 
 @if (Model.HasCoureses)
 {
-    @await Html.PartialAsync("~/Views/Shared/Partials/Courses/_LatestCoursesPartial.cshtml", Model.LatestCourses)
+    @await Html.PartialAsync("~/Views/Shared/Partials/Courses/_LatestCoursesPartial.cshtml", Model.CoursesSlider)
 }
 
 @section Scripts {

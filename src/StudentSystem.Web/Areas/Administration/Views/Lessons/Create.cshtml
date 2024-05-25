@@ -1,0 +1,22 @@
+﻿@{
+    this.ViewData["Title"] = "Create Lesson";
+}
+
+@section HeadScripts
+{
+    @{
+        await Html.RenderPartialAsync("_TinymceScriptsPartial");
+    }
+}
+
+<div class="container mt-5">
+    @{
+        await Html.RenderPartialAsync("_LessonFormPartial");
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
