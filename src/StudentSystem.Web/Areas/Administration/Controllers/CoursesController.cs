@@ -34,11 +34,14 @@
         [HttpGet]
         public async Task<IActionResult> All(CoursesRequestDataModel requestData)
         {
-            var courses = await this.courseService.GetAllAsync<CourseManagementViewModel>(requestData, CoursesPerPage, true);
+            var courses = await this.courseService.GetAllAsync<CourseManagementViewModel>(
+                requestData, 
+                CoursesPerPage, 
+                includeExpiredCourses: true, 
+                includeAlreadyStarted: true);
 
             return this.View(courses);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Create()

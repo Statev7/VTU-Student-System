@@ -32,6 +32,8 @@
 
         public const string StudentAlreadyInCourseMessage = "You are already in this course!";
 
+        public const string NotActiveCourseErrorMessage = "This course is already started or is not active!";
+
         // Payments 
 
         public const string SuccessfullyPaymentMessage = "The payment was successful!";

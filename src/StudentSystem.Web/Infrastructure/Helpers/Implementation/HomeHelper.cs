@@ -4,6 +4,8 @@
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Courses.Enums;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Lessons.DTOs.ViewModels;
+    using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
@@ -36,7 +38,11 @@
 
             if (isActiveStudent)
             {
-                // TODO: Get Schedule
+                viewModel.StudentDashboard = new StudentDashboardViewModel()
+                {
+                    Courses = await this.studentService.GetCoursesAsync<StudentCourseViewModel>(userId),
+                    Schedule = await this.studentService.GetScheduleAsync<LessonScheduleViewModel>(userId),
+                };
             }
 
             viewModel.IsActiveStudent = isActiveStudent;

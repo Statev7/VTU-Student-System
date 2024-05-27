@@ -65,6 +65,16 @@
                 return Result<SessionServiceModel>.Failure(InvalidCourseErrorMessage);
             }
 
+            var isCourseNotActiveOrAlreadyStarted = await this.courseService.IsExistAsync(
+                x => x.Id.Equals(courseId) && 
+                !x.IsActive || 
+                DateTime.UtcNow > x.StartDate);
+
+            if (isCourseNotActiveOrAlreadyStarted)
+            {
+                return Result<SessionServiceModel>.Failure(NotActiveCourseErrorMessage);
+            }
+
             var isStudentAlreadyBuyTheCourse = await this.studentCourseService.IsUserRegisteredInCourseAsync(courseId, this.currentUserService.GetUserId());
             if (isStudentAlreadyBuyTheCourse)
             {

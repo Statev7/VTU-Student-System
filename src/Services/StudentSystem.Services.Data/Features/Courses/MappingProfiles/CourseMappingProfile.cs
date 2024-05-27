@@ -14,7 +14,8 @@
         {
             this.CreateMap<CourseFormBindingModel, Course>()
                 .ForMember(d => d.TeaserDescription, conf => conf.MapFrom(s => HtmlHelper.Sanitize(s.TeaserDescription)))
-                .ForMember(d => d.Description, conf => conf.MapFrom(s => HtmlHelper.Sanitize(s.Description)));
+                .ForMember(d => d.Description, conf => conf.MapFrom(s => HtmlHelper.Sanitize(s.Description)))
+                .ForMember(d => d.IsActive, conf => conf.MapFrom(_ => true)); ;
 
             this.CreateMap<Course, CourseFormBindingModel>();
 
@@ -33,6 +34,9 @@
                 .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString(CourseConstants.DateFormat)));
 
             this.CreateMap<Course, CourseSelectionItemViewModel>();
+            this.CreateMap<CourseStudentMap, StudentCourseViewModel>()
+                .ForMember(d => d.Id, conf => conf.MapFrom(s => s.CourseId))
+                .ForMember(d => d.Name, conf => conf.MapFrom(s => s.Course.Name));
         }
     }
 }

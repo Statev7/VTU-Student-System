@@ -49,6 +49,7 @@
         }
 
         public async Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage)
+            where TEntity : class
             => await this.Repository
                 .AllAsNoTracking()
                 .OrderByDescending(s => s.CreatedOn)
@@ -62,6 +63,30 @@
                 .Where(x => x.ApplicationUserId.Equals(userId))
                 .Select(x => x.Id)
                 .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<TEntity>> GetScheduleAsync<TEntity>(string userId)
+            where TEntity : class
+            => await this.Repository
+                .AllAsNoTracking()
+                .Where(s => s.ApplicationUserId.Equals(userId))
+                .SelectMany(s => s.Courses)
+                    .Where(cs => cs.Course.IsActive)
+                    .SelectMany(cs => cs.Course.Lessons)
+                        .Where(l => l.StartTime > DateTime.UtcNow)
+                        .OrderBy(l => l.StartTime)
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+               .ToListAsync();
+
+        public async Task<IEnumerable<TEntity>> GetCoursesAsync<TEntity>(string userId)
+            where TEntity : class
+            => await this.Repository
+                    .AllAsNoTracking()
+                    .Where(s => s.ApplicationUserId.Equals(userId))
+                        .SelectMany(s => s.Courses)
+                        .Where(cs => cs.Course.IsActive)
+                        .OrderBy(cs => cs.Course.Name)
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                .ToListAsync();
 
         public async Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel)
         {

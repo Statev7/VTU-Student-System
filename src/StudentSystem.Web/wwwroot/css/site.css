@@ -168,3 +168,41 @@ footer p {
 .list-group-item :hover {
     transform: none;
 }
+
+.student-dashboard-section {
+    margin: 100px 0px 200px 0px;
+}
+
+.student-dashboard {
+    height: 350px;
+    background-color: #E4F0F4;
+    border: 1px;
+    border-radius: 4px;
+}
+
+.student-dashboard .heading{
+    background-color: #527FA3;
+    color: white;
+    overflow: hidden;
+}
+
+.student-dashboard a {
+    color: #212427;
+    font-size: 18px;
+}
+
+.student-dashboard a:hover {
+    color: #565656;
+}
+
+.student-dashboard .lesson-name {
+    font-size: 18px;
+}
+
+.student-dashboard p {
+    font-size: 16px;
+}
+
+.student-dashboard .metadata {
+    font-size: 15px;
+}

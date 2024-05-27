@@ -13,7 +13,8 @@
         Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(
             CoursesRequestDataModel requestData, 
             int entitiesPerPage, 
-            bool includeExpiredCourses = false)
+            bool includeExpiredCourses = false,
+            bool includeAlreadyStarted = false)
             where TEntity : class;
 
         Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()

@@ -54,12 +54,13 @@
         public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(
             CoursesRequestDataModel requestData, 
             int entitiesPerPage,
-            bool includeExpiredCourses)
+            bool includeExpiredCourses = false,
+            bool includeAlreadyStarted = false)
             where TEntity : class
         {
             var pagedCourses = string.IsNullOrWhiteSpace(requestData.SearchTerm)
-                ? await this.GetCoursesFromCache<TEntity>(requestData, entitiesPerPage, includeExpiredCourses)
-                : await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage, includeExpiredCourses);
+                ? await this.GetCoursesFromCache<TEntity>(requestData, entitiesPerPage, includeExpiredCourses, includeAlreadyStarted)
+                : await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage, includeExpiredCourses, includeAlreadyStarted);
 
             var resultModel = new ListCoursesViewModel<TEntity>() { PageList = pagedCourses, RequestData = requestData };
 
@@ -173,7 +174,8 @@
         private async Task<IPageList<TEntity>> GetCoursesFromCache<TEntity>(
             CoursesRequestDataModel requestData, 
             int entitiesPerPage, 
-            bool includeExpiredCourses)
+            bool includeExpiredCourses,
+            bool includeAlreadyStarted = false)
             where TEntity : class
         {
             var key = CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix, new CacheParameter[]
@@ -184,7 +186,7 @@
 
             var courses = await this.cacheService.GetAsync<IPageList<TEntity>>(key, async () =>
             {
-                return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage, includeExpiredCourses);
+                return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage, includeExpiredCourses, includeAlreadyStarted);
             }, 
             CacheTimeInHours);
 
@@ -194,12 +196,14 @@
         private async Task<IPageList<TEntity>> GetCoursesAsync<TEntity>(
             CoursesRequestDataModel requestData, 
             int entitiesPerPage, 
-            bool includeExpiredCourses)
+            bool includeExpiredCourses, 
+            bool includeAlreadyStarted)
             where TEntity : class
             => await this.Repository
                 .AllAsNoTracking()
                 .WhereIf(!string.IsNullOrEmpty(requestData.SearchTerm), x => x.Name.Contains(requestData.SearchTerm))
-                .WhereIf(!includeExpiredCourses, x => x.EndDate >= DateTime.UtcNow)
+                .WhereIf(includeExpiredCourses == false, x => x.IsActive)
+                .WhereIf(includeAlreadyStarted == false, x => x.StartDate > DateTime.UtcNow)
                 .OrderBy(requestData.OrderBy.GetEnumValue())
                 .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                 .ToPagedAsync(requestData.CurrentPage, entitiesPerPage);

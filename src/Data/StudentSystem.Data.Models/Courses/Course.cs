@@ -36,6 +36,8 @@
 
         public decimal Price { get; set; }
 
+        public bool IsActive { get; set; }
+
         [Required]
         public Guid TeacherId { get; set; }
 

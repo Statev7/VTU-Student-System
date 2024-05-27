@@ -9,7 +9,14 @@
 
     public interface IStudentService
     {
-        Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage);
+        Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage) 
+            where TEntity : class;
+
+        Task<IEnumerable<TEntity>> GetScheduleAsync<TEntity>(string userId) 
+            where TEntity : class;
+
+        Task<IEnumerable<TEntity>> GetCoursesAsync<TEntity>(string userId) 
+            where TEntity : class;
 
         Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel);
 

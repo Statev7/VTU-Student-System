@@ -14,7 +14,7 @@
 
 @if (Model.IsActiveStudent)
 {
-    // TODO: Display Schedule
+    @await Html.PartialAsync("~/Views/Shared/Partials/Home/_StudentDashboardPartial.cshtml", Model.StudentDashboard)
 }
 else
 {
