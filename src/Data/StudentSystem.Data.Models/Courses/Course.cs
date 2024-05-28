@@ -30,7 +30,6 @@
 
         public DateTime EndDate { get; set; }
 
-        [Required]
         [StringLength(ImageFolderMaxLength)]
         public string ImageFolder { get; set; } = null!;
 

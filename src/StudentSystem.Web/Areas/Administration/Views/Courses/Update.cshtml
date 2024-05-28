@@ -1,4 +1,5 @@
-﻿@model CourseFormBindingModel
+﻿@using StudentSystem.Services.Data.Features.Courses.Constants
+@model CourseFormBindingModel
 
 @{
     this.ViewData["Title"] = "Update Course";
@@ -13,7 +14,7 @@
 
 <div class="container mt-5">
     @{
-        await Html.RenderPartialAsync("_CourseFormPartial");
+        await Html.RenderPartialAsync("_CourseFormPartial", new ViewDataDictionary(ViewData) { { CourseConstants.DisplayUploadNewImage, true } });
     }
 </div>
 

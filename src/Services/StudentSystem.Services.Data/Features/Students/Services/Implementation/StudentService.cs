@@ -143,7 +143,7 @@
                 return ErrorMesage;
             }
 
-            return true;
+            return Result.Success(SuccesfullyAprovedOperationMessage);
         }
 
         public async Task<bool> IsAppliedAlreadyAsync()

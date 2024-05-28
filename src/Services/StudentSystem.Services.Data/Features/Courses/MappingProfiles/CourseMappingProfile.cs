@@ -1,5 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Features.Courses.MappingProfiles
 {
+    using Microsoft.AspNetCore.Http;
+
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Courses.Constants;
     using StudentSystem.Services.Data.Features.Courses.DTOs.BindingModels;

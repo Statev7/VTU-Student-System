@@ -137,12 +137,40 @@
                 return InvalidCourseErrorMessage;
             }
 
-            this.Mapper.Map(bindingModel, courseToUpdate);
+            var oldImageFolder = courseToUpdate.ImageFolder;
 
-            this.Repository.Update(courseToUpdate);
-            await this.Repository.SaveChangesAsync();
+            try
+            {
+                if (bindingModel.UploadNewImage && bindingModel.Image != null)
+                {
+                    courseToUpdate.ImageFolder = await this.imageFileService.CreateToFileSystemAsync(bindingModel.Image, ImagesFolder, ImagesWitdhInPexels);
+                }
 
-            this.cacheService.RemoveByPrefix(CachePrefix);
+                this.Mapper.Map(bindingModel, courseToUpdate);
+
+                this.Repository.Update(courseToUpdate);
+                await this.Repository.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(oldImageFolder) && 
+                    bindingModel.UploadNewImage && 
+                    oldImageFolder != courseToUpdate.ImageFolder)
+                {
+                    this.imageFileService.DeleteFromFileSystem(oldImageFolder);
+                }
+
+                this.cacheService.RemoveByPrefix(CachePrefix);
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(courseToUpdate.ImageFolder) && courseToUpdate.ImageFolder != oldImageFolder)
+                {
+                    this.imageFileService.DeleteFromFileSystem(courseToUpdate.ImageFolder);
+                }
+
+                this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.UpdateAsync)} method");
+
+                return ErrorMesage;
+            }
 
             return Result.Success(SuccessfullyUpdatedMessage);
         }

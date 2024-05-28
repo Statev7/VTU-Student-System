@@ -22,7 +22,7 @@
 
         public const string InvalidStudentErrorMessage = "Such a student not exist!";
 
-        public const string SuccesfullyAprovedOperationMessage = "Response send!";
+        public const string SuccesfullyAprovedOperationMessage = "Response successfully sent!";
 
         // Courses
 
