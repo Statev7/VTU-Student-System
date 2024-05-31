@@ -4,6 +4,19 @@
     this.ViewData["Title"] = "All Courses";
 }
 
+<div id="courses-top-banner">
+    <div class="top-banner-text-box">
+        <div class="offset-1 offset-md-3 col-10 col-md-4 text-white mt-5">
+            <h3>Courses in "Students System"</h3>
+            <p class="mt-3">
+                The courses at "Students System" are entirely practice-oriented.
+                They are suitable for anyone looking to enter various fields of programming and IT technologies, 
+                helping to develop key skills necessary for future professional growth.
+            </p>
+        </div>
+    </div>
+</div>
+
 <div class="container">
 
     @await Html.PartialAsync("~/Views/Shared/Partials/Courses/_CoursesFiltrationSectionPartial.cshtml", Model.RequestData)
@@ -52,3 +65,7 @@
     </section>
 
 </div>
+
+@section Scripts {
+    <script src="~/js/layout.js"></script>
+}

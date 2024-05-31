@@ -14,5 +14,8 @@
 
         public static bool IsTeacher(this ClaimsPrincipal claimsPrincipal)
             => claimsPrincipal.IsInRole(TeacherRole);
+
+        public static bool IsStudent(this ClaimsPrincipal claimsPrincipal)
+            => claimsPrincipal.IsInRole(StudentRole);
     }
 }

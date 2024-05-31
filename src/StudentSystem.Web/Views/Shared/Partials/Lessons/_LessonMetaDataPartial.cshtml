@@ -1,0 +1,6 @@
+﻿@model LessonMetaDataViewModel
+
+<p>
+    <i class="fa-regular fa-clock"></i>
+    @Model.StartTime.ToString(DateFormat) from @Model.StartTime.ToString(StartEndTimeDateFormat) - @Model.EndTime.ToString(StartEndTimeDateFormat)
+</p>

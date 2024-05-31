@@ -10,6 +10,9 @@
         {
             this.CreateMap<Teacher, TeacherSelectionItemViewModel>()
                 .ForMember(d => d.FullName, conf => conf.MapFrom(s => $"{s.User.FirstName} {s.User.LastName}"));
+
+            this.CreateMap<Teacher, TeacherViewModel>()
+                .ForMember(d => d.FullName, conf => conf.MapFrom(s => $"{s.User.FirstName} {s.User.LastName}"));
         }
     }
 }

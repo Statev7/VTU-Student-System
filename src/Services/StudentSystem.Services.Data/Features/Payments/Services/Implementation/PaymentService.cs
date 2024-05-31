@@ -67,8 +67,7 @@
 
             var isCourseNotActiveOrAlreadyStarted = await this.courseService.IsExistAsync(
                 x => x.Id.Equals(courseId) && 
-                !x.IsActive || 
-                DateTime.UtcNow > x.StartDate);
+                (!x.IsActive || DateTime.UtcNow > x.StartDate));
 
             if (isCourseNotActiveOrAlreadyStarted)
             {

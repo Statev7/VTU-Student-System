@@ -44,6 +44,8 @@
 
         public const string InvalidDatesErrorMessage = "The lesson start time cannot be earlier than the course start date, and the lesson end time cannot be later than the course end date";
 
+        public const string InvalidLessonErrorMessage = "Such a lesson not exist!";
+
         // CRUD
 
         public const string SuccessfullyCreatedMessage = $"Successfully created!";

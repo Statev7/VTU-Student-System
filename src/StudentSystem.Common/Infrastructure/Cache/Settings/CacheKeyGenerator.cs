@@ -6,6 +6,9 @@
             => $"{prefix}:{typeof(T).Name}:{string.Join(":", parameters.Select(x => x.ToString()))}";
 
         public static string GenerateKey<T>(string prefix, Guid id)
-            => $"{prefix}:{id}:{typeof(T).Name}";
+            => $"{prefix}:{typeof(T).Name}:{id}";
+
+        public static string GenerateKey<T>(Guid id)
+            => $"{typeof(T).Name}:{id}";
     }
 }

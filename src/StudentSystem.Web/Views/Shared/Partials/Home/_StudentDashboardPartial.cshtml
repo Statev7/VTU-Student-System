@@ -37,13 +37,16 @@
                     <div class="body">
                         <a asp-controller="Trainings"
                            asp-action="Details"
+                           asp-route-id="@lesson.CourseId"
+                           asp-fragment="collapse-@lesson.Id"
                            class="d-flex flex-column gap-2 text-decoration-none">
 
                             <p class="lesson-name">@lesson.Name</p>
                             <p>@lesson.CourseName</p>
-                            <span class="metadata">
-                                <i class="fa-regular fa-clock"></i> @lesson.StartTime.ToString("dd/MM/yyyy") from @lesson.StartTime.ToString("HH:MM") - @lesson.EndTime.ToString("HH:MM")
-                            </span>
+
+                            @{
+                                await Html.RenderPartialAsync("~/Views/Shared/Partials/Lessons/_LessonMetaDataPartial.cshtml", lesson);
+                            }
 
                         </a>
                         <hr />

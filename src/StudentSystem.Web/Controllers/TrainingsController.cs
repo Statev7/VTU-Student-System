@@ -2,18 +2,25 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Services.Data.Features.Courses.DTOs.RequestDataModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
+    using StudentSystem.Web.Infrastructure.Attributes;
 
     public class TrainingsController : Controller
     {
         private const int CoursesPerPage = 6;
 
         private readonly ICourseService courseService;
+        private readonly IStudentCourseService studentCourseService;
 
-        public TrainingsController(ICourseService courseService) 
-            => this.courseService = courseService;
+        public TrainingsController(ICourseService courseService, IStudentCourseService studentCourseService)
+        {
+            this.courseService = courseService;
+            this.studentCourseService = studentCourseService;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Index(CoursesRequestDataModel requestData)
@@ -24,6 +31,19 @@
         }
 
         [HttpGet]
-        public IActionResult Details() => this.View();
+        [ModelOrBadRequest]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var course = await this.courseService.GetByIdAsync<CourseDetailsViewModel>(id);
+
+            var userId = this.User.GetUserId();
+
+            if (course != null && !string.IsNullOrEmpty(userId))
+            {
+                course.IsUserAlreadyInCourse = await this.studentCourseService.IsUserRegisteredInCourseAsync(id, userId);
+            }
+
+            return this.View(course);
+        }
     }
 }

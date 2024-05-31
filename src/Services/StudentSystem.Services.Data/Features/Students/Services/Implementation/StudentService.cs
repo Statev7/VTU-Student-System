@@ -72,7 +72,7 @@
                 .SelectMany(s => s.Courses)
                     .Where(cs => cs.Course.IsActive)
                     .SelectMany(cs => cs.Course.Lessons)
-                        .Where(l => l.StartTime > DateTime.UtcNow)
+                        .Where(l => l.StartTime.Date >= DateTime.UtcNow.Date && !l.IsDeleted)
                         .OrderBy(l => l.StartTime)
                         .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                .ToListAsync();

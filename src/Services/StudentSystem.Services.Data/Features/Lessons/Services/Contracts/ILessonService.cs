@@ -5,6 +5,13 @@
 
     public interface ILessonService
     {
-        Task<Result> CreateAsync(LessonFormBindingModel model); 
+        Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
+            where TEntity : class;
+
+        Task<Result> CreateAsync(LessonFormBindingModel model);
+
+        Task<Result> UpdateAsync(Guid id, LessonFormBindingModel model);
+
+        Task<Result> DeleteAsync(Guid id);
     }
 }

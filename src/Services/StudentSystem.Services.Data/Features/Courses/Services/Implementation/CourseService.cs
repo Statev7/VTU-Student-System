@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
+    using AngleSharp.Dom;
+
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
@@ -32,7 +34,7 @@
         private const string CachePrefix = "Courses";
 
         private readonly string ImagesFolder = $"courses/{DateTime.Now:MMMM}-{DateTime.Now:yyyy}";
-        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(8);
+        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(1);
 
         private readonly ICacheService cacheService;
         private readonly IImageFileService imageFileService;
@@ -52,7 +54,7 @@
         }
 
         public async Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(
-            CoursesRequestDataModel requestData, 
+            CoursesRequestDataModel requestData,
             int entitiesPerPage,
             bool includeExpiredCourses = false,
             bool includeAlreadyStarted = false)
@@ -68,7 +70,7 @@
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
-            where TEntity : class 
+            where TEntity : class
             => await this.cacheService.GetAsync<IEnumerable<TEntity>>(
                 CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix),
                 async () =>
@@ -84,9 +86,9 @@
                 CacheTimeInHours);
 
         public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
-            where TEntity : class 
+            where TEntity : class
             => await this.cacheService.GetAsync<TEntity>(
-                CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix, id), 
+                CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix, id),
                 async () =>
                 {
                     var course = await this.Repository
@@ -97,7 +99,7 @@
 
                     return course;
 
-                }, 
+                },
                 CacheTimeInHours);
 
         public async Task<Result> CreateAsync(CourseFormBindingModel bindingModel)
@@ -111,7 +113,7 @@
                 await this.Repository.AddAsync(courseToCreate);
                 await this.Repository.SaveChangesAsync();
 
-                this.cacheService.RemoveByPrefix(CachePrefix);
+                this.cacheService.RemoveByPrefixOrSuffix(CachePrefix);
             }
             catch (Exception ex)
             {
@@ -151,14 +153,14 @@
                 this.Repository.Update(courseToUpdate);
                 await this.Repository.SaveChangesAsync();
 
-                if (!string.IsNullOrEmpty(oldImageFolder) && 
-                    bindingModel.UploadNewImage && 
+                if (!string.IsNullOrEmpty(oldImageFolder) &&
+                    bindingModel.UploadNewImage &&
                     oldImageFolder != courseToUpdate.ImageFolder)
                 {
                     this.imageFileService.DeleteFromFileSystem(oldImageFolder);
                 }
 
-                this.cacheService.RemoveByPrefix(CachePrefix);
+                this.cacheService.RemoveByPrefixOrSuffix(CachePrefix);
             }
             catch (Exception ex)
             {
@@ -187,7 +189,7 @@
             this.Repository.Delete(courseToDelete);
             await this.Repository.SaveChangesAsync();
 
-            this.cacheService.RemoveByPrefix(CachePrefix);
+            this.cacheService.RemoveByPrefixOrSuffix(CachePrefix);
 
             return Result.Success(SuccessfullyDeletedMessage);
         }
@@ -200,8 +202,8 @@
         #region Private Methods
 
         private async Task<IPageList<TEntity>> GetCoursesFromCache<TEntity>(
-            CoursesRequestDataModel requestData, 
-            int entitiesPerPage, 
+            CoursesRequestDataModel requestData,
+            int entitiesPerPage,
             bool includeExpiredCourses,
             bool includeAlreadyStarted = false)
             where TEntity : class
@@ -215,16 +217,16 @@
             var courses = await this.cacheService.GetAsync<IPageList<TEntity>>(key, async () =>
             {
                 return await this.GetCoursesAsync<TEntity>(requestData, entitiesPerPage, includeExpiredCourses, includeAlreadyStarted);
-            }, 
+            },
             CacheTimeInHours);
 
             return courses;
         }
 
         private async Task<IPageList<TEntity>> GetCoursesAsync<TEntity>(
-            CoursesRequestDataModel requestData, 
-            int entitiesPerPage, 
-            bool includeExpiredCourses, 
+            CoursesRequestDataModel requestData,
+            int entitiesPerPage,
+            bool includeExpiredCourses,
             bool includeAlreadyStarted)
             where TEntity : class
             => await this.Repository
