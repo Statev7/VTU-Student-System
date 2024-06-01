@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
-    using AngleSharp.Dom;
-
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
@@ -23,6 +21,7 @@
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Lessons.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
 
@@ -101,6 +100,34 @@
 
                 },
                 CacheTimeInHours);
+
+        public async Task<CourseDetailsViewModel> GetDetailsAsync(Guid id)
+        {
+            var courseDetails = await this.cacheService.GetAsync<CourseDetailsViewModel>(
+                CacheKeyGenerator.GenerateKey<CourseDetailsViewModel>(CachePrefix, id),
+                async () =>
+                {
+                    var course = await this.Repository
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                        .ProjectTo<CourseDetailsViewModel>(this.Mapper.ConfigurationProvider)
+                        .FirstOrDefaultAsync();
+
+                    course.Lessons = await this.Repository
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                            .SelectMany(x => x.Lessons)
+                            .Where(l => !l.IsDeleted)
+                            .OrderBy(l => l.StartTime)
+                        .ProjectTo<LessonPanelViewModel>(this.Mapper.ConfigurationProvider)
+                        .ToListAsync();
+
+                    return course;
+                },
+                CacheTimeInHours);
+
+            return courseDetails;
+        }
 
         public async Task<Result> CreateAsync(CourseFormBindingModel bindingModel)
         {

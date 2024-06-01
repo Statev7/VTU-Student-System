@@ -34,7 +34,7 @@
         [ModelOrBadRequest]
         public async Task<IActionResult> Details(Guid id)
         {
-            var course = await this.courseService.GetByIdAsync<CourseDetailsViewModel>(id);
+            var course = await this.courseService.GetDetailsAsync(id);
 
             var userId = this.User.GetUserId();
 

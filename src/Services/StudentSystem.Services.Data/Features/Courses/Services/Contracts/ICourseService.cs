@@ -23,6 +23,8 @@
         Task<TEntity?> GetByIdAsync<TEntity>(Guid id) 
             where TEntity : class;
 
+        Task<CourseDetailsViewModel> GetDetailsAsync(Guid id);
+
         Task<Result> CreateAsync(CourseFormBindingModel bindingModel);
 
         Task<Result> UpdateAsync(Guid id, CourseFormBindingModel bindingModel);
