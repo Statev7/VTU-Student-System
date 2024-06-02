@@ -22,6 +22,8 @@
 
         public string ImageFolder { get; set; } = null!;
 
+        public decimal Price { get; set; }
+
         public bool IsUserAlreadyInCourse { get; set; }
 
         public TeacherViewModel Teacher { get; set; }
