@@ -155,3 +155,94 @@ footer p {
     background-color: white;
     margin-right: 12px;
 }
+
+.list-group {
+    cursor: pointer;
+}
+
+.list-group :hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.list-group-item :hover {
+    transform: none;
+}
+
+.student-dashboard-section {
+    margin: 100px 0px 200px 0px;
+}
+
+.student-dashboard {
+    height: 350px;
+    background-color: #E4F0F4;
+    border: 1px;
+    border-radius: 4px;
+}
+
+.student-dashboard .heading{
+    background-color: #527FA3;
+    color: white;
+    overflow: hidden;
+}
+
+.student-dashboard a {
+    color: #212427;
+    font-size: 18px;
+}
+
+.student-dashboard a:hover {
+    color: #565656;
+}
+
+.student-dashboard .lesson-name {
+    font-size: 18px;
+}
+
+.student-dashboard p {
+    font-size: 16px;
+}
+
+.student-dashboard .metadata {
+    font-size: 15px;
+}
+
+#courses-top-banner {
+    position: relative;
+    max-height: 100%;
+    overflow: hidden;
+    margin-bottom: 7px;
+    background-image: url(../images/courses-top-banner.png);
+    background-size: cover;
+    padding: 0px 30px 350px 30px;
+}
+
+.top-banner-text-box {
+    position: absolute;
+    background-color: rgba(22,34,57,0.85);
+    top: 0;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+}
+
+.course-details-top-banner {
+    background-color: rgba(22,34,57,0.85);
+}
+
+#accordion {
+    color: #565656;
+}
+
+.course-details-image-box {
+    width: 400px;
+    height: 200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.course-details-image-box img {
+    width: auto;
+    height: 100%; 
+    object-fit: cover;
+}

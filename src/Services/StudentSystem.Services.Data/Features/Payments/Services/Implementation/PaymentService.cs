@@ -59,10 +59,19 @@
 
         public async Task<Result<SessionServiceModel>> CheckOutAsync(Guid courseId)
         {
-            var isCourseNotExist = !await this.courseService.IsExistAsync(courseId);
+            var isCourseNotExist = !await this.courseService.IsExistAsync(x => x.Id.Equals(courseId));
             if (isCourseNotExist)
             {
                 return Result<SessionServiceModel>.Failure(InvalidCourseErrorMessage);
+            }
+
+            var isCourseNotActiveOrAlreadyStarted = await this.courseService.IsExistAsync(
+                x => x.Id.Equals(courseId) && 
+                (!x.IsActive || DateTime.UtcNow > x.StartDate));
+
+            if (isCourseNotActiveOrAlreadyStarted)
+            {
+                return Result<SessionServiceModel>.Failure(NotActiveCourseErrorMessage);
             }
 
             var isStudentAlreadyBuyTheCourse = await this.studentCourseService.IsUserRegisteredInCourseAsync(courseId, this.currentUserService.GetUserId());
@@ -109,7 +118,7 @@
 
             if (isPaymentSuccess)
             {
-                await this.studentService.SetActiveStatus(studentId, true);
+                await this.studentService.SetActiveStatusAsync(studentId, true);
             }
 
             var result = isPaymentSuccess

@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudentSystem.Services.Data\StudentSystem.Services.Data.csproj" />
+  </ItemGroup>
+
 </Project>

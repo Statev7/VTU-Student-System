@@ -38,6 +38,16 @@
             entry.State = EntityState.Modified;
         }
 
+        public virtual void BulkUpdate(IEnumerable<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                entity.ModifiedOn = DateTime.UtcNow;
+            }
+
+            this.DbSet.UpdateRange(entities);
+        }
+
         public void Delete(TEntity entity)
         {
             entity.IsDeleted = true;

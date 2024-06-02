@@ -2,11 +2,16 @@
 {
     using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
+    using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels;
 
     public class HomeViewModel
     {
-        public IEnumerable<LatestCourseViewModel> LatestCourses { get; set; }
+        public StudentDashboardViewModel StudentDashboard { get; set; }
 
-        public bool HasCoureses => !this.LatestCourses.IsNullOrEmpty();
+        public bool IsActiveStudent { get; set; }
+
+        public IEnumerable<LatestCourseViewModel> CoursesSlider { get; set; }
+
+        public bool HasCoureses => !this.CoursesSlider.IsNullOrEmpty();
     }
 }

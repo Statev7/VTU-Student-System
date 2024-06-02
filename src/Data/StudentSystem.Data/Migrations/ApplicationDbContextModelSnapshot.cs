@@ -144,9 +144,11 @@ namespace StudentSystem.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageFolder")
-                        .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar(512)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -205,6 +207,50 @@ namespace StudentSystem.Data.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("CourseStudents");
+                });
+
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Lesson", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Lessons");
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Payment", b =>
@@ -547,6 +593,17 @@ namespace StudentSystem.Data.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Lesson", b =>
+                {
+                    b.HasOne("StudentSystem.Data.Models.Courses.Course", "Course")
+                        .WithMany("Lessons")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Payment", b =>
                 {
                     b.HasOne("StudentSystem.Data.Models.Courses.Course", "Course")
@@ -617,6 +674,8 @@ namespace StudentSystem.Data.Migrations
 
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Course", b =>
                 {
+                    b.Navigation("Lessons");
+
                     b.Navigation("Payments");
 
                     b.Navigation("Students");

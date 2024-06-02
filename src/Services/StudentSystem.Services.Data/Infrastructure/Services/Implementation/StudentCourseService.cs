@@ -40,11 +40,9 @@
             await this.Repository.SaveChangesAsync();
         }
 
-        public Task<bool> IsUserRegisteredInCourseAsync(Guid courseId, string userId)
-            => this.Repository
-            .AllAsNoTracking()
-            .AnyAsync(sc =>
-                sc.Student.ApplicationUserId.Equals(userId) && 
-                sc.CourseId.Equals(courseId));
+        public async Task<bool> IsUserRegisteredInCourseAsync(Guid courseId, string userId)
+            => await this.Repository
+                .AllAsNoTracking()
+                .AnyAsync(sc => sc.Student.ApplicationUserId.Equals(userId) && sc.CourseId.Equals(courseId));
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace StudentSystem.Common.Infrastructure.Cache.Services.Implementation
 {
+    using System.Linq;
+
     using Microsoft.Extensions.Caching.Memory;
 
     using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
@@ -32,7 +34,6 @@
 
             if (cachedValue != null) 
             {
-
                 return cachedValue;
             }
 
@@ -61,13 +62,13 @@
             }
         }
 
-        public void RemoveByPrefix(string prefix)
+        public void RemoveByPrefixOrSuffix(string prefix = null, string suffix = null)
         {
-            var keysToDelete = this.CacheKeys
-                .Keys
-                .Where(x => x.StartsWith(prefix));
+            var keysToDelete = this.CacheKeys.Keys
+                .Where(x => !string.IsNullOrEmpty(prefix) && x.StartsWith(prefix) || 
+                            !string.IsNullOrEmpty(suffix) && x.EndsWith(suffix));
 
-            foreach (var key in keysToDelete) 
+            foreach (var key in keysToDelete)
             {
                 this.memoryCache.Remove(key);
             }

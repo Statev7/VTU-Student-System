@@ -30,11 +30,12 @@
 
         public DateTime EndDate { get; set; }
 
-        [Required]
         [StringLength(ImageFolderMaxLength)]
         public string ImageFolder { get; set; } = null!;
 
         public decimal Price { get; set; }
+
+        public bool IsActive { get; set; }
 
         [Required]
         public Guid TeacherId { get; set; }
@@ -44,5 +45,7 @@
         public ICollection<CourseStudentMap> Students { get; set; } = new HashSet<CourseStudentMap>();
 
         public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
+
+        public ICollection<Lesson> Lessons { get; set; } = new HashSet<Lesson>();
     }
 }

@@ -1,0 +1,47 @@
+﻿@model LessonDetailsViewModel
+
+<section class="lecture-detail p-3">
+
+    <section class="d-flex gap-5">
+
+        <div class="d-flex flex-column gap-3 w-50">
+            <p><strong>@Model.Name</strong></p>
+
+            @Html.Raw(Model.Description)
+
+            @{
+                await Html.RenderPartialAsync("~/Views/Shared/Partials/Lessons/_LessonMetaDataPartial.cshtml", Model);
+            }
+
+        </div>
+
+        <div class="d-flex flex-column gap-3 w-50">
+            <h5>Resources</h5>
+
+            <div>
+                <p>Link</p>
+                <p>Link</p>
+                <p>Link</p>
+            </div>
+        </div>
+
+    </section>
+
+    @if (this.User.IsAdmin())
+    {
+        <div class="d-flex justify-content-between mt-3">
+            <a asp-area="Administration"
+               asp-controller="Lessons"
+               asp-action="Update"
+               asp-route-id="@Model.Id"
+               class="btn btn-primary">Update</a>
+
+            <a asp-area="Administration"
+               asp-controller="Lessons"
+               asp-action="Delete"
+               asp-route-id="@Model.Id"
+               class="btn btn-danger">Delete</a>
+        </div>
+    }
+
+</section>

@@ -1,6 +1,7 @@
 namespace StudentSystem.Web
 {
     using StudentSystem.Web.Infrastructure.Extensions;
+    using StudentSystem.Services.Jobs.Infrastructure.Extensions;
 
     using static StudentSystem.Web.Infrastructure.Constants;
 
@@ -21,6 +22,7 @@ namespace StudentSystem.Web
                 .RegisterHelpers()
                 .RegisterAutoMapper()
                 .RegisterEmailSender()
+                .RegisterJobs()
                 .AddHttpContextAccessor()
                 .AddMemoryCache()
                 .ConfigureApplicationSettings(builder.Configuration)

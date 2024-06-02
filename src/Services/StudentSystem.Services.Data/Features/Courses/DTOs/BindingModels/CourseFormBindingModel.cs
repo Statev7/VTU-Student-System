@@ -25,7 +25,10 @@
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
+
+        [Display(Name = "Upload New Image")]
+        public bool UploadNewImage { get; set; }
 
         [Range(typeof(decimal), "0.00", "10000")]
         public decimal Price { get; set; }
@@ -37,9 +40,11 @@
 
         [Display(Name = "Start Date")]
         [DateLessThan(nameof(EndDate))]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; } = DateTime.Now;
 
         [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; } = DateTime.Now;
 
         [Display(Name = "Teacher")]

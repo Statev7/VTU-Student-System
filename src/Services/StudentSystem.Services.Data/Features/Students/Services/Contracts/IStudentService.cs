@@ -6,10 +6,18 @@
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
     using StudentSystem.Services.Data.Infrastructure;
+    using StudentSystem.Services.Data.Infrastructure.Contracts;
 
-    public interface IStudentService
+    public interface IStudentService : IActivityStatusChanger
     {
-        Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage);
+        Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage) 
+            where TEntity : class;
+
+        Task<IEnumerable<TEntity>> GetScheduleAsync<TEntity>(string userId) 
+            where TEntity : class;
+
+        Task<IEnumerable<TEntity>> GetCoursesAsync<TEntity>(string userId) 
+            where TEntity : class;
 
         Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel);
 
@@ -19,6 +27,8 @@
 
         Task<Guid> GetIdByUserIdAsync(string userId);
 
-        Task<Result> SetActiveStatus(Guid id, bool isActive);
+        Task<Result> SetActiveStatusAsync(Guid id, bool isActive);
+
+        Task<bool> IsActiveAsync(string userId);
     }
 }

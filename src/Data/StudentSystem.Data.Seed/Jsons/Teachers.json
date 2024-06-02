@@ -1,0 +1,17 @@
+﻿[
+  {
+    "id": "559a0f3a-6d0e-442f-b6be-af4f1b80e6f7",
+    "aboutМe": "Ivan Ivanov is a seasoned .NET developer with over 5 years of experience in the industry. Throughout his career, Ivan has worked on a variety of interesting and challenging projects, showcasing his expertise and passion for coding. His deep understanding of .NET technologies and commitment to continuous learning make him an excellent mentor for aspiring developers. Ivan's practical insights and hands-on approach ensure that his students gain both theoretical knowledge and real-world skills. Join his classes to benefit from his wealth of experience and dedication to teaching.",
+    "applicationUserId": "529f74fd-8ba3-4d3f-8eb5-229758138354"
+  },
+  {
+    "id": "7963c7b1-1732-4552-9232-4f6187c2f412",
+    "aboutМe": "Georgi Georgiev is a highly experienced .NET Lead with a proven track record in the software development industry. With over a decade of hands-on experience, Georgi has led numerous successful projects, demonstrating his expertise in .NET technologies and his exceptional leadership skills. He is passionate about mentoring and guiding new developers, helping them unlock their potential and achieve their career goals. Known for his problem-solving abilities and innovative approach, Georgi consistently delivers high-quality solutions and inspires his team to strive for excellence. Join his courses to benefit from his wealth of knowledge and his commitment to fostering a dynamic and collaborative learning environment.",
+    "applicationUserId": "d592ee13-cc9b-4820-b524-02cde1983b58"
+  },
+  {
+    "id": "f1aa915a-a411-46ca-9013-5901b5f41995",
+    "aboutМe": "Pesho Peshev is a seasoned Front-End Developer with extensive experience in building dynamic and responsive web applications. Over the years, Georgi has mastered a variety of front-end frameworks, including React, Angular, and others. His expertise in modern web development technologies and best practices has allowed him to lead numerous successful projects, delivering high-quality, user-friendly interfaces.",
+    "applicationUserId": "47de6af5-e0b6-42df-818d-673a90f3b8ac"
+  }
+]

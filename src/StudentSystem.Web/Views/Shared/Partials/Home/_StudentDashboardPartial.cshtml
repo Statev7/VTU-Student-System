@@ -1,0 +1,59 @@
+﻿@using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels
+@model StudentDashboardViewModel
+
+<div class="d-flex flex-column flex-md-row gap-5 student-dashboard-section">
+
+    <div class="offset-1 offset-md-3 col-10 col-md-3 mt-2">
+        <div class="student-dashboard">
+            <div class="p-3 text-center text-uppercase heading">
+                <h5>My courses</h5>
+            </div>
+            <div class="h-75 p-3" style="overflow-y: auto">
+                @foreach (var course in Model.Courses)
+                {
+                    <div class="body">
+                        <a 
+                            asp-controller="Trainings" 
+                            asp-action="Details" 
+                            asp-route-id="@course.Id" 
+                            class="text-decoration-none">
+                            @course.Name
+                        </a>
+                    </div>
+                    <hr />
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="offset-1 offset-md-0 col-10 col-md-3 mt-2">
+        <div class="student-dashboard">
+            <div class="p-3 text-center text-uppercase heading">
+                <h5>My schedule</h5>
+            </div>
+            <div class="h-75 p-3" style="overflow-y: auto">
+                @foreach (var lesson in Model.Schedule)
+                {
+                    <div class="body">
+                        <a asp-controller="Trainings"
+                           asp-action="Details"
+                           asp-route-id="@lesson.CourseId"
+                           asp-fragment="collapse-@lesson.Id"
+                           class="d-flex flex-column gap-2 text-decoration-none">
+
+                            <p class="lesson-name">@lesson.Name</p>
+                            <p>@lesson.CourseName</p>
+
+                            @{
+                                await Html.RenderPartialAsync("~/Views/Shared/Partials/Lessons/_LessonMetaDataPartial.cshtml", lesson);
+                            }
+
+                        </a>
+                        <hr />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

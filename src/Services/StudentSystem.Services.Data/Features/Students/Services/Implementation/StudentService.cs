@@ -49,6 +49,7 @@
         }
 
         public async Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage)
+            where TEntity : class
             => await this.Repository
                 .AllAsNoTracking()
                 .OrderByDescending(s => s.CreatedOn)
@@ -62,6 +63,30 @@
                 .Where(x => x.ApplicationUserId.Equals(userId))
                 .Select(x => x.Id)
                 .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<TEntity>> GetScheduleAsync<TEntity>(string userId)
+            where TEntity : class
+            => await this.Repository
+                .AllAsNoTracking()
+                .Where(s => s.ApplicationUserId.Equals(userId))
+                .SelectMany(s => s.Courses)
+                    .Where(cs => cs.Course.IsActive)
+                    .SelectMany(cs => cs.Course.Lessons)
+                        .Where(l => l.StartTime.Date >= DateTime.UtcNow.Date && !l.IsDeleted)
+                        .OrderBy(l => l.StartTime)
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+               .ToListAsync();
+
+        public async Task<IEnumerable<TEntity>> GetCoursesAsync<TEntity>(string userId)
+            where TEntity : class
+            => await this.Repository
+                    .AllAsNoTracking()
+                    .Where(s => s.ApplicationUserId.Equals(userId))
+                        .SelectMany(s => s.Courses)
+                        .Where(cs => cs.Course.IsActive)
+                        .OrderBy(cs => cs.Course.Name)
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                .ToListAsync();
 
         public async Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel)
         {
@@ -118,7 +143,7 @@
                 return ErrorMesage;
             }
 
-            return true;
+            return Result.Success(SuccesfullyAprovedOperationMessage);
         }
 
         public async Task<bool> IsAppliedAlreadyAsync()
@@ -147,7 +172,24 @@
             await this.Repository.SaveChangesAsync();
         }
 
-        public async Task<Result> SetActiveStatus(Guid id, bool isActive)
+        public async Task ChangeActivityStatusAsync()
+        {
+            var students = await this.Repository
+                    .All()
+                    .Where(s => s.IsActive && s.Courses.All(c => c.Course.EndDate < DateTime.UtcNow))
+                    .ToListAsync();
+
+            foreach (var student in students)
+            {
+                student.IsActive = false;
+            }
+
+            this.Repository.BulkUpdate(students);
+
+            await this.Repository.SaveChangesAsync();
+        }
+
+        public async Task<Result> SetActiveStatusAsync(Guid id, bool isActive)
         {
             var student = await this.Repository.FindAsync(id);
 
@@ -166,5 +208,10 @@
 
             return true;
         }
+
+        public async Task<bool> IsActiveAsync(string userId)
+            => await this.Repository
+                .AllAsNoTracking()
+                .AnyAsync(s => s.ApplicationUserId.Equals(userId) && s.IsActive);
     }
 }

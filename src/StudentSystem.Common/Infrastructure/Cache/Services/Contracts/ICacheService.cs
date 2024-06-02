@@ -13,6 +13,6 @@
 
         void Remove(string key);
 
-        void RemoveByPrefix(string prefix);
+        void RemoveByPrefixOrSuffix(string prefix = null, string suffix = null);
     }
 }

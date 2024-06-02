@@ -21,14 +21,20 @@
                 return;
             }
 
-            var users = JsonConvert.DeserializeObject<ApplicationUser>(this.JsonData);
+            var users = JsonConvert.DeserializeObject<ApplicationUser[]>(this.JsonData);
 
-            await this.DbSet.AddAsync(users);
+            await this.DbContext.Users.AddRangeAsync(users);
 
             await this.DbContext.SaveChangesAsync();
 
-            await this.UserManager.AddPasswordAsync(users, AdminPassword);
-            await this.UserManager.AddToRoleAsync(users, AdminRole);
+            await this.UserManager.AddPasswordAsync(users[0], AdminPassword);
+            await this.UserManager.AddToRoleAsync(users[0], AdminRole);
+
+            foreach (var user in users.Skip(1))
+            {
+                await this.UserManager.AddPasswordAsync(user, TeacherPassword);
+                await this.UserManager.AddToRoleAsync(user, TeacherRole);
+            }
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿@model LessonFormBindingModel
+
+@{
+    this.ViewData["Title"] = "Update Lesson";
+}
+
+@section HeadScripts
+{
+    @{
+        await Html.RenderPartialAsync("_TinymceScriptsPartial");
+    }
+}
+
+<div class="container mt-5">
+    @{
+        await Html.RenderPartialAsync("_LessonFormPartial", Model);
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

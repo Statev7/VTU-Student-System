@@ -22,22 +22,20 @@
             IRepository<City> repository,
             IMapper mapper,
             ICacheService cacheService)
-            : base(repository, mapper) 
+            : base(repository, mapper)
             => this.cacheService = cacheService;
 
         public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
-        {
-            var cities = await this.cacheService.GetAsync(CacheKey, async () =>
-            {
-                return await Repository
-                    .AllAsNoTracking()
-                    .OrderBy(c => c.Name)
-                    .ProjectTo<TEntity>(Mapper.ConfigurationProvider)
-                    .ToListAsync();
-
-            }, CacheTimeInDays);
-
-            return cities;
-        }
+            => await this.cacheService.GetAsync(
+                CacheKey,
+                async () =>
+                {
+                    return await Repository
+                        .AllAsNoTracking()
+                        .OrderBy(c => c.Name)
+                        .ProjectTo<TEntity>(Mapper.ConfigurationProvider)
+                        .ToListAsync();
+                }, 
+                CacheTimeInDays);
     }
 }

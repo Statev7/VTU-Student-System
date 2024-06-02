@@ -1,0 +1,74 @@
+﻿@model ListCoursesViewModel<CourseManagementViewModel>
+
+@{
+    this.ViewData["Title"] = "Courses";
+}
+
+<div class="container">
+
+    @await Html.PartialAsync("~/Views/Shared/Partials/Courses/_CoursesFiltrationSectionPartial.cshtml", Model.RequestData)
+
+    <section class="row">
+
+        <div class="d-flex gap-3 mb-3">
+            <a asp-controller="Dashboard"
+               asp-action="Index"
+               class="btn btn-outline-secondary"><i class="fa-solid fa-rotate-left"></i> Back</a>
+
+            <a asp-controller="Courses"
+               asp-action="Create"
+               class="btn btn-outline-success"><i class="fa-solid fa-plus"></i> Create Course</a>
+
+            <a asp-controller="Lessons"
+               asp-action="Create"
+               class="btn btn-outline-success"><i class="fa-solid fa-plus"></i> Create Lesson</a>
+        </div>
+
+        <div class="container d-flex">
+
+            <ul class="list-group d-flex gap-3 text-white w-100">
+
+                @foreach (var course in Model.PageList.Entities)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-content-center border-1 rounded p-3">
+
+                        <div class="d-flex flex-row gap-3">
+                            @Html.RenderPngIcon("course")
+                            <div>
+                                <h5 class="mb-0">@course.Name</h5>
+                                <div class="mt-1">
+                                    <span class="small">@course.StartDate</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-md-row justify-content-end gap-2 col-5 mt-3" style="height: 40px">
+                            <a asp-controller="Courses"
+                               asp-action="Update"
+                               asp-route-id="@course.Id"
+                               class="btn btn-primary w-25"><i class="fa-solid fa-pen"></i> <span class="d-none d-lg-inline">Edit</span></a>
+
+                            <a asp-controller="Courses"
+                               asp-action="Delete"
+                               asp-route-id="@course.Id"
+                               class="btn btn-danger w-25"><i class="fa-solid fa-trash"></i>  <span class="d-none d-lg-inline">Delete</span></a>
+                        </div>
+
+                    </li>
+                }
+
+            </ul>
+        </div>
+
+        @if (Model.PageList.HasPagination)
+        {
+            <div class="row">
+                <div class="mt-4 pt-2 col-lg-12">
+                    @await Html.PartialAsync("_Pagination", Model.PageList)
+                </div>
+            </div>
+        }
+
+    </section>
+
+</div>

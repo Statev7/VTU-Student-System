@@ -1,0 +1,563 @@
+﻿[
+  {
+    "id": "f63d5f14-8e8a-4912-95fa-69cac6dc9597",
+    "name": "Stacks and Queues",
+    "description": "<ul><li>Introduction to Stacks;</li><li>Introduction to Queues;</li><li>Stack and Queue Operations;</li><li>Applications of Stacks and Queues;</li></ul>",
+    "startTime": "2024-07-09 18:00:00.0000000",
+    "endTime": "2024-07-09 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "63b824c9-0009-46ef-9eb8-5a21ee974c29",
+    "name": "Exercise: Stacks and Queues",
+    "description": "",
+    "startTime": "2024-07-11 18:00:00.0000000",
+    "endTime": "2024-07-11 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "24a849e0-0b60-4223-a788-92941e924a15",
+    "name": "Multidimensional Arrays",
+    "description": "<ul><li>Introduction to Multidimensional Arrays;</li><li>Rectangular Arrays;</li><li>Jagged Arrays;</li><li>Working with Multidimensional Arrays;</li></ul>",
+    "startTime": "2024-07-16 18:00:00.0000000",
+    "endTime": "2024-07-16 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "15d73ef4-4c9f-4984-9c4b-9eb37878cf21",
+    "name": "Exercise: Multidimensional Arrays",
+    "description": "",
+    "startTime": "2024-07-18 18:00:00.0000000",
+    "endTime": "2024-07-18 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "5b7f80b7-9bcb-4316-92bb-92984875f61d",
+    "name": "Sets and Dictionaries Advanced",
+    "description": "<ul><li>Introduction to Sets;</li><li>Introduction to Dictionaries;</li><li>Advanced Operations with Sets and Dictionaries;</li><li>Applications of Sets and Dictionaries;</li></ul>",
+    "startTime": "2024-07-23 18:00:00.0000000",
+    "endTime": "2024-07-23 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "ddc65ba7-4874-4c1a-9c70-34edf5bf6708",
+    "name": "Exercise: Sets and Dictionaries Advanced",
+    "description": "",
+    "startTime": "2024-07-25 18:00:00.0000000",
+    "endTime": "2024-07-25 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "4e8994ac-2e97-4590-80c5-8499d6b06747",
+    "name": "Streams, Files and Directories",
+    "description": "<ul><li>Working with Streams;</li><li>Working with Files;</li><li>Working with Directories;</li><li>Error Handling and Exception Management;</li></ul>",
+    "startTime": "2024-07-30 18:00:00.0000000",
+    "endTime": "2024-07-30 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "0e1af74c-d25b-48fc-8605-efb2bea4e0f4",
+    "name": "Exercise: Streams, Files and Directories",
+    "description": "",
+    "startTime": "2024-08-01 18:00:00.0000000",
+    "endTime": "2024-08-01 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "23b9e86e-4e9c-4e7b-b3d2-7a5f7f6b1e0c",
+    "name": "Functional Programming",
+    "description": "<ul><li>Introduction to Functional Programming;</li><li>Functional Programming Concepts;</li><li>Functional Programming in C#;</li><li>Lambda Expressions;</li></ul>",
+    "startTime": "2024-08-06 18:00:00.0000000",
+    "endTime": "2024-08-06 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "fc6d0f87-d7ac-4133-841b-41a7aef7b6a7",
+    "name": "Exercise: Functional Programming",
+    "description": "",
+    "startTime": "2024-08-08 18:00:00.0000000",
+    "endTime": "2024-08-08 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "328e4fd3-9434-4554-8ac0-90d5eae72859",
+    "name": "Generics",
+    "description": "<ul><li>Introduction to Generics;</li><li>Generic Classes;</li><li>Generic Methods;</li><li>Constraints in Generics;</li></ul>",
+    "startTime": "2024-08-13 18:00:00.0000000",
+    "endTime": "2024-08-13 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "ea26ebff-fa8b-4e20-8450-e1563a5c8d30",
+    "name": "Exercise: Generics",
+    "description": "",
+    "startTime": "2024-08-15 18:00:00.0000000",
+    "endTime": "2024-08-15 22:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "e37ffad0-c49c-4df1-9ef3-b4af51e4a3bb",
+    "name": "Exam",
+    "description": "",
+    "startTime": "2024-08-20 08:00:00.0000000",
+    "endTime": "2024-08-20 12:00:00.0000000",
+    "courseId": "c20cda47-e268-4498-8609-f6d71a6e977f"
+  },
+  {
+    "id": "cabe5cc7-d184-4c14-8cdc-78f558c06ca3",
+    "name": "Inheritance",
+    "description": "<ul><li>Inheritance;</li><li>Class Hierarchies;</li><li>Accessing Base Class Members;</li><li>Reusing Classes;</li></ul>",
+    "startTime": "2024-08-27 18:00:00.0000000",
+    "endTime": "2024-08-27 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "676b0e2d-88f1-4fa9-b77f-645d07645ea2",
+    "name": "Exercise: Inheritance",
+    "description": "",
+    "startTime": "2024-08-29 18:00:00.0000000",
+    "endTime": "2024-08-29 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "a3c5e7b2-6f8a-4a2b-921d-9a5b5d3edc4a",
+    "name": "Encapsulation",
+    "description": "<ul><li>Encapsulation;</li><li>Data Hiding;</li><li>Access Modifiers;</li><li>Getter and Setter Methods;</li></ul>",
+    "startTime": "2024-09-03 18:00:00.0000000",
+    "endTime": "2024-09-03 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "6d33f42d-ba63-433a-8db8-96b30376a160",
+    "name": "Exercise: Encapsulation",
+    "description": "",
+    "startTime": "2024-09-05 18:00:00.0000000",
+    "endTime": "2024-09-05 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "b4e6f8a3-7f9b-4b3c-821d-1c6b6c8a7d3e",
+    "name": "Interfaces and Abstraction",
+    "description": "<ul><li>Interfaces;</li><li>Abstract Classes;</li><li>Method Signatures;</li><li>Design Principles;</li></ul>",
+    "startTime": "2024-09-10 18:00:00.0000000",
+    "endTime": "2024-09-10 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "13a3cadd-2a28-48eb-bad8-f84dfa13d7d3",
+    "name": "Exercise: Interfaces and Abstraction",
+    "description": "",
+    "startTime": "2024-09-12 18:00:00.0000000",
+    "endTime": "2024-09-12 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "c5f7a9b4-8b0c-4c4d-931d-2d7c7d9b8e4f",
+    "name": "Polymorphism",
+    "description": "<ul><li>Polymorphism;</li><li>Overriding Methods;</li><li>Dynamic Binding;</li><li>Type Casting;</li></ul>",
+    "startTime": "2024-09-17 18:00:00.0000000",
+    "endTime": "2024-09-17 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "44914f78-3f84-4c7b-b835-dc21ffad6f8b",
+    "name": "Exercise: Polymorphism",
+    "description": "",
+    "startTime": "2024-09-19 18:00:00.0000000",
+    "endTime": "2024-09-19 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "d6a8b0c5-9c1d-4d5e-941e-3e8d8e0c9f5d",
+    "name": "SOLID",
+    "description": "<ul><li>Single Responsibility Principle;</li><li>Open/Closed Principle;</li><li>Liskov Substitution Principle;</li><li>Interface Segregation Principle;</li><li>Dependency Inversion Principle;</li></ul>",
+    "startTime": "2024-09-24 18:00:00.0000000",
+    "endTime": "2024-09-24 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "4c2e4ebf-13e2-4a0a-a999-94a898fc1d17",
+    "name": "Exercise: SOLID",
+    "description": "",
+    "startTime": "2024-09-26 18:00:00.0000000",
+    "endTime": "2024-09-26 22:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+  {
+    "id": "a558b1f5-6a0c-42c0-b3f4-17f8f140d4e9",
+    "name": "Exam",
+    "description": "",
+    "startTime": "2024-10-01 14:00:00.0000000",
+    "endTime": "2024-10-01 18:00:00.0000000",
+    "courseId": "182DD7B9-658E-4660-BDAF-7884CBF032BA"
+  },
+
+  {
+    "id": "ad55619f-38e1-49df-9156-4426956e4dcf",
+    "name": "Databases Introduction",
+    "description": "<ul><li>Data Management;</li><li>Database Engines;</li><li>Data Types;</li></ul>",
+    "startTime": "2024-07-16 18:00:00.0000000",
+    "endTime": "2024-07-16 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "d5478280-b6f9-4ae6-a552-aed593c35e02",
+    "name": "Exercise: Databases Introduction",
+    "description": "",
+    "startTime": "2024-07-18 18:00:00.0000000",
+    "endTime": "2024-07-18 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "e1a59b6d-1e12-4a34-8cdd-30c657d5b467",
+    "name": "CRUD Operations",
+    "description": "<ul><li>Create Operations;</li><li>Read Operations;</li><li>Update Operations;</li><li>Delete Operations;</li></ul>",
+    "startTime": "2024-07-23 18:00:00.0000000",
+    "endTime": "2024-07-23 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "b8bd1612-48de-489d-b255-5e652fc63529",
+    "name": "Exercise: CRUD Operations",
+    "description": "",
+    "startTime": "2024-07-25 18:00:00.0000000",
+    "endTime": "2024-07-25 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "f2b6a8c7-2f23-4b56-9cde-41d768e5a8f8",
+    "name": "Table Relations",
+    "description": "<ul><li>Primary Keys;</li><li>Foreign Keys;</li><li>One-to-One Relations;</li><li>One-to-Many Relations;</li><li>Many-to-Many Relations;</li></ul>",
+    "startTime": "2024-07-30 18:00:00.0000000",
+    "endTime": "2024-07-30 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "e6582901-1e1a-4d3c-b567-2d78c5a8c6f8",
+    "name": "Exercise: Table Relations",
+    "description": "",
+    "startTime": "2024-08-01 18:00:00.0000000",
+    "endTime": "2024-08-01 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "46a06c28-090e-4134-b553-39ec9c8dca41",
+    "name": "Built-in Functions",
+    "description": "<ul><li>Aggregate Functions;</li><li>String Functions;</li><li>Date Functions;</li><li>Numeric Functions;</li></ul>",
+    "startTime": "2024-08-06 18:00:00.0000000",
+    "endTime": "2024-08-06 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "f6583902-2f2b-5d4d-c678-3e89d6b9d7f9",
+    "name": "Exercise: Built-in Functions",
+    "description": "",
+    "startTime": "2024-08-08 18:00:00.0000000",
+    "endTime": "2024-08-08 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "ed3289b3-d5bd-4c8c-b4d2-5ae740b61805",
+    "name": "Subqueries and Joins",
+    "description": "<ul><li>Subqueries;</li><li>Inner Joins;</li><li>Left Joins;</li><li>Right Joins;</li><li>Full Joins;</li></ul>",
+    "startTime": "2024-08-13 18:00:00.0000000",
+    "endTime": "2024-08-13 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "0efccb4e-82b0-40d0-8aa4-e162b2979c5b",
+    "name": "Exercise: Subqueries and Joins",
+    "description": "",
+    "startTime": "2024-08-15 18:00:00.0000000",
+    "endTime": "2024-08-15 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "35b1d405-4bb5-46da-b09b-a81064edc88b",
+    "name": "Functions and Stored Procedures",
+    "description": "<ul><li>User-defined Functions;</li><li>Stored Procedures;</li><li>Execution Plans;</li><li>Error Handling;</li></ul>",
+    "startTime": "2024-08-20 18:00:00.0000000",
+    "endTime": "2024-08-20 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "660047d9-b469-4adf-bf37-56d15b482a03",
+    "name": "Exercise: Functions and Stored Procedures",
+    "description": "",
+    "startTime": "2024-08-22 18:00:00.0000000",
+    "endTime": "2024-08-22 22:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "660e4f9f-f3d3-4cb9-ba7d-8f2f9846ae55",
+    "name": "Exam",
+    "description": "",
+    "startTime": "2024-08-27 14:00:00.0000000",
+    "endTime": "2024-08-27 18:00:00.0000000",
+    "courseId": "10e174ae-9117-4612-8c76-2dfdbabc9f85"
+  },
+  {
+    "id": "2519a831-43fd-4b1a-ae5c-028d772bf711",
+    "name": "ADO.NET",
+    "description": "<ul><li>ADO.NET;</li><li>Accessing SQL Server from ADO.NET;</li><li>SQL Injection;</li></ul>",
+    "startTime": "2024-09-03 18:00:00.0000000",
+    "endTime": "2024-09-03 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "4931f062-82e2-4822-8078-090dc1f956aa",
+    "name": "Exercise: ADO.NET",
+    "description": "",
+    "startTime": "2024-09-05 18:00:00.0000000",
+    "endTime": "2024-09-05 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "1d3e89ab-692b-4943-b85d-098ba3fd8b8a",
+    "name": "Entity Framework Introduction",
+    "description": "<ul><li>Introduction to Entity Framework;</li><li>Code-First Approach;</li><li>Database-First Approach;</li><li>Model-First Approach;</li></ul>",
+    "startTime": "2024-09-10 18:00:00.0000000",
+    "endTime": "2024-09-10 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "68d2a75b-14d7-44ab-81b9-2a5fc3246f0d",
+    "name": "Exercise: Entity Framework Introduction",
+    "description": "",
+    "startTime": "2024-09-12 18:00:00.0000000",
+    "endTime": "2024-09-12 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "3e2c9ef3-22e5-498a-a434-ff0664f6a3ef",
+    "name": "Entity Relations",
+    "description": "<ul><li>One-to-One Relations;</li><li>One-to-Many Relations;</li><li>Many-to-Many Relations;</li><li>Navigation Properties;</li></ul>",
+    "startTime": "2024-09-17 18:00:00.0000000",
+    "endTime": "2024-09-17 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "6a7c1972-54b5-4b84-b943-f12cb6a3a278",
+    "name": "Exercise: Entity Relations",
+    "description": "",
+    "startTime": "2024-09-19 18:00:00.0000000",
+    "endTime": "2024-09-19 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "1c437fc8-7a3c-4e2d-ae9c-916348c0d6d7",
+    "name": "LINQ",
+    "description": "<ul><li>Introduction to LINQ;</li><li>Query Syntax vs. Method Syntax;</li><li>Standard Query Operators;</li><li>Deferred Execution;</li></ul>",
+    "startTime": "2024-09-24 18:00:00.0000000",
+    "endTime": "2024-09-24 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "1f9f6d7d-c449-4c45-96cb-31679cbb44b9",
+    "name": "Exercise: LINQ",
+    "description": "",
+    "startTime": "2024-09-26 18:00:00.0000000",
+    "endTime": "2024-09-26 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "724ad046-3a2a-4b72-8926-987cb00b45e2",
+    "name": "Advanced Querying",
+    "description": "<ul><li>Join Operations;</li><li>Grouping and Aggregating;</li><li>Projection and Filtering;</li><li>Performance Optimization;</li></ul>",
+    "startTime": "2024-10-01 18:00:00.0000000",
+    "endTime": "2024-10-01 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "cf156efb-7e34-4a35-9fe1-39d9957a0e4f",
+    "name": "Exercise: Advanced Querying",
+    "description": "",
+    "startTime": "2024-10-03 18:00:00.0000000",
+    "endTime": "2024-10-03 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "9af3f9e1-5928-4fc5-b3f0-8e1f53eb33a0",
+    "name": "C# Auto Mapping Objects",
+    "description": "<ul><li>Introduction to AutoMapper;</li><li>Configuration;</li><li>Mapping Techniques;</li><li>Custom Mapping;</li></ul>",
+    "startTime": "2024-10-08 18:00:00.0000000",
+    "endTime": "2024-10-08 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "b0a39b38-b408-4cf9-b8e7-0a4c8c228a58",
+    "name": "Exercise: C# Auto Mapping Objects",
+    "description": "",
+    "startTime": "2024-10-10 18:00:00.0000000",
+    "endTime": "2024-10-10 22:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "55c75c18-a1af-46ce-9ebc-817fd5d2e2d2",
+    "name": "Exam",
+    "description": "",
+    "startTime": "2024-10-15 14:00:00.0000000",
+    "endTime": "2024-10-15 18:00:00.0000000",
+    "courseId": "4a9075de-efc2-4f00-8497-30b0eeb3406a"
+  },
+  {
+    "id": "0a3b7740-3d19-4e93-9877-0749ddc7a213",
+    "name": "First Steps in Programming",
+    "description": "<ul><li>Introduction to Programming;</li><li>Programming Language and Its Components;</li><li>Basic Concepts in Programming;</li><li>First Program - Hello World;</li></ul>",
+    "startTime": "2024-07-09 18:00:00.0000000",
+    "endTime": "2024-07-09 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "1c96fc7c-3b8f-44f8-bfea-d237b9a2f7d4",
+    "name": "Exercise: First Steps in Programming",
+    "description": "",
+    "startTime": "2024-07-11 18:00:00.0000000",
+    "endTime": "2024-07-11 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "39b50d19-7db5-4b9d-9c5f-48e2568de4bc",
+    "name": "Conditional Operators",
+    "description": "<ul><li>What are Conditional Operators;</li><li>If, Else, Else If Operators;</li><li>Nesting Conditional Operators;</li><li>Using Conditional Operators in Programs;</li></ul>",
+    "startTime": "2024-07-16 18:00:00.0000000",
+    "endTime": "2024-07-16 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "5f7128f0-c610-4a54-8f5d-8c27e933a8b1",
+    "name": "Exercise: Conditional Operators",
+    "description": "",
+    "startTime": "2024-07-18 18:00:00.0000000",
+    "endTime": "2024-07-18 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "72fbd5c3-0a96-41cb-9c1e-bb9b1a2d72d7",
+    "name": "Complex Conditional Operator Checks",
+    "description": "<ul><li>Combining Multiple Conditions;</li><li>Logical Operators (AND, OR, NOT);</li><li>Short-Circuit Evaluation;</li><li>Examples of Complex Conditional Checks;</li></ul>",
+    "startTime": "2024-07-23 18:00:00.0000000",
+    "endTime": "2024-07-23 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "85f96be8-8dcf-4b6d-a8da-43d83a4ff80e",
+    "name": "Exercise: Complex Conditional Operator Checks",
+    "description": "",
+    "startTime": "2024-07-25 18:00:00.0000000",
+    "endTime": "2024-07-25 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "c186d50d-7f3e-4901-9e94-84e660af76e4",
+    "name": "Loops",
+    "description": "<ul><li>Introduction to Loops;</li><li>For Loop;</li><li>Nesting Loops;</li><li>Break and Continue Statements;</li></ul>",
+    "startTime": "2024-07-30 18:00:00.0000000",
+    "endTime": "2024-07-30 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "4fba6b6e-5018-4620-96b2-94d55118a0b0",
+    "name": "Exercise: Loops",
+    "description": "",
+    "startTime": "2024-08-01 18:00:00.0000000",
+    "endTime": "2024-08-01 22:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "f0780e71-c400-497f-a04d-aec65691ea25",
+    "name": "Exam",
+    "description": "",
+    "startTime": "2024-08-06 14:00:00.0000000",
+    "endTime": "2024-08-06 18:00:00.0000000",
+    "courseId": "073161b6-0bb0-440d-bd4d-7ca5d3ae4268"
+  },
+  {
+    "id": "8f3b47f4-d50b-4c76-b78d-96b800c2d56e",
+    "name": "Intro to React and JSX",
+    "description": "<ul><li>Introduction to React;</li><li>What is JSX;</li><li>Setting up a React Environment;</li><li>Creating Your First React Component;</li></ul>",
+    "startTime": "2024-08-13 18:00:00.0000000",
+    "endTime": "2024-08-13 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "69b1a44d-1d19-462f-9681-4e2215e98f3c",
+    "name": "Exercise: Intro to React and JSX",
+    "description": "",
+    "startTime": "2024-08-15 18:00:00.0000000",
+    "endTime": "2024-08-15 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "b9c20a33-72e2-46f3-aa7e-2d276c8b8e7d",
+    "name": "Components",
+    "description": "<ul><li>Understanding Components in React;</li><li>Creating Functional and Class Components;</li><li>Passing Data to Components;</li><li>Component Lifecycle;</li></ul>",
+    "startTime": "2024-08-20 18:00:00.0000000",
+    "endTime": "2024-08-20 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "b49f5737-7fcf-4937-a34d-454a0e5b94f0",
+    "name": "Exercise: Components",
+    "description": "",
+    "startTime": "2024-08-22 18:00:00.0000000",
+    "endTime": "2024-08-22 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "2342650b-f3ed-45f7-8a9f-7d70d823a7c4",
+    "name": "Forms",
+    "description": "<ul><li>Working with Forms in React;</li><li>Controlled vs. Uncontrolled Components;</li><li>Form Validation;</li><li>Handling Form Submission;</li></ul>",
+    "startTime": "2024-08-27 18:00:00.0000000",
+    "endTime": "2024-08-27 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "896d8845-7311-4b47-9a85-803e04db2b90",
+    "name": "Exercise: Forms",
+    "description": "",
+    "startTime": "2024-08-29 18:00:00.0000000",
+    "endTime": "2024-08-29 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "b1875d3f-07ec-44e0-9015-f7d1a05c9e6e",
+    "name": "Routing",
+    "description": "<ul><li>Introduction to React Router;</li><li>Basic Routing;</li><li>Nested Routes;</li><li>Route Parameters;</li></ul>",
+    "startTime": "2024-09-03 18:00:00.0000000",
+    "endTime": "2024-09-03 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "1ef930fb-0241-45d5-9fd3-3c345c0b4258",
+    "name": "Exercise: Routing",
+    "description": "",
+    "startTime": "2024-09-05 18:00:00.0000000",
+    "endTime": "2024-09-05 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "1d82d5cd-76a3-4f17-b7e2-1a28f2c4bc6f",
+    "name": "React Hooks",
+    "description": "<ul><li>Understanding React Hooks;</li><li>useState Hook;</li><li>useEffect Hook;</li><li>Custom Hooks;</li></ul>",
+    "startTime": "2024-09-10 18:00:00.0000000",
+    "endTime": "2024-09-10 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "76c9a8b8-8f6e-4a5f-baf0-601126eeb6a3",
+    "name": "Exercise: React Hooks",
+    "description": "",
+    "startTime": "2024-09-12 18:00:00.0000000",
+    "endTime": "2024-09-12 22:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  },
+  {
+    "id": "3f607019-128c-4dc5-b48d-7566eda4f83e",
+    "name": "Exam",
+    "description": "",
+    "startTime": "2024-09-17 08:00:00.0000000",
+    "endTime": "2024-09-17 12:00:00.0000000",
+    "courseId": "bcf799b6-68d3-406a-b230-2a1ec673afd0"
+  }
+]

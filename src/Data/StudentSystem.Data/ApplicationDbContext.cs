@@ -28,6 +28,8 @@
 
         public DbSet<Payment> Payments { get; set; }
 
+        public DbSet<Lesson> Lessons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

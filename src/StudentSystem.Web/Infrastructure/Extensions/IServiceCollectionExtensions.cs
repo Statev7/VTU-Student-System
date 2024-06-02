@@ -20,6 +20,8 @@
     using StudentSystem.Services.Data.Features.Courses.Services.Implementation;
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Contracts;
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Lessons.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Lessons.Services.Implementation;
     using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
     using StudentSystem.Services.Data.Features.Payments.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
@@ -92,13 +94,16 @@
                 .AddTransient<ICourseService, CourseService>()
                 .AddTransient<IImageFileService, ImageFileService>()
                 .AddTransient<IPaymentService, PaymentService>()
-                .AddTransient<IStudentCourseService, StudentCourseService>();
+                .AddTransient<IStudentCourseService, StudentCourseService>()
+                .AddTransient<ILessonService, LessonService>();
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
 
         public static IServiceCollection RegisterHelpers(this IServiceCollection services)
-            => services.AddTransient<IControllerHelper, ControllerHelper>();
+            => services
+                .AddTransient<IControllerHelper, ControllerHelper>()
+                .AddTransient<IHomeHelper, HomeHelper>();
 
         public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
             => services.AddAutoMapper(typeof(BaseMappingProfile).Assembly);
