@@ -37,6 +37,7 @@
     <ProjectReference Include="..\Data\StudentSystem.Data.Seed\StudentSystem.Data.Seed.csproj" />
     <ProjectReference Include="..\Data\StudentSystem.Data\StudentSystem.Data.csproj" />
     <ProjectReference Include="..\Services\StudentSystem.Services.Data\StudentSystem.Services.Data.csproj" />
+    <ProjectReference Include="..\Services\StudentSystem.Services.Jobs\StudentSystem.Services.Jobs.csproj" />
     <ProjectReference Include="..\Services\StudentSystem.Services.Messaging\StudentSystem.Services.Messaging.csproj" />
     <ProjectReference Include="..\StudentSystem.Common\StudentSystem.Common.csproj" />
   </ItemGroup>
@@ -46,6 +47,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\files\seeds\" />
   </ItemGroup>
 
 </Project>

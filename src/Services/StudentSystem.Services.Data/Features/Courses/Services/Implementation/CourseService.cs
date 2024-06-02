@@ -226,6 +226,22 @@
                 .AllAsNoTracking()
                 .AnyAsync(selector);
 
+        public async Task ChangeActivityStatusAsync()
+        {
+            var courses = await this.Repository
+                    .All()
+                    .Where(c => c.IsActive && DateTime.UtcNow > c.EndDate)
+                    .ToListAsync();
+
+            foreach (var course in courses)
+            {
+                course.IsActive = false;
+            }
+
+            this.Repository.BulkUpdate(courses);
+            await this.Repository.SaveChangesAsync();
+        }
+
         #region Private Methods
 
         private async Task<IPageList<TEntity>> GetCoursesFromCache<TEntity>(

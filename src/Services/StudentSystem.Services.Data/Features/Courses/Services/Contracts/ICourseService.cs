@@ -7,8 +7,9 @@
     using StudentSystem.Services.Data.Features.Courses.DTOs.RequestDataModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure;
+    using StudentSystem.Services.Data.Infrastructure.Contracts;
 
-    public interface ICourseService
+    public interface ICourseService : IActivityStatusChanger
     {
         Task<ListCoursesViewModel<TEntity>> GetAllAsync<TEntity>(
             CoursesRequestDataModel requestData, 

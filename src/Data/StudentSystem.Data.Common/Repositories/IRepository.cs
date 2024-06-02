@@ -15,6 +15,8 @@
 
         void Update(TEntity entity);
 
+        void BulkUpdate(IEnumerable<TEntity> entities);
+
         void Delete(TEntity entity);
 
         void HardDelete(TEntity entity);

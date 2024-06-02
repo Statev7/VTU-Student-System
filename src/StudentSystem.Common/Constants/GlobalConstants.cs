@@ -12,6 +12,7 @@
         //Users
 
         public const string AdminPassword = "admin@admin.admin";
+        public const string TeacherPassword = "teacher@teacher.teacher";
 
         //Email
 

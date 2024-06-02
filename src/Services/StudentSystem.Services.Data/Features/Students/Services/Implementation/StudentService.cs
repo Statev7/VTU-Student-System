@@ -172,6 +172,23 @@
             await this.Repository.SaveChangesAsync();
         }
 
+        public async Task ChangeActivityStatusAsync()
+        {
+            var students = await this.Repository
+                    .All()
+                    .Where(s => s.IsActive && s.Courses.All(c => c.Course.EndDate < DateTime.UtcNow))
+                    .ToListAsync();
+
+            foreach (var student in students)
+            {
+                student.IsActive = false;
+            }
+
+            this.Repository.BulkUpdate(students);
+
+            await this.Repository.SaveChangesAsync();
+        }
+
         public async Task<Result> SetActiveStatusAsync(Guid id, bool isActive)
         {
             var student = await this.Repository.FindAsync(id);

@@ -6,8 +6,9 @@
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
     using StudentSystem.Services.Data.Infrastructure;
+    using StudentSystem.Services.Data.Infrastructure.Contracts;
 
-    public interface IStudentService
+    public interface IStudentService : IActivityStatusChanger
     {
         Task<IPageList<TEntity>> GetAllAsync<TEntity>(Expression<Func<Student, bool>> selector, int currentPage) 
             where TEntity : class;

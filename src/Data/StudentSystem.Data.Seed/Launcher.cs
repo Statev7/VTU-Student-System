@@ -36,6 +36,9 @@
             {
                 new RoleSeeder(serviceScope, GetJsonContentAsync(Constants.RolesJson).GetAwaiter().GetResult()),
                 new UsersSeed(serviceScope, GetJsonContentAsync(Constants.UsersJson).GetAwaiter().GetResult()),
+                new TeacherSeeder(serviceScope, GetJsonContentAsync(Constants.TeachersJson).GetAwaiter().GetResult()),
+                new CourseSeeder(serviceScope, GetJsonContentAsync(Constants.CoursesJson).GetAwaiter().GetResult()),
+                new LessonSeeder(serviceScope, GetJsonContentAsync(Constants.LessonsJson).GetAwaiter().GetResult()),
                 new CitiesSeed(serviceScope, GetJsonContentAsync(Constants.CitiesJson).GetAwaiter().GetResult()),
             };
 

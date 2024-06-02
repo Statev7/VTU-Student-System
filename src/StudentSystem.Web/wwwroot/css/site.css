@@ -230,10 +230,19 @@ footer p {
     background-color: rgba(22,34,57,0.85);
 }
 
-.teacher-section {
-    height: 350px;
-}
-
 #accordion {
     color: #565656;
+}
+
+.course-details-image-box {
+    width: 400px;
+    height: 200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.course-details-image-box img {
+    width: auto;
+    height: 100%; 
+    object-fit: cover;
 }

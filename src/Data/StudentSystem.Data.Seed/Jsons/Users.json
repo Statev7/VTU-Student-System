@@ -1,8 +1,40 @@
-﻿{
-  "id": "0968993c-1bf5-4f58-b417-f5e2b56f7aad",
-  "username": "Admin",
-  "normalizedUserName": "ADMIN",
-  "email": "admin@admin.admin",
-  "normalizedEmail": "ADMIN@ADMIN.ADMIN",
-  "emailConfirmed": true
-}
+﻿[
+  {
+    "id": "0968993c-1bf5-4f58-b417-f5e2b56f7aad",
+    "username": "Admin",
+    "normalizedUserName": "ADMIN",
+    "email": "admin@admin.admin",
+    "normalizedEmail": "ADMIN@ADMIN.ADMIN",
+    "emailConfirmed": true
+  },
+  {
+    "id": "529f74fd-8ba3-4d3f-8eb5-229758138354",
+    "username": "Teacher",
+    "normalizedUserName": "TEACHER",
+    "email": "teacher@teacher.teacher",
+    "normalizedEmail": "TEACHER@TEACHER.TEACHER",
+    "emailConfirmed": true,
+    "firstName": "Ivan",
+    "lastName": "Ivanov"
+  },
+  {
+    "id": "d592ee13-cc9b-4820-b524-02cde1983b58",
+    "username": "Teacher1",
+    "normalizedUserName": "TEACHER1",
+    "email": "teacher1@teacher.teacher",
+    "normalizedEmail": "TEACHER1@TEACHER.TEACHER",
+    "emailConfirmed": true,
+    "firstName": "Georgi",
+    "lastName": "Georgiev"
+  },
+  {
+    "id": "47de6af5-e0b6-42df-818d-673a90f3b8ac",
+    "username": "Teacher2",
+    "normalizedUserName": "TEACHER2",
+    "email": "teacher2@teacher.teacher",
+    "normalizedEmail": "TEACHER2@TEACHER.TEACHER",
+    "emailConfirmed": true,
+    "firstName": "Pesho",
+    "lastName": "Peshev"
+  }
+]
