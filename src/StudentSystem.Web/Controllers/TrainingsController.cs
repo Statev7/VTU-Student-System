@@ -6,7 +6,7 @@
     using StudentSystem.Services.Data.Features.Courses.DTOs.RequestDataModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
-    using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Attributes;
 
     public class TrainingsController : Controller

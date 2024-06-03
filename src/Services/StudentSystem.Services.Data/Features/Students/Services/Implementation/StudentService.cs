@@ -74,6 +74,7 @@
                     .SelectMany(cs => cs.Course.Lessons)
                         .Where(l => l.StartTime.Date >= DateTime.UtcNow.Date && !l.IsDeleted)
                         .OrderBy(l => l.StartTime)
+                        .Take(10)
                         .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                .ToListAsync();
 

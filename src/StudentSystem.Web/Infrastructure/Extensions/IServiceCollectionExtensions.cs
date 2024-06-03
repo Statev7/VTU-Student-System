@@ -24,6 +24,8 @@
     using StudentSystem.Services.Data.Features.Lessons.Services.Implementation;
     using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
     using StudentSystem.Services.Data.Features.Payments.Services.Implementation;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;

@@ -46,6 +46,10 @@
 
         public const string InvalidLessonErrorMessage = "Such a lesson not exist!";
 
+        // StudentCourses
+
+        public const string EmailNotificationMessage = "The email was sent to {0} students.";
+
         // CRUD
 
         public const string SuccessfullyCreatedMessage = $"Successfully created!";
