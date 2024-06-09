@@ -50,6 +50,16 @@
 
         public const string EmailNotificationMessage = "The email was sent to {0} students.";
 
+        // Files
+
+        public const string EmptyFileErrorMessage = "The file cannot be empty!";
+
+        public const string PotentialVirusInFileErrorMessage = "File contains potential viruses. Cannot continue with this file!";
+
+        // Resources 
+
+        public const string InvalidResourceErrorMessage = "Such a resource not exist!";
+
         // CRUD
 
         public const string SuccessfullyCreatedMessage = $"Successfully created!";

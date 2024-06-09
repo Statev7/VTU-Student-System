@@ -18,11 +18,17 @@
         <div class="d-flex flex-column gap-3 w-50">
             <h5>Resources</h5>
 
-            <div>
-                <p>Link</p>
-                <p>Link</p>
-                <p>Link</p>
-            </div>
+            @if (Model.HasResources)
+            {
+                <div>
+                    @foreach (var resource in Model.Resources)
+                    {
+                        <p>
+                            <a asp-controller="Trainings" asp-action="DownloadResource" asp-route-id="@resource.Id">@resource.Name</a>
+                        </p>
+                    }
+                </div>
+            }
         </div>
 
     </section>

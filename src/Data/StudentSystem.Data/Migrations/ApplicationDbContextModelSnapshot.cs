@@ -288,6 +288,49 @@ namespace StudentSystem.Data.Migrations
                     b.ToTable("Payments");
                 });
 
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Resource", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Extension")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("FolderPath")
+                        .IsRequired()
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("Resources");
+                });
+
             modelBuilder.Entity("StudentSystem.Data.Models.Users.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
@@ -623,6 +666,17 @@ namespace StudentSystem.Data.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Resource", b =>
+                {
+                    b.HasOne("StudentSystem.Data.Models.Courses.Lesson", "Lesson")
+                        .WithMany("Resources")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("StudentSystem.Data.Models.Users.ApplicationUserRole", b =>
                 {
                     b.HasOne("StudentSystem.Data.Models.Users.ApplicationRole", "Role")
@@ -679,6 +733,11 @@ namespace StudentSystem.Data.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Lesson", b =>
+                {
+                    b.Navigation("Resources");
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Users.ApplicationRole", b =>

@@ -1,10 +1,12 @@
 ﻿namespace StudentSystem.Common.Infrastructure.Cache.Services.Implementation
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using Microsoft.Extensions.Caching.Memory;
 
     using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
+    using StudentSystem.Common.Infrastructure.Cache.Settings;
 
     public class CacheService : ICacheService
     {
@@ -62,15 +64,23 @@
             }
         }
 
-        public void RemoveByPrefixOrSuffix(string prefix = null, string suffix = null)
+        public void RemoveByPrefix(string prefix)
         {
-            var keysToDelete = this.CacheKeys.Keys
-                .Where(x => !string.IsNullOrEmpty(prefix) && x.StartsWith(prefix) || 
-                            !string.IsNullOrEmpty(suffix) && x.EndsWith(suffix));
+            var keysToDelete = this.CacheKeys
+                .Keys
+                .Where(x => !string.IsNullOrEmpty(prefix) && x.StartsWith(prefix));
 
             foreach (var key in keysToDelete)
             {
                 this.memoryCache.Remove(key);
+            }
+        }
+
+        public void RemoveByCollectionKeysPrefixes(CacheKeyCollection keyCollection)
+        {
+            foreach (var keyPrefix in keyCollection.Keys) 
+            {
+                this.RemoveByPrefix(keyPrefix);
             }
         }
     }

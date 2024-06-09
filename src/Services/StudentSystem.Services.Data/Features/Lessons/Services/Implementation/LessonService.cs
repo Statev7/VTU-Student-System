@@ -1,6 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Features.Lessons.Services.Implementation
 {
     using System;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -42,10 +43,25 @@
 
         #region Public Methods
 
+        public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
+            where TEntity : class
+                => await this.cacheService.GetAsync(
+                    CacheKeyGenerator.GenerateKey<IEnumerable<TEntity>>(CachePrefix),
+                    async () =>
+                    {
+                        var lessons = await this.Repository
+                            .AllAsNoTracking()
+                            .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                            .ToListAsync();
+
+                        return lessons;
+                    },
+                    CacheTimeInHours);
+
         public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : class
                 => await this.cacheService.GetAsync(
-                    CacheKeyGenerator.GenerateKey<TEntity>(id.ToString(), id),
+                    CacheKeyGenerator.GenerateKey<TEntity>(id),
                     async () =>
                     {
                         var lesson = await this.Repository
@@ -72,6 +88,8 @@
             await this.Repository.AddAsync(lessonToCreate);
             await this.Repository.SaveChangesAsync();
 
+            this.cacheService.RemoveByPrefix(CachePrefix);
+
             return Result.Success(SuccessfullyCreatedMessage);
         }
 
@@ -96,7 +114,7 @@
             this.Repository.Update(lessonToUpdate);
             await this.Repository.SaveChangesAsync();
 
-            this.cacheService.RemoveByPrefixOrSuffix(id.ToString(), model.CourseId.ToString());
+            this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(CachePrefix, id.ToString(), lessonToUpdate.CourseId.ToString()));
 
             return Result.Success(SuccessfullyUpdatedMessage);
         }
@@ -113,10 +131,16 @@
             this.Repository.Delete(lessonToDelete);
             await this.Repository.SaveChangesAsync();
 
-            this.cacheService.RemoveByPrefixOrSuffix(id.ToString(), lessonToDelete.CourseId.ToString());
+            this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(CachePrefix, id.ToString(), lessonToDelete.CourseId.ToString()));
 
             return Result.Success(SuccessfullyDeletedMessage);
         }
+
+        public async Task<bool> IsExistAsync(Expression<Func<Lesson, bool>> selector)
+            => await this.Repository
+                .AllAsNoTracking()
+                .Where(selector)
+                .AnyAsync();  
 
         #endregion
 

@@ -5,10 +5,13 @@
     using Microsoft.AspNetCore.Http;
 
     using StudentSystem.Common.Attributes;
+    using StudentSystem.Common.Infrastructure.Attributes;
     using StudentSystem.Data.Models.Courses.Enums;
+    using StudentSystem.Services.Data.Features.Courses.Constants;
     using StudentSystem.Services.Data.Features.Teachers.DTOs.ViewModels;
 
     using static StudentSystem.Data.Common.Constants.Course;
+    using static StudentSystem.Services.Data.Features.Courses.Constants.CourseConstants;
 
     public class CourseFormBindingModel
     {
@@ -25,6 +28,7 @@
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
+        [AllowedExtensions(AllowImageTypes)]
         public IFormFile? Image { get; set; }
 
         [Display(Name = "Upload New Image")]

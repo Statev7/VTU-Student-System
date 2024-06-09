@@ -2,6 +2,7 @@
 {
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Lessons.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Lessons.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Lessons.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Mapper;
     using StudentSystem.Services.Data.Infrastructure.StaticHelpers;
@@ -21,6 +22,11 @@
             this.CreateMap<Lesson, LessonPanelViewModel>();
 
             this.CreateMap<Lesson, LessonDetailsViewModel>();
+
+            this.CreateMap<Lesson, LessonCourseNameServiceModel>();
+
+            this.CreateMap<Lesson, LessonSelectionItemViewModel>()
+                .ForMember(d => d.Name, conf => conf.MapFrom(s => $"{s.Name} - {s.Course.Name}"));
         }
     }
 }

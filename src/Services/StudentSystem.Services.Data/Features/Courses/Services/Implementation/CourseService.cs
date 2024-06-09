@@ -87,7 +87,7 @@
         public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : class
             => await this.cacheService.GetAsync<TEntity>(
-                CacheKeyGenerator.GenerateKey<TEntity>(CachePrefix, id),
+                CacheKeyGenerator.GenerateKey<TEntity>(id.ToString()),
                 async () =>
                 {
                     var course = await this.Repository
@@ -104,7 +104,7 @@
         public async Task<CourseDetailsViewModel> GetDetailsAsync(Guid id)
         {
             var courseDetails = await this.cacheService.GetAsync<CourseDetailsViewModel>(
-                CacheKeyGenerator.GenerateKey<CourseDetailsViewModel>(CachePrefix, id),
+                CacheKeyGenerator.GenerateKey<CourseDetailsViewModel>(id),
                 async () =>
                 {
                     var course = await this.Repository
@@ -140,7 +140,7 @@
                 await this.Repository.AddAsync(courseToCreate);
                 await this.Repository.SaveChangesAsync();
 
-                this.cacheService.RemoveByPrefixOrSuffix(CachePrefix);
+                this.cacheService.RemoveByPrefix(CachePrefix);
             }
             catch (Exception ex)
             {
@@ -187,7 +187,7 @@
                     this.imageFileService.DeleteFromFileSystem(oldImageFolder);
                 }
 
-                this.cacheService.RemoveByPrefixOrSuffix(CachePrefix);
+                this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(CachePrefix, id.ToString()));
             }
             catch (Exception ex)
             {
@@ -216,7 +216,7 @@
             this.Repository.Delete(courseToDelete);
             await this.Repository.SaveChangesAsync();
 
-            this.cacheService.RemoveByPrefixOrSuffix(CachePrefix);
+            this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(CachePrefix, id.ToString()));
 
             return Result.Success(SuccessfullyDeletedMessage);
         }

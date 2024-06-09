@@ -1,0 +1,18 @@
+﻿@model ResourceBindingModel
+
+@{
+    this.ViewData["Title"] = "Create Resource";
+}
+
+<div class="container mt-5">
+    @{
+        await Html.RenderPartialAsync("_ResourceFormPartial", Model);
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+</div>
