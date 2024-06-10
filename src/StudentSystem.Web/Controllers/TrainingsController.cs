@@ -6,7 +6,6 @@
     using StudentSystem.Services.Data.Features.Courses.DTOs.RequestDataModels;
     using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
-    using StudentSystem.Services.Data.Features.Resources.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Resources.Services.Contracts;
     using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Attributes;
@@ -59,7 +58,8 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> DownloadResource(Guid id)
+        [ResourceAccess]
+        public async Task<IActionResult> DownloadResource(Guid id, Guid courseId)
         {
             var result = await this.resourceService.LoadResourceAsync(id);
 

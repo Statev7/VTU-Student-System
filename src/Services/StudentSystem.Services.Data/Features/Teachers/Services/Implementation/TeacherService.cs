@@ -82,5 +82,11 @@
 
             return true;
         }
+
+        public async Task<bool> IsLeadTheCourseAsync(string userId, Guid courseId)
+            => await this.Repository
+                .AllAsNoTracking()
+                .AnyAsync(u => u.ApplicationUserId.Equals(userId) && u.Courses
+                    .Any(course => course.Id.Equals(courseId)));
     }
 }

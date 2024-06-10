@@ -48,15 +48,15 @@
 
         public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : class
-                => await this.cacheService.GetAsync(
+                => await this.cacheService.GetAsync<TEntity>(
                     CacheKeyGenerator.GenerateKey<TEntity>(id),
                     async () =>
                     {
                         var resource = await this.Repository
-                            .AllAsNoTracking()
-                            .Where(l => l.Id.Equals(id))
-                            .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
-                            .FirstOrDefaultAsync();
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                        .FirstOrDefaultAsync();
 
                         return resource;
                     },
@@ -103,16 +103,12 @@
 
         public async Task<Result<FileServiceModel>> LoadResourceAsync(Guid id)
         {
-            var isResourceNotExist = !await this.Repository
-                .AllAsNoTracking()
-                .AnyAsync(x => x.Id.Equals(id));
+            var resource = await this.GetByIdAsync<ResourceDetailsServiceModel>(id);
 
-            if (isResourceNotExist)
+            if (resource == null)
             {
                 return Result<FileServiceModel>.Failure(InvalidResourceErrorMessage);
             }
-
-            var resource = await this.GetByIdAsync<ResourceDetailsServiceModel>(id);
 
             var result = this.fileService.GetFile(resource.FolderPath, resource.Name, resource.Extension);
 

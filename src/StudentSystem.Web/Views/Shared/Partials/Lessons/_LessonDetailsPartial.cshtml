@@ -24,7 +24,11 @@
                     @foreach (var resource in Model.Resources)
                     {
                         <p>
-                            <a asp-controller="Trainings" asp-action="DownloadResource" asp-route-id="@resource.Id">@resource.Name</a>
+                            <a 
+                                asp-controller="Trainings" 
+                                asp-action="DownloadResource" 
+                                asp-route-id="@resource.Id"
+                                asp-route-courseId="@Model.CourseId">@resource.Name</a>
                         </p>
                     }
                 </div>

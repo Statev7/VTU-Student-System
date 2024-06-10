@@ -11,6 +11,8 @@
 
         public string Description { get; set; } = null!;
 
+        public Guid CourseId { get; set; }
+
         public IEnumerable<ResourceViewModel> Resources { get; set; }
 
         public bool HasResources => !this.Resources.IsNullOrEmpty();

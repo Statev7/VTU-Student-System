@@ -8,16 +8,22 @@
     using StudentSystem.Services.Data.Features.Resources.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Extensions;
+    using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
     public class ResourcesController : BaseAdminController
     {
         private readonly IResourceService resourceService;
         private readonly ILessonService lessonService;
+        private readonly IControllerHelper controllerHelper;
 
-        public ResourcesController(IResourceService resourceService, ILessonService lessonService)
+        public ResourcesController(
+            IResourceService resourceService,
+            ILessonService lessonService,
+            IControllerHelper controllerHelper)
         {
             this.resourceService = resourceService;
             this.lessonService = lessonService;
+            this.controllerHelper = controllerHelper;
         }
 
         [HttpGet]
@@ -37,7 +43,7 @@
         {
             this.TempData.Add(await this.resourceService.CreateAsync(model));
 
-            return this.RedirectToAction();
+            return this.RedirectToAction(nameof(CoursesController.All), this.controllerHelper.GetName(nameof(CoursesController)));
         }
     }
 }

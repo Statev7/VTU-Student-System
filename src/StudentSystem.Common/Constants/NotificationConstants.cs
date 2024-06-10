@@ -60,6 +60,8 @@
 
         public const string InvalidResourceErrorMessage = "Such a resource not exist!";
 
+        public const string ResourceNotAccessErrorMessage = "You do not have access to this resource!";
+
         // CRUD
 
         public const string SuccessfullyCreatedMessage = $"Successfully created!";
