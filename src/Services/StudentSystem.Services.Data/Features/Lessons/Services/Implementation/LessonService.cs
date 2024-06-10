@@ -15,7 +15,9 @@
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Lessons.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Lessons.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Lessons.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Resources.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
 
@@ -34,7 +36,7 @@
             IRepository<Lesson> repository,
             IMapper mapper,
             ICacheService cacheService,
-            ICourseService courseService) 
+            ICourseService courseService)
             : base(repository, mapper)
         {
             this.cacheService = cacheService;
@@ -73,6 +75,33 @@
                         return lesson;
                     },
                     CacheTimeInHours);
+
+        public async Task<LessonDetailsViewModel> GetDetailsAsync(Guid id)
+        {
+            var courseDetails = await this.cacheService.GetAsync<LessonDetailsViewModel>(
+                CacheKeyGenerator.GenerateKey<LessonDetailsViewModel>(id),
+                async () =>
+                {
+                    var lesson = await this.Repository
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                        .ProjectTo<LessonDetailsViewModel>(this.Mapper.ConfigurationProvider)
+                        .FirstOrDefaultAsync();
+
+                    lesson.Resources = await this.Repository
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                            .SelectMany(x => x.Resources)
+                            .Where(l => !l.IsDeleted)
+                        .ProjectTo<ResourceViewModel>(this.Mapper.ConfigurationProvider)
+                        .ToListAsync();
+
+                    return lesson;
+                },
+                CacheTimeInHours);
+
+            return courseDetails;
+        }
 
         public async Task<Result> CreateAsync(LessonFormBindingModel model)
         {

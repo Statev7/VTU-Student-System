@@ -67,7 +67,7 @@
         {
             var isLessonNotExist = !await this.lessonService.IsExistAsync(x => x.Id.Equals(model.LessonId));
 
-            if (isLessonNotExist) 
+            if (isLessonNotExist)
             {
                 return InvalidLessonErrorMessage;
             }
@@ -118,6 +118,28 @@
             }
 
             return result;
+        }
+
+        public Task<Result> UpdateAsync(ResourceBindingModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Result> DeleteAsync(Guid id)
+        {
+            var resourceToDelete = await this.Repository.FindAsync(id);
+
+            if (resourceToDelete == null)
+            {
+                return Result.Failure(InvalidResourceErrorMessage);
+            }
+
+            this.Repository.Delete(resourceToDelete);
+            await this.Repository.SaveChangesAsync();
+
+            this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(id.ToString(), resourceToDelete.LessonId.ToString()));
+
+            return Result.Success(SuccessfullyDeletedMessage);
         }
 
         #region Private Methods

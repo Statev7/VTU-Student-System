@@ -6,6 +6,7 @@
     using StudentSystem.Services.Data.Features.Lessons.Services.Contracts;
     using StudentSystem.Services.Data.Features.Resources.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Resources.Services.Contracts;
+    using StudentSystem.Web.Controllers;
     using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Extensions;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
@@ -44,6 +45,17 @@
             this.TempData.Add(await this.resourceService.CreateAsync(model));
 
             return this.RedirectToAction(nameof(CoursesController.All), this.controllerHelper.GetName(nameof(CoursesController)));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id, Guid courseId)
+        {
+            this.TempData.Add(await this.resourceService.DeleteAsync(id));
+
+            return this.RedirectToAction(
+                nameof(TrainingsController.Details), 
+                this.controllerHelper.GetName(nameof(TrainingsController)), 
+                new { area = "", id = courseId });
         }
     }
 }

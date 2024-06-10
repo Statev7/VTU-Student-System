@@ -20,18 +20,35 @@
 
             @if (Model.HasResources)
             {
-                <div>
+                <section>
                     @foreach (var resource in Model.Resources)
                     {
-                        <p>
+                        <section class="d-flex gap-2">
                             <a 
                                 asp-controller="Trainings" 
                                 asp-action="DownloadResource" 
                                 asp-route-id="@resource.Id"
-                                asp-route-courseId="@Model.CourseId">@resource.Name</a>
-                        </p>
+                                asp-route-courseId="@Model.CourseId"
+                                class="text-decoration-none">
+                                @resource.Name
+                            </a>
+
+                            @if (this.User.IsAdmin())
+                            {
+                                <div class="d-flex gap-1">
+                                    <a asp-area="Administration"
+                                       asp-controller="Resources"
+                                       asp-action="Delete"
+                                       asp-route-id="@resource.Id"
+                                       asp-route-courseId="@Model.CourseId"
+                                       class="text-decoration-none">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            }
+                        </section>
                     }
-                </div>
+                </section>
             }
         </div>
 

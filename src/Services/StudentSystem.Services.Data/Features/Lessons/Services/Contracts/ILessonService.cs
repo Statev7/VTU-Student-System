@@ -4,6 +4,7 @@
 
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Lessons.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Lessons.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure;
 
     public interface ILessonService
@@ -13,6 +14,8 @@
 
         Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : class;
+
+        Task<LessonDetailsViewModel> GetDetailsAsync(Guid id);
 
         Task<Result> CreateAsync(LessonFormBindingModel model);
 
