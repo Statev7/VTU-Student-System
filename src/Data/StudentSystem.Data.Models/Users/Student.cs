@@ -5,11 +5,16 @@
     using StudentSystem.Data.Common.Models;
     using StudentSystem.Data.Models.Courses;
 
+    using static StudentSystem.Data.Common.Constants.Student;
+
     public class Student : BaseModel
     {
         public Guid? CityId { get; set; }
 
         public City City { get; set; }
+
+        [MaxLength(PhoneNumberMaxLength)]
+        public string? PhoneNumber { get; set; }
 
         public bool IsApproved { get; set; }
 

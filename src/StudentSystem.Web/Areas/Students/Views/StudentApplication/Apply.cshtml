@@ -19,6 +19,10 @@
                 <span asp-validation-for="LastName" class="text-danger error"></span>
             </div>
             <div class="form-group mb-3">
+                <input asp-for="PhoneNumber" type="text" class="form-control p-2" placeholder="Phone Number">
+                <span asp-validation-for="PhoneNumber" class="text-danger error"></span>
+            </div>
+            <div class="form-group mb-3">
                 <select asp-for="CityId" class="form-select">
                     @foreach (var city in Model.Cities)
                     {

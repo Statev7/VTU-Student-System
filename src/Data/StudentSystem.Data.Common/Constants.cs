@@ -19,6 +19,13 @@
             public const int AboutMeMaxLength = 20000;
         }
 
+        public static class Student
+        {
+            public const int PhoneNumberMaxLength = 32;
+
+            public const string PhoneNumberRegex = @"^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
+        }
+
         public static class City
         {
             public const int NameMaxLength = 128;
