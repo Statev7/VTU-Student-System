@@ -1,5 +1,7 @@
 ﻿namespace StudentSystem.Common.Infrastructure.Cache.Services.Contracts
 {
+    using StudentSystem.Common.Infrastructure.Cache.Settings;
+
     public interface ICacheService
     {
         T? Get<T>(string key) 
@@ -13,6 +15,8 @@
 
         void Remove(string key);
 
-        void RemoveByPrefixOrSuffix(string prefix = null, string suffix = null);
+        void RemoveByPrefix(string prefix);
+
+        void RemoveByCollectionKeysPrefixes(CacheKeyCollection masterKey);
     }
 }

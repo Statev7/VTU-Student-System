@@ -13,6 +13,11 @@
                 .HasOne(l => l.Course)
                 .WithMany(c => c.Lessons)
                 .HasForeignKey(l => l.CourseId);
+
+            builder
+                .HasMany(l => l.Resources)
+                .WithOne(r => r.Lesson)
+                .HasForeignKey(r => r.LessonId);
         }
     }
 }

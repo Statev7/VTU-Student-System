@@ -4,13 +4,12 @@
     using Microsoft.AspNetCore.Mvc;
 
     using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
-    using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
+    using StudentSystem.Web.Infrastructure.Attributes;
     using StudentSystem.Web.Infrastructure.Extensions;
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
-    using static StudentSystem.Common.Constants.GlobalConstants;
-
-    [Authorize(Roles = StudentRole)]
+    [Authorize]
     public class PaymentsController : Controller
     {
         private readonly IPaymentService paymentService;
@@ -28,6 +27,7 @@
         }
 
         [HttpGet]
+        [PaymentRedirectionIfNotStudentAttribute]
         public async Task<IActionResult> CheckOut(Guid courseId)
         {
             var result = await paymentService.CheckOutAsync(courseId);

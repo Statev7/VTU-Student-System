@@ -18,11 +18,45 @@
         <div class="d-flex flex-column gap-3 w-50">
             <h5>Resources</h5>
 
-            <div>
-                <p>Link</p>
-                <p>Link</p>
-                <p>Link</p>
-            </div>
+            @if (Model.HasResources)
+            {
+                <section>
+                    @foreach (var resource in Model.Resources)
+                    {
+                        <section class="d-flex gap-2">
+                            <a 
+                                asp-controller="Trainings" 
+                                asp-action="DownloadResource" 
+                                asp-route-id="@resource.Id"
+                                asp-route-courseId="@Model.CourseId">
+                                @resource.Name
+                            </a>
+
+                            @if (this.User.IsAdmin())
+                            {
+                                <div class="d-flex gap-2">
+                                    <a asp-area="Administration"
+                                       asp-controller="Resources"
+                                       asp-action="Delete"
+                                       asp-route-id="@resource.Id"
+                                       asp-route-courseId="@Model.CourseId"
+                                       class="text-decoration-none">
+                                        <i class="fa-solid fa-trash text-dark"></i>
+                                    </a>
+
+                                    <a asp-area="Administration"
+                                       asp-controller="Resources"
+                                       asp-action="Update"
+                                       asp-route-id="@resource.Id"
+                                       class="text-decoration-none">
+                                        <i class="fa-solid fa-pen text-dark"></i>
+                                    </a>
+                                </div>
+                            }
+                        </section>
+                    }
+                </section>
+            }
         </div>
 
     </section>

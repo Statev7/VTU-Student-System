@@ -234,15 +234,16 @@ footer p {
     color: #565656;
 }
 
+.course-price-box {
+    background-color: #333c4e;
+}
+
 .course-details-image-box {
-    width: 400px;
     height: 200px;
-    margin-right: auto;
-    margin-left: auto;
 }
 
 .course-details-image-box img {
-    width: auto;
+    width: 100%;
     height: 100%; 
     object-fit: cover;
 }

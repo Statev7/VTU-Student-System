@@ -20,6 +20,9 @@
 
         public static Result Success(string message)
             => new Result(true, message);
+
+        public static Result Failure(string errorMessage)
+            => new Result(false, errorMessage);
     }
 
     public class Result<TData> : Result

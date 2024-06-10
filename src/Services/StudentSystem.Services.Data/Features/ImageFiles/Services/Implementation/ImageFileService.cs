@@ -1,6 +1,5 @@
 ﻿namespace StudentSystem.Services.Data.Features.ImageFiles.Services.Implementation
 {
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
 
     using SixLabors.ImageSharp;
@@ -8,24 +7,25 @@
     using SixLabors.ImageSharp.Processing;
 
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Helpers.Contracts;
+
+    using static StudentSystem.Services.Data.Infrastructure.Constants.FilesConstants;
 
     public class ImageFileService :IImageFileService
     {
-        private const string FilesFolder = "files";
+        private readonly IFilesHelper filesHelper;
 
-        private readonly IWebHostEnvironment environment;
-
-        public ImageFileService(IWebHostEnvironment environment)
-            => this.environment = environment;
+        public ImageFileService(IFilesHelper filesHelper) 
+            => this.filesHelper = filesHelper;
 
         public async Task<string> CreateToFileSystemAsync(IFormFile imageFile, string folder, int resizeWidth)
         {
             using var loadedImage = await Image.LoadAsync(imageFile.OpenReadStream());
 
-            var path = $"/{FilesFolder}/{folder}";
+            var path = $"/{RootFilesFolderName}/{folder}";
             var name = $"{Guid.NewGuid()}.jpg";
 
-            var storagePath = this.GetStoragePath(path);
+            var storagePath = this.filesHelper.GetStoragePath(path);
             if (!Directory.Exists(storagePath))
             {
                 Directory.CreateDirectory(storagePath);
@@ -46,24 +46,6 @@
         }
 
         public void DeleteFromFileSystem(string filePath)
-        {
-            var path = $"/{FilesFolder}/{filePath}";
-
-            var storagePath = this.GetStoragePath(path);
-
-            if (File.Exists(storagePath))
-            {
-                File.Delete(storagePath);
-            }
-        }
-
-        private string GetStoragePath(string path)
-        {
-            var webRootPath = this.environment.WebRootPath;
-
-            var storagePath = Path.Combine(Directory.GetCurrentDirectory(), $"{webRootPath}{path}".Replace("/", "\\"));
-
-            return storagePath;
-        }
+            => this.filesHelper.DeleteFromFileSystem(filePath);
     }
 }

@@ -52,5 +52,14 @@
 
             public const int DescriptionMaxLength = 2000;
         }
+
+        public static class Resources
+        {
+            public const int NameMaxLength = 64;
+
+            public const int FolderPathMaxLength = 2048;
+
+            public const int ExtansionMaxLength = 16;
+        }
     }
 }

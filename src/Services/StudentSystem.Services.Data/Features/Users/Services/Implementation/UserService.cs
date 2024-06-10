@@ -72,7 +72,7 @@
 
             if (userToUpdate == null)
             {
-                return InvalidUserErrorMessage;
+                return Result.Failure(InvalidUserErrorMessage);
             }
 
             this.Mapper.Map(model, userToUpdate);

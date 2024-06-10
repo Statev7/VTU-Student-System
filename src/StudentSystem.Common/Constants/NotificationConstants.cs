@@ -46,6 +46,26 @@
 
         public const string InvalidLessonErrorMessage = "Such a lesson not exist!";
 
+        // StudentCourses
+
+        public const string EmailNotificationMessage = "The email was sent to {0} students.";
+
+        // Files
+
+        public const string EmptyFileErrorMessage = "The file cannot be empty!";
+
+        public const string PotentialVirusInFileErrorMessage = "File contains potential viruses. Cannot continue with this file!";
+
+        // Resources 
+
+        public const string InvalidResourceErrorMessage = "Such a resource not exist!";
+
+        public const string ResourceNotAccessErrorMessage = "You do not have access to this resource!";
+
+        // Teacher
+
+        public const string SuccessfullyCreateTeacher = "Successfully operation!";
+
         // CRUD
 
         public const string SuccessfullyCreatedMessage = $"Successfully created!";

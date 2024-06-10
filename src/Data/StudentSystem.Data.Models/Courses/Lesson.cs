@@ -23,5 +23,7 @@
         public Guid CourseId { get; set; }
 
         public Course Course { get; set; }
+
+        public ICollection<Resource> Resources { get; set; } = new HashSet<Resource>();
     }
 }

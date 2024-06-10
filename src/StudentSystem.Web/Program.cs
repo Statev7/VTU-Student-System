@@ -25,6 +25,7 @@ namespace StudentSystem.Web
                 .RegisterJobs()
                 .AddHttpContextAccessor()
                 .AddMemoryCache()
+                .AddResponseCaching()
                 .ConfigureApplicationSettings(builder.Configuration)
                 .ConfigureStripe(builder.Configuration)
                 .ConfigureControllersWithViews();
@@ -38,6 +39,7 @@ namespace StudentSystem.Web
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()
+                .UseResponseCaching()
                 .ConfigureEndPoints();
 
             if (app.Environment.IsDevelopment())

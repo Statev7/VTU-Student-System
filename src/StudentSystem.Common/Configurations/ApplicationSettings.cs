@@ -7,5 +7,7 @@
         public string StudentsStatusCronSchedule { get; set; } = null!;
 
         public string CoursesStatusCronSchedule { get; set; } = null!;
+
+        public string VirusTotaApiKey { get; set; } = null!;
     }
 }

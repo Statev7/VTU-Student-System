@@ -17,5 +17,8 @@
 
         public static bool IsStudent(this ClaimsPrincipal claimsPrincipal)
             => claimsPrincipal.IsInRole(StudentRole);
+
+        public static bool IsGuess(this ClaimsPrincipal claimsPrincipal)
+            => claimsPrincipal.IsInRole(GuestRole);
     }
 }

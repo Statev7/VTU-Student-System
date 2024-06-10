@@ -1,6 +1,7 @@
 ﻿namespace StudentSystem.Services.Data.Features.Lessons.Services.Implementation
 {
     using System;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -14,7 +15,9 @@
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Lessons.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Lessons.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Lessons.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Resources.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
 
@@ -33,7 +36,7 @@
             IRepository<Lesson> repository,
             IMapper mapper,
             ICacheService cacheService,
-            ICourseService courseService) 
+            ICourseService courseService)
             : base(repository, mapper)
         {
             this.cacheService = cacheService;
@@ -42,10 +45,25 @@
 
         #region Public Methods
 
+        public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
+            where TEntity : class
+                => await this.cacheService.GetAsync(
+                    CacheKeyGenerator.GenerateKey<IEnumerable<TEntity>>(CachePrefix),
+                    async () =>
+                    {
+                        var lessons = await this.Repository
+                            .AllAsNoTracking()
+                            .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                            .ToListAsync();
+
+                        return lessons;
+                    },
+                    CacheTimeInHours);
+
         public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : class
                 => await this.cacheService.GetAsync(
-                    CacheKeyGenerator.GenerateKey<TEntity>(id.ToString(), id),
+                    CacheKeyGenerator.GenerateKey<TEntity>(id),
                     async () =>
                     {
                         var lesson = await this.Repository
@@ -58,19 +76,48 @@
                     },
                     CacheTimeInHours);
 
+        public async Task<LessonDetailsViewModel> GetDetailsAsync(Guid id)
+        {
+            var courseDetails = await this.cacheService.GetAsync<LessonDetailsViewModel>(
+                CacheKeyGenerator.GenerateKey<LessonDetailsViewModel>(id),
+                async () =>
+                {
+                    var lesson = await this.Repository
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                        .ProjectTo<LessonDetailsViewModel>(this.Mapper.ConfigurationProvider)
+                        .FirstOrDefaultAsync();
+
+                    lesson.Resources = await this.Repository
+                        .AllAsNoTracking()
+                        .Where(x => x.Id.Equals(id))
+                            .SelectMany(x => x.Resources)
+                            .Where(l => !l.IsDeleted)
+                        .ProjectTo<ResourceViewModel>(this.Mapper.ConfigurationProvider)
+                        .ToListAsync();
+
+                    return lesson;
+                },
+                CacheTimeInHours);
+
+            return courseDetails;
+        }
+
         public async Task<Result> CreateAsync(LessonFormBindingModel model)
         {
             var result = await this.ValidateLessonAsync(model);
 
             if (!result.Succeed) 
             {
-                return result.Message;
+                return Result.Failure(result.Message);
             }
 
             var lessonToCreate = this.Mapper.Map<Lesson>(model);
 
             await this.Repository.AddAsync(lessonToCreate);
             await this.Repository.SaveChangesAsync();
+
+            this.cacheService.RemoveByPrefix(CachePrefix);
 
             return Result.Success(SuccessfullyCreatedMessage);
         }
@@ -81,14 +128,14 @@
 
             if (lessonToUpdate == null)
             {
-                return InvalidLessonErrorMessage;
+                return Result.Failure(InvalidLessonErrorMessage);
             }
 
             var result = await this.ValidateLessonAsync(model);
 
             if (!result.Succeed)
             {
-                return result.Message;
+                return Result.Failure(result.Message);
             }
 
             this.Mapper.Map(model, lessonToUpdate);
@@ -96,7 +143,7 @@
             this.Repository.Update(lessonToUpdate);
             await this.Repository.SaveChangesAsync();
 
-            this.cacheService.RemoveByPrefixOrSuffix(id.ToString(), model.CourseId.ToString());
+            this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(CachePrefix, id.ToString(), lessonToUpdate.CourseId.ToString()));
 
             return Result.Success(SuccessfullyUpdatedMessage);
         }
@@ -107,16 +154,22 @@
 
             if (lessonToDelete == null) 
             { 
-                return InvalidLessonErrorMessage;
+                return Result.Failure(InvalidLessonErrorMessage);
             }
 
             this.Repository.Delete(lessonToDelete);
             await this.Repository.SaveChangesAsync();
 
-            this.cacheService.RemoveByPrefixOrSuffix(id.ToString(), lessonToDelete.CourseId.ToString());
+            this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(CachePrefix, id.ToString(), lessonToDelete.CourseId.ToString()));
 
             return Result.Success(SuccessfullyDeletedMessage);
         }
+
+        public async Task<bool> IsExistAsync(Expression<Func<Lesson, bool>> selector)
+            => await this.Repository
+                .AllAsNoTracking()
+                .Where(selector)
+                .AnyAsync();  
 
         #endregion
 

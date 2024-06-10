@@ -5,5 +5,7 @@
         public const string DateFormat = "dd MMMM yyyy";
 
         public const string DisplayUploadNewImage = "Upload New Image";
+
+        public const string AllowImageTypes = ".jpg .png .jpeg";
     }
 }

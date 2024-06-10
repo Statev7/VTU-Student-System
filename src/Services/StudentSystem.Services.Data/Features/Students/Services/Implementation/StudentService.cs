@@ -74,6 +74,7 @@
                     .SelectMany(cs => cs.Course.Lessons)
                         .Where(l => l.StartTime.Date >= DateTime.UtcNow.Date && !l.IsDeleted)
                         .OrderBy(l => l.StartTime)
+                        .Take(10)
                         .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                .ToListAsync();
 
@@ -110,7 +111,7 @@
 
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateAsync)} method");
 
-                return ErrorMesage;
+                return Result.Failure(ErrorMesage);
             }
 
             return Result.Success(SuccessfullyAppliedMessage);
@@ -125,7 +126,7 @@
 
             if (student == null)
             {
-                return InvalidStudentErrorMessage;
+                return Result.Failure(InvalidStudentErrorMessage);
             }
 
             try
@@ -140,7 +141,7 @@
             {
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.ApproveStudentAsync)} method");
 
-                return ErrorMesage;
+                return Result.Failure(ErrorMesage);
             }
 
             return Result.Success(SuccesfullyAprovedOperationMessage);
@@ -195,7 +196,7 @@
 
             if (student == null)
             {
-                return InvalidStudentErrorMessage;
+                return Result.Failure(InvalidStudentErrorMessage);
             }
 
             if (student.IsActive != isActive) 

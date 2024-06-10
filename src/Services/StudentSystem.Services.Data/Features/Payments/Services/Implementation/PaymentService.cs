@@ -19,6 +19,7 @@
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Payments.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;

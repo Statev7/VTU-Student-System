@@ -8,5 +8,7 @@
         Task<IEnumerable<TEntity>> GetAllAsync<TEntity>();
 
         Task<Result> CreateTeacherAsync(string userEmail, BecomeTeacherBindingModel bindingModel);
+
+        Task<bool> IsLeadTheCourseAsync(string userId, Guid courseId);
     }
 }

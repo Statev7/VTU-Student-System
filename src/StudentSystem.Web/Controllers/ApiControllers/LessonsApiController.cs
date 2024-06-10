@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    using StudentSystem.Services.Data.Features.Lessons.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Lessons.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Attributes;
 
@@ -20,7 +19,7 @@
         [ModelOrBadRequest]
         public async Task<IActionResult> Details(Guid id)
         {
-            var lesson = await lessonService.GetByIdAsync<LessonDetailsViewModel>(id);
+            var lesson = await lessonService.GetDetailsAsync(id);
 
             return PartialView("~/Views/Shared/Partials/Lessons/_LessonDetailsPartial.cshtml", lesson);
         }

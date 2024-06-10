@@ -9,6 +9,9 @@
             => $"{prefix}:{typeof(T).Name}:{id}";
 
         public static string GenerateKey<T>(Guid id)
-            => $"{typeof(T).Name}:{id}";
+            => $"{id}:{typeof(T).Name}";
+
+        public static CacheKeyCollection GenerateCollectionKeys(params string[] keys)
+            => new CacheKeyCollection(keys) ;
     }
 }

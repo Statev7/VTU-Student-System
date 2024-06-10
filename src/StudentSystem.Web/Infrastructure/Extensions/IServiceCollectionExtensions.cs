@@ -24,6 +24,10 @@
     using StudentSystem.Services.Data.Features.Lessons.Services.Implementation;
     using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
     using StudentSystem.Services.Data.Features.Payments.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Resources.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Resources.Services.Implementation;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Implementation;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Implementation;
     using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
@@ -31,6 +35,8 @@
     using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Services.Data.Features.Users.Services.Implementation;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Mapper;
+    using StudentSystem.Services.Data.Infrastructure.Helpers.Contracts;
+    using StudentSystem.Services.Data.Infrastructure.Helpers.Implementation;
     using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure.Services.Implementation;
     using StudentSystem.Services.Messaging;
@@ -95,7 +101,9 @@
                 .AddTransient<IImageFileService, ImageFileService>()
                 .AddTransient<IPaymentService, PaymentService>()
                 .AddTransient<IStudentCourseService, StudentCourseService>()
-                .AddTransient<ILessonService, LessonService>();
+                .AddTransient<ILessonService, LessonService>()
+                .AddTransient<IFileService, Services.Data.Infrastructure.Services.Implementation.FileService>()
+                .AddTransient<IResourceService, ResourceService>();
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
@@ -103,7 +111,8 @@
         public static IServiceCollection RegisterHelpers(this IServiceCollection services)
             => services
                 .AddTransient<IControllerHelper, ControllerHelper>()
-                .AddTransient<IHomeHelper, HomeHelper>();
+                .AddTransient<IHomeHelper, HomeHelper>()
+                .AddTransient<IFilesHelper, FilesHelper>();
 
         public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
             => services.AddAutoMapper(typeof(BaseMappingProfile).Assembly);
