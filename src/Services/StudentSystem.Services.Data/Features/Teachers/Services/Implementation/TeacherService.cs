@@ -47,12 +47,12 @@
 
             if (user == null)
             {
-                return InvalidUserErrorMessage;
+                return Result.Failure(InvalidUserErrorMessage);
             }
 
             if (user.Teacher != null)
             {
-                return AlreadyATeacherErrorMessage;
+                return Result.Failure(AlreadyATeacherErrorMessage);
             }
 
             using var transaction = await this.Repository.BeginTransactionAsync();
@@ -80,7 +80,7 @@
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateTeacherAsync)} method");
             }
 
-            return true;
+            return Result.Success(SuccessfullyCreateTeacher);
         }
 
         public async Task<bool> IsLeadTheCourseAsync(string userId, Guid courseId)

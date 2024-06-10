@@ -62,6 +62,10 @@
 
         public const string ResourceNotAccessErrorMessage = "You do not have access to this resource!";
 
+        // Teacher
+
+        public const string SuccessfullyCreateTeacher = "Successfully operation!";
+
         // CRUD
 
         public const string SuccessfullyCreatedMessage = $"Successfully created!";

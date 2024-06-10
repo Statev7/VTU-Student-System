@@ -109,7 +109,7 @@
 
             if (!result.Succeed) 
             {
-                return result.Message;
+                return Result.Failure(result.Message);
             }
 
             var lessonToCreate = this.Mapper.Map<Lesson>(model);
@@ -128,14 +128,14 @@
 
             if (lessonToUpdate == null)
             {
-                return InvalidLessonErrorMessage;
+                return Result.Failure(InvalidLessonErrorMessage);
             }
 
             var result = await this.ValidateLessonAsync(model);
 
             if (!result.Succeed)
             {
-                return result.Message;
+                return Result.Failure(result.Message);
             }
 
             this.Mapper.Map(model, lessonToUpdate);
@@ -154,7 +154,7 @@
 
             if (lessonToDelete == null) 
             { 
-                return InvalidLessonErrorMessage;
+                return Result.Failure(InvalidLessonErrorMessage);
             }
 
             this.Repository.Delete(lessonToDelete);

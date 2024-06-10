@@ -151,7 +151,7 @@
 
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateAsync)} method");
 
-                return ErrorMesage;
+                return Result.Failure(ErrorMesage);
             }
 
             return Result.Success(SuccessfullyCreatedMessage);
@@ -163,7 +163,7 @@
 
             if (courseToUpdate == null)
             {
-                return InvalidCourseErrorMessage;
+                return Result.Failure(InvalidCourseErrorMessage);
             }
 
             var oldImageFolder = courseToUpdate.ImageFolder;
@@ -198,7 +198,7 @@
 
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.UpdateAsync)} method");
 
-                return ErrorMesage;
+                return Result.Failure(ErrorMesage);
             }
 
             return Result.Success(SuccessfullyUpdatedMessage);
@@ -210,7 +210,7 @@
 
             if (courseToDelete == null)
             {
-                return InvalidCourseErrorMessage;
+                return Result.Failure(InvalidCourseErrorMessage);
             }
 
             this.Repository.Delete(courseToDelete);
