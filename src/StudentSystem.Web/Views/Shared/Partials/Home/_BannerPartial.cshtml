@@ -9,7 +9,10 @@
             <h2><em>Students</em> System</h2>
             <div class="main-button">
                 <div class="scroll-to-section">
-                    <a asp-area="Students" asp-controller="StudentApplication" asp-action="Apply">Become a student</a>
+                    @if (this.User.IsGuess() || this.User == null)
+                    {
+                        <a asp-area="Students" asp-controller="StudentApplication" asp-action="Apply">Become a student</a>
+                    }
                 </div>
             </div>
         </div>
