@@ -1,4 +1,5 @@
-﻿@model ResourceBindingModel
+﻿@using StudentSystem.Services.Data.Features.Resources.Constants
+@model ResourceBindingModel
 
 @{
     this.ViewData["Title"] = "Update Resource";
@@ -6,7 +7,7 @@
 
 <div class="container mt-5">
     @{
-        await Html.RenderPartialAsync("_ResourceFormPartial", Model);
+        await Html.RenderPartialAsync("_ResourceFormPartial", Model, new ViewDataDictionary(ViewData) { { ResourcesConstants.UpdateResourceCheckBoxKey, true } });
     }
 </div>
 

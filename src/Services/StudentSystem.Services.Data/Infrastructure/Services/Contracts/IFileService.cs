@@ -5,10 +5,10 @@
 
     public interface IFileService
     {
-        Result<FileServiceModel> GetFile(string path, string name, string extension);
+        Result<FileServiceModel> Get(string path, string name, string extension);
 
-        Task<Result<string>> UploadFileAsync(IFormFile file, string name, string folder);
+        Task<Result<string>> CreateAsync(IFormFile file, string name, string folder);
 
-        void DeleteFromFileSystem(string filePath);
+        void Delete(string filePath);
     }
 }

@@ -3,6 +3,7 @@
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
@@ -72,7 +73,7 @@
                 return InvalidLessonErrorMessage;
             }
 
-            var fileResult = await this.fileService.UploadFileAsync(model.File, model.Name, await this.GenerateFolderAsync(model.LessonId));
+            var fileResult = await this.fileService.CreateAsync(model.File, model.Name, await this.GenerateFolderAsync(model.LessonId));
 
             if (!fileResult.Succeed)
             {
@@ -91,7 +92,7 @@
             }
             catch (Exception ex)
             {
-                this.fileService.DeleteFromFileSystem(fileResult.Data);
+                this.fileService.Delete(fileResult.Data);
 
                 this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.CreateAsync)} method");
 
@@ -110,7 +111,7 @@
                 return Result<FileServiceModel>.Failure(InvalidResourceErrorMessage);
             }
 
-            var result = this.fileService.GetFile(resource.FolderPath, resource.Name, resource.Extension);
+            var result = this.fileService.Get(resource.FolderPath, resource.Name, resource.Extension);
 
             if (!result.Succeed)
             {
@@ -120,9 +121,54 @@
             return result;
         }
 
-        public Task<Result> UpdateAsync(ResourceBindingModel model)
+        public async Task<Result> UpdateAsync(Guid id, ResourceBindingModel model)
         {
-            throw new NotImplementedException();
+            var resourceToUpdate = await this.Repository.FindAsync(id);
+
+            if (resourceToUpdate == null)
+            {
+                return Result.Failure(InvalidResourceErrorMessage);
+            }
+
+            var oldResourcePath = resourceToUpdate.FolderPath;
+
+            try
+            {
+                if (model.UploadNewResource && model.File != null)
+                {
+                    var result = await SaveFileToFileSystemAsync(model.File, model.Name, model.LessonId, resourceToUpdate);
+
+                    if (!result.Succeed) 
+                    {
+                        return Result.Failure(result.Message);
+                    }
+                }
+
+                this.Mapper.Map(model, resourceToUpdate);
+
+                this.Repository.Update(resourceToUpdate);
+                await this.Repository.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(oldResourcePath) && model.UploadNewResource && oldResourcePath != resourceToUpdate.FolderPath)
+                {
+                    this.fileService.Delete(oldResourcePath);
+                }
+
+                this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(id.ToString(), model.LessonId.ToString()));
+            }
+            catch (Exception ex)
+            {
+                if (!string.IsNullOrEmpty(resourceToUpdate.FolderPath) && resourceToUpdate.FolderPath != oldResourcePath)
+                {
+                    this.fileService.Delete(resourceToUpdate.FolderPath);
+                }
+
+                this.logger.LogError(ex, $"An exception occurred in the ${nameof(this.UpdateAsync)} method");
+
+                return ErrorMesage;
+            }
+
+            return Result.Success(SuccessfullyUpdatedMessage);
         }
 
         public async Task<Result> DeleteAsync(Guid id)
@@ -151,6 +197,20 @@
             var folder = $"Resources/{lesson.CourseName}/{lesson.Name}";
 
             return folder;
+        }
+
+        private async Task<Result> SaveFileToFileSystemAsync(IFormFile file, string name, Guid lessonId, Resource resourceToUpdate)
+        {
+            var result = await this.fileService.CreateAsync(file, name, await this.GenerateFolderAsync(lessonId));
+
+            if (!result.Succeed)
+            {
+                return Result.Failure(result.Message);
+            }
+
+            resourceToUpdate.FolderPath = result.Data;
+
+            return true;
         }
 
         #endregion

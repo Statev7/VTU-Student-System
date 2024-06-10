@@ -28,7 +28,7 @@
             this.filesHelper = filesHelper;
         }
 
-        public Result<FileServiceModel> GetFile(string path, string name, string extension)
+        public Result<FileServiceModel> Get(string path, string name, string extension)
         {
             var storagePath = this.filesHelper.GetStoragePath(path);
 
@@ -56,7 +56,7 @@
             return Result<FileServiceModel>.SuccessWith(fileModel);
         }
 
-        public async Task<Result<string>> UploadFileAsync(IFormFile file, string name, string folder)
+        public async Task<Result<string>> CreateAsync(IFormFile file, string name, string folder)
         {
             var result = await this.CheckFileAsync(file);
 
@@ -87,7 +87,7 @@
             return Result<string>.SuccessWith(pathForDb);
         }
 
-        public void DeleteFromFileSystem(string filePath)
+        public void Delete(string filePath)
             => this.filesHelper.DeleteFromFileSystem(filePath);
 
         #region Private Methods

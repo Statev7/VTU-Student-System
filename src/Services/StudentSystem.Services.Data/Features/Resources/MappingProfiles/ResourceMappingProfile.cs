@@ -10,7 +10,7 @@
     {
         public ResourceMappingProfile()
         {
-            this.CreateMap<ResourceBindingModel, Resource>();
+            this.CreateMap<ResourceBindingModel, Resource>().ReverseMap();
 
             this.CreateMap<Resource, ResourceViewModel>();
 

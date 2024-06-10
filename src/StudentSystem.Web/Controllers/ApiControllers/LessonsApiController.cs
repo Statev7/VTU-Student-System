@@ -17,7 +17,6 @@
         [HttpGet]
         [Route("{id}")]
         [ModelOrBadRequest]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
         public async Task<IActionResult> Details(Guid id)
         {
             var lesson = await lessonService.GetDetailsAsync(id);

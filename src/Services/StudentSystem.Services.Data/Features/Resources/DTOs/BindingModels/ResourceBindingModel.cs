@@ -13,7 +13,10 @@
         [StringLength(NameMaxLength)]
         public string Name { get; set; }
 
-        public IFormFile File { get; set; }
+        public IFormFile? File { get; set; }
+
+        [Display(Name = "Upload New Resource")]
+        public bool UploadNewResource { get; set; }
 
         [Display(Name = "Lesson")]
         public Guid LessonId { get; set; }

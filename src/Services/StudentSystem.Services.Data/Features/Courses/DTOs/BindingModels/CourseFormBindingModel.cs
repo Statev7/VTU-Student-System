@@ -7,7 +7,6 @@
     using StudentSystem.Common.Attributes;
     using StudentSystem.Common.Infrastructure.Attributes;
     using StudentSystem.Data.Models.Courses.Enums;
-    using StudentSystem.Services.Data.Features.Courses.Constants;
     using StudentSystem.Services.Data.Features.Teachers.DTOs.ViewModels;
 
     using static StudentSystem.Data.Common.Constants.Course;

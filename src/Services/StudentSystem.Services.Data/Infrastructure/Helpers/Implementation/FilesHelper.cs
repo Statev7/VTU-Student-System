@@ -4,8 +4,6 @@
 
     using StudentSystem.Services.Data.Infrastructure.Helpers.Contracts;
 
-    using static StudentSystem.Services.Data.Infrastructure.Constants.FilesConstants;
-
     public class FilesHelper : IFilesHelper
     {
         private readonly IWebHostEnvironment webHostEnvironment;
@@ -15,9 +13,7 @@
 
         public void DeleteFromFileSystem(string filePath)
         {
-            var path = $"/{RootFilesFolderName}/{filePath}";
-
-            var storagePath = this.GetStoragePath(path);
+            var storagePath = this.GetStoragePath(filePath);
 
             if (File.Exists(storagePath))
             {

@@ -48,6 +48,29 @@
         }
 
         [HttpGet]
+        [ModelOrBadRequest]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var model = await this.resourceService.GetByIdAsync<ResourceBindingModel>(id);
+
+            if (model != null)
+            {
+                model.Lessons = await this.lessonService.GetAllAsync<LessonSelectionItemViewModel>();
+            }
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [ModelStateValidation]
+        public async Task<IActionResult> Update(Guid id, ResourceBindingModel model)
+        {
+            this.TempData.Add(await this.resourceService.UpdateAsync(id, model));
+
+            return this.RedirectToAction(nameof(HomeController.Index), this.controllerHelper.GetName(nameof(HomeController)), new { Area = "" });
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid id, Guid courseId)
         {
             this.TempData.Add(await this.resourceService.DeleteAsync(id));

@@ -13,7 +13,7 @@
 
         Task<Result> CreateAsync(ResourceBindingModel model);
 
-        Task<Result> UpdateAsync(ResourceBindingModel model);
+        Task<Result> UpdateAsync(Guid id, ResourceBindingModel model);
 
         Task<Result> DeleteAsync(Guid id);
     }
