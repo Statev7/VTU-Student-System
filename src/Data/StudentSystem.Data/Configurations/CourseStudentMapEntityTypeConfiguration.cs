@@ -18,6 +18,12 @@
             builder
                 .HasOne(cs => cs.Course)
                 .WithMany(c => c.Students);
+
+            builder
+                .HasOne(csm => csm.Exam)
+                .WithOne(e => e.CourseStudentMap)
+                .HasForeignKey<Exam>(e => new { e.CourseId, e.StudentId })
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -68,5 +68,14 @@
 
             public const int ExtansionMaxLength = 16;
         }
+
+        public static class Exam
+        {
+            public const int MinGradeValue = 2;
+
+            public const int MaxGradeValue = 6;
+
+            public const int CommentMaxLength = 1000;
+        }
     }
 }

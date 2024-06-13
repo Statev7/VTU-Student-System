@@ -11,6 +11,8 @@
 
     using Stripe.Checkout;
 
+    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
+    using StudentSystem.Common.Infrastructure.Cache.Settings;
     using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Courses;

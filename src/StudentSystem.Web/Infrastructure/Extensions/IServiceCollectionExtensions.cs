@@ -18,6 +18,8 @@
     using StudentSystem.Services.Data.Features.City.Services.Implementation;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Courses.Services.Implementation;
+    using StudentSystem.Services.Data.Features.Exam.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Exam.Services.Implementation;
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Contracts;
     using StudentSystem.Services.Data.Features.ImageFiles.Services.Implementation;
     using StudentSystem.Services.Data.Features.Lessons.Services.Contracts;
@@ -103,7 +105,8 @@
                 .AddTransient<IStudentCourseService, StudentCourseService>()
                 .AddTransient<ILessonService, LessonService>()
                 .AddTransient<IFileService, Services.Data.Infrastructure.Services.Implementation.FileService>()
-                .AddTransient<IResourceService, ResourceService>();
+                .AddTransient<IResourceService, ResourceService>()
+                .AddTransient<IExamService, ExamService>();
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
             => services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));

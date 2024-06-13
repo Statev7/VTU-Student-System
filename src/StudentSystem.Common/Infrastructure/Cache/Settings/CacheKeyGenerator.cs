@@ -2,6 +2,9 @@
 {
     public static class CacheKeyGenerator
     {
+        public static string GenerateKey<T>(Guid id, params CacheParameter[] parameters)
+            => GenerateKey<T>(id.ToString(), parameters);
+
         public static string GenerateKey<T>(string prefix, params CacheParameter[] parameters)
             => $"{prefix}:{typeof(T).Name}:{string.Join(":", parameters.Select(x => x.ToString()))}";
 
