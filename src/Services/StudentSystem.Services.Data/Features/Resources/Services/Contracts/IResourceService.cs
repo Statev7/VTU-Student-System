@@ -6,7 +6,7 @@
 
     public interface IResourceService
     {
-        Task<Result<FileServiceModel>> LoadResourceAsync(Guid id);
+        Task<Result<FileServiceModel>> LoadAsync(Guid id);
 
         Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : class;
@@ -16,5 +16,7 @@
         Task<Result> UpdateAsync(Guid id, ResourceBindingModel model);
 
         Task<Result> DeleteAsync(Guid id);
+
+        Task<bool> CurrentUserHasAccessToDonwloadAsync(Guid courseId);
     }
 }

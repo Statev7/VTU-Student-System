@@ -11,6 +11,10 @@
         public CurrentUserService(IHttpContextAccessor httpContextAccessor) 
             => this.httpContextAccessor = httpContextAccessor;
 
-        public string? GetUserId() => this.httpContextAccessor.HttpContext?.User?.GetUserId();
+        public string? GetUserId() 
+            => this.httpContextAccessor.HttpContext?.User?.GetUserId();
+
+        public bool IsAdmin()
+            => this.httpContextAccessor.HttpContext?.User?.IsAdmin() ?? false;
     }
 }

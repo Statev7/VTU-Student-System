@@ -61,7 +61,7 @@
         [ResourceAccess]
         public async Task<IActionResult> DownloadResource(Guid id, Guid courseId)
         {
-            var result = await this.resourceService.LoadResourceAsync(id);
+            var result = await this.resourceService.LoadAsync(id);
 
             if (!result.Succeed)
             {

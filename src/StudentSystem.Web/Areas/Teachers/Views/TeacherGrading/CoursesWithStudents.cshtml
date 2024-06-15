@@ -29,7 +29,10 @@
 
                         @if (!student.Grade.HasValue)
                         {
-                            <a asp-action="AssignGrade"
+                            <a 
+                               asp-area="Teachers"
+                               asp-controller="TeacherGrading"
+                               asp-action="AssignGrade"
                                asp-route-studentId="@student.Id"
                                asp-route-courseId="@Model.RequestData.CourseId"
                                class="btn btn-success align-self-center" style="height: 40px">

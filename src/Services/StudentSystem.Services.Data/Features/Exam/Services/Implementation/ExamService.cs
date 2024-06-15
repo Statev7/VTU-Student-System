@@ -12,6 +12,8 @@
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
     using StudentSystem.Services.Data.Infrastructure.Services.Contracts;
 
+    using static StudentSystem.Common.Constants.NotificationConstants;
+
     public class ExamService : BaseService<Exam>, IExamService
     {
         private readonly ICurrentUserService currentUserService;
@@ -42,36 +44,34 @@
 
             var examToCreate = this.Mapper.Map<Exam>(model);
 
-            //TODO: Update credits of the student
-
             await this.Repository.AddAsync(examToCreate);
 
             await this.Repository.SaveChangesAsync();
 
-            return Result.Success("");
+            return Result.Success(SuccessfullyAssignedGradeMessage);
         }
 
         private async Task<Result> ValidateExamAsync(Guid studentId, Guid courseId)
         {
-            var isAlreadyHasAGrade = await this.studentCourseService.HasGradeAsync(studentId, courseId);
-
-            if (isAlreadyHasAGrade)
-            {
-                return Result.Failure("");
-            }
-
             var isStudentCourseMapNotExist = !await this.studentCourseService.IsExistAsync(studentId, courseId);
 
             if (isStudentCourseMapNotExist)
             {
-                return Result.Failure("");
+                return Result.Failure(StudentCourseRelationNotFoundErrorMessage);
+            }
+
+            var isAlreadyHasAGrade = await this.studentCourseService.HasGradeAsync(studentId, courseId);
+
+            if (isAlreadyHasAGrade)
+            {
+                return Result.Failure(StudentAlreadyHadGradeErrorMessage);
             }
 
             var isTeacherNotLeadTheCourse = !await this.teacherService.IsLeadTheCourseAsync(this.currentUserService.GetUserId(), courseId);
 
             if (isTeacherNotLeadTheCourse)
             {
-                return Result.Failure("");
+                return Result.Failure(TeacherNotPermissionToAssignGradeErrorMessage);
             }
 
             return true;
