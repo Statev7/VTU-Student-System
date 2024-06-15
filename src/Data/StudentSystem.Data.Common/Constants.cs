@@ -19,6 +19,13 @@
             public const int AboutMeMaxLength = 20000;
         }
 
+        public static class Student
+        {
+            public const int PhoneNumberMaxLength = 32;
+
+            public const string PhoneNumberRegex = @"^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
+        }
+
         public static class City
         {
             public const int NameMaxLength = 128;
@@ -60,6 +67,15 @@
             public const int FolderPathMaxLength = 2048;
 
             public const int ExtansionMaxLength = 16;
+        }
+
+        public static class Exam
+        {
+            public const int MinGradeValue = 2;
+
+            public const int MaxGradeValue = 6;
+
+            public const int CommentMaxLength = 1000;
         }
     }
 }

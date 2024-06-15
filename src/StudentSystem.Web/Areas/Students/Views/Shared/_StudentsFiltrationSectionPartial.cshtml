@@ -1,0 +1,33 @@
+﻿@model StudentsInCourseRequestData
+
+@{
+    var controllerName = this.Context?.Request?.RouteValues["controller"]?.ToString();
+    var actionName = this.Context?.Request?.RouteValues["action"]?.ToString();
+}
+
+<section>
+    <form method="get" asp-controller=@controllerName asp-action=@actionName
+          asp-route-currentPage="@Model.CurrentPage"
+          asp-route-courseId="@Model.CourseId"
+          class="row row-gap-2 justify-content-center">
+
+        <div class="col-lg-4 mt-2 mt-lg-0">
+            <select asp-for="CourseId" class="form-select">
+                <option value="">Select Course</option>
+                @foreach (var course in Model.Courses)
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-lg-4">
+            <input asp-for="SearchTerm" id="searchTerm" placeholder="Search by name" type="search" class="form-control" />
+        </div>
+
+        <div class="col-lg-1 mt-2 mt-lg-0 align-self-end">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> </button>
+        </div>
+
+    </form>
+</section>

@@ -209,6 +209,46 @@ namespace StudentSystem.Data.Migrations
                     b.ToTable("CourseStudents");
                 });
 
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Exam", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Grade")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId", "StudentId")
+                        .IsUnique();
+
+                    b.ToTable("Exams");
+                });
+
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Lesson", b =>
                 {
                     b.Property<Guid>("Id")
@@ -525,6 +565,10 @@ namespace StudentSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId")
@@ -636,6 +680,17 @@ namespace StudentSystem.Data.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.Exam", b =>
+                {
+                    b.HasOne("StudentSystem.Data.Models.Courses.CourseStudentMap", "CourseStudentMap")
+                        .WithOne("Exam")
+                        .HasForeignKey("StudentSystem.Data.Models.Courses.Exam", "CourseId", "StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CourseStudentMap");
+                });
+
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Lesson", b =>
                 {
                     b.HasOne("StudentSystem.Data.Models.Courses.Course", "Course")
@@ -733,6 +788,12 @@ namespace StudentSystem.Data.Migrations
                     b.Navigation("Payments");
 
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("StudentSystem.Data.Models.Courses.CourseStudentMap", b =>
+                {
+                    b.Navigation("Exam")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("StudentSystem.Data.Models.Courses.Lesson", b =>

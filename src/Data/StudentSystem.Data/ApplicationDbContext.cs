@@ -32,6 +32,8 @@
 
         public DbSet<Resource> Resources { get; set; }
 
+        public DbSet<Exam> Exams { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

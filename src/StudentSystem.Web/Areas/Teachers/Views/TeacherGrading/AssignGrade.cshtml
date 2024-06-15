@@ -1,0 +1,41 @@
+﻿@model CreateExamBindingModel
+
+@{
+    this.ViewData["Title"] = "Assing Grade";
+}
+
+@section HeadScripts
+{
+    @{
+        await Html.RenderPartialAsync("_TinymceScriptsPartial");
+    }
+}
+
+<div class="col-md-8 offset-md-2 bg-white p-4 shadow rounded">
+    <h2 class="text-center mb-4">
+        <span class="border-bottom border-info">Assing Grade</span>
+    </h2>
+    <form method="post">
+        <input type="hidden" name="studentId" value="@Model.StudentId" />
+        <input type="hidden" name="courseId" value="@Model.CourseId" />
+        <div class="form-group mb-3">
+            <label asp-for="Grade"></label>
+            <input asp-for="Grade" class="form-control p-2">
+            <span asp-validation-for="Grade" class="error"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Comment"></label>
+            <textarea asp-for="Comment" class="p-2"> </textarea>
+            <span asp-validation-for="Comment" class="error"></span>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="w-25 btn btn-success shadow p-2">Submit</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

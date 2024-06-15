@@ -50,6 +50,8 @@
 
         public const string EmailNotificationMessage = "The email was sent to {0} students.";
 
+        public const string StudentCourseRelationNotFoundErrorMessage = "The relationship between the student and the course was not found!";
+
         // Files
 
         public const string EmptyFileErrorMessage = "The file cannot be empty!";
@@ -65,6 +67,16 @@
         // Teacher
 
         public const string SuccessfullyCreateTeacher = "Successfully operation!";
+
+        // Exam
+
+        public const string SuccessfullyAssignedGradeMessage = "Grade successfully assigned";
+
+        public const string StudentAlreadyHadGradeErrorMessage = "This student already has a grade!";
+
+        public const string TeacherNotPermissionToAssignGradeErrorMessage = "You do not have permission to assign a grade!";
+
+        public const string InvalidExamErrorMessage = "This resource not exist!";
 
         // CRUD
 

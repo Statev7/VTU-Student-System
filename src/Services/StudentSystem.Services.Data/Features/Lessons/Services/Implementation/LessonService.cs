@@ -30,7 +30,7 @@
 
         private const string CachePrefix = nameof(Lesson);
 
-        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(8);
+        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(1);
 
         public LessonService(
             IRepository<Lesson> repository,

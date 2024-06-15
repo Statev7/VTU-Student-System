@@ -8,6 +8,8 @@
 
         public const string StudentsArea = "Students";
 
+        public const string TeachersArea = "Teachers";
+
         public const string PaymentArea = "Payment";
 
         public const string DefaultConnectionString = "DefaultConnection";

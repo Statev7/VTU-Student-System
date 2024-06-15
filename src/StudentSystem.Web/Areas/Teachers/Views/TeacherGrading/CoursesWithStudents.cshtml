@@ -1,0 +1,26 @@
+﻿@model ListStudentsViewModel
+
+@{
+    this.ViewData["Title"] = "My Courses";
+}
+
+<section class="offset-2 col-8 mt-5">
+
+    @await Html.PartialAsync("~/Areas/Students/Views/Shared/_StudentsFiltrationSectionPartial.cshtml", Model.RequestData)
+
+
+    <section class="mt-5">
+
+        @if (Model.StudentsPageList.HasEntities)
+        {
+            @await Html.PartialAsync("~/Areas/Teachers/Views/Shared/_StudentsListPartial.cshtml", Model)
+        }
+        else
+        {
+            @await Html.PartialAsync("~/Views/Shared/_NoDataToDisplayPartial.cshtml");
+        }
+
+    </section>
+
+</section>
+

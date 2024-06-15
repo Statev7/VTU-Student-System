@@ -16,6 +16,8 @@
     using StudentSystem.Services.Data.Features.Resources.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.Resources.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Resources.Services.Contracts;
+    using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
+    using StudentSystem.Services.Data.Features.Teachers.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Abstaction.Services;
     using StudentSystem.Services.Data.Infrastructure.DTOs.ServiceModels;
@@ -26,22 +28,31 @@
     public class ResourceService : BaseService<Resource>, IResourceService
     {
         private readonly IFileService fileService;
+        private readonly ICurrentUserService currentUserService;
+        private readonly IStudentCourseService studentCourseService;
+        private readonly ITeacherService teacherService;
         private readonly ILessonService lessonService;
         private readonly ICacheService cacheService;
         private readonly ILogger<ResourceService> logger;
 
-        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(12);
+        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(1);
 
         public ResourceService(
             IRepository<Resource> repository,
             IMapper mapper,
             IFileService fileService,
+            ICurrentUserService currentUserService,
+            IStudentCourseService studentCourseService,
+            ITeacherService teacherService,
             ILessonService lessonService,
             ICacheService cacheService,
             ILogger<ResourceService> logger)
             : base(repository, mapper)
         {
             this.fileService = fileService;
+            this.currentUserService = currentUserService;
+            this.studentCourseService = studentCourseService;
+            this.teacherService = teacherService;
             this.lessonService = lessonService;
             this.cacheService = cacheService;
             this.logger = logger;
@@ -102,7 +113,7 @@
             return Result.Success(SuccessfullyCreatedMessage);
         }
 
-        public async Task<Result<FileServiceModel>> LoadResourceAsync(Guid id)
+        public async Task<Result<FileServiceModel>> LoadAsync(Guid id)
         {
             var resource = await this.GetByIdAsync<ResourceDetailsServiceModel>(id);
 
@@ -186,6 +197,22 @@
             this.cacheService.RemoveByCollectionKeysPrefixes(new CacheKeyCollection(id.ToString(), resourceToDelete.LessonId.ToString()));
 
             return Result.Success(SuccessfullyDeletedMessage);
+        }
+
+        public async Task<bool> CurrentUserHasAccessToDonwloadAsync(Guid courseId)
+        {
+            var userId = this.currentUserService.GetUserId();
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return false;
+            }
+
+            var hasAccess = await this.studentCourseService.IsUserRegisteredInCourseAsync(courseId, userId) ||
+                            await this.teacherService.IsLeadTheCourseAsync(userId, courseId) ||
+                            this.currentUserService.IsAdmin();
+
+            return hasAccess;
         }
 
         #region Private Methods
