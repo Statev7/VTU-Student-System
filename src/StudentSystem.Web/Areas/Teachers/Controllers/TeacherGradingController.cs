@@ -33,16 +33,35 @@
         [HttpGet]
         [TeacherCourseAssignmentRequired]
         public IActionResult AssignGrade(Guid studentId, Guid courseId)
-            => this.View(new ExamBindingModel { StudentId = studentId, CourseId = courseId });
+            => this.View(new CreateExamBindingModel { StudentId = studentId, CourseId = courseId });
 
         [HttpPost]
         [TeacherCourseAssignmentRequired]
         [ModelStateValidation]
-        public async Task<IActionResult> AssignGrade(ExamBindingModel model)
+        public async Task<IActionResult> AssignGrade(CreateExamBindingModel model)
         {
             this.TempData.Add(await this.examService.CreateAsync(model));
 
-            return this.RedirectToAction(nameof(this.CoursesWithStudents));
+            return this.RedirectToAction(nameof(this.CoursesWithStudents), new {courseId = model.CourseId});
+        }
+
+        [HttpGet]
+        [TeacherCourseAssignmentRequired]
+        public async Task<IActionResult> UpdateGrade(Guid examId)
+        {
+            var exam = await this.examService.GetByIdAsync<UpdateExamBindingModel>(examId);
+
+           return this.View(exam);
+        }
+
+        [HttpPost]
+        [TeacherCourseAssignmentRequired]
+        [ModelStateValidation]
+        public async Task<IActionResult> UpdateGrade(Guid examId, Guid courseId, UpdateExamBindingModel model)
+        {
+            this.TempData.Add(await this.examService.UpdateAsync(examId, model));
+
+            return this.RedirectToAction(nameof(this.CoursesWithStudents), new { courseId });
         }
     }
 }

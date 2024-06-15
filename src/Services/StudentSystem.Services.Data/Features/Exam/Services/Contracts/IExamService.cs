@@ -5,6 +5,11 @@
 
     public interface IExamService
     {
-        Task<Result> CreateAsync(ExamBindingModel model);
+        Task<TEnity> GetByIdAsync<TEnity>(Guid id)
+            where TEnity : class;
+
+        Task<Result> CreateAsync(CreateExamBindingModel model);
+
+        Task<Result> UpdateAsync(Guid id, UpdateExamBindingModel model);
     }
 }

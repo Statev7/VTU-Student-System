@@ -35,7 +35,7 @@
         private readonly ICacheService cacheService;
         private readonly ILogger<ResourceService> logger;
 
-        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(12);
+        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(1);
 
         public ResourceService(
             IRepository<Resource> repository,

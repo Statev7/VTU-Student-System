@@ -10,10 +10,15 @@
     {
         public ExamMappingProfile()
         {
-            this.CreateMap<Exam, ExamBindingModel>()
+            this.CreateMap<Exam, CreateExamBindingModel>()
                 .ForMember(d => d.Comment, conf => conf.MapFrom(s => HtmlHelper.Sanitize(s.Comment)));
 
-            this.CreateMap<ExamBindingModel, Exam>();
+            this.CreateMap<CreateExamBindingModel, Exam>();
+
+            this.CreateMap<Exam, UpdateExamBindingModel>()
+                .ForMember(d => d.Comment, conf => conf.MapFrom(s => HtmlHelper.Sanitize(s.Comment)));
+
+            this.CreateMap<UpdateExamBindingModel, Exam>();
         }
     }
 }

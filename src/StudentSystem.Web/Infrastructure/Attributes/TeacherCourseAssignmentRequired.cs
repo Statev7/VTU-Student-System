@@ -42,6 +42,8 @@
 
                 return;
             }
+
+            await base.OnActionExecutionAsync(context, next);
         }
 
         #region Private Methods

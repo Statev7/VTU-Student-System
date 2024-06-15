@@ -76,6 +76,8 @@
 
         public const string TeacherNotPermissionToAssignGradeErrorMessage = "You do not have permission to assign a grade!";
 
+        public const string InvalidExamErrorMessage = "This resource not exist!";
+
         // CRUD
 
         public const string SuccessfullyCreatedMessage = $"Successfully created!";

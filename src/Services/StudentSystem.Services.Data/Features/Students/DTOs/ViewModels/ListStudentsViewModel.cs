@@ -5,7 +5,7 @@
 
     public class ListStudentsViewModel
     {
-        public IPageList<StudentNamesViewModel> StudentsPageList { get; set; }
+        public IPageList<StudentWithGradeViewModel> StudentsPageList { get; set; }
 
         public StudentsInCourseRequestData RequestData { get; set; }
     }

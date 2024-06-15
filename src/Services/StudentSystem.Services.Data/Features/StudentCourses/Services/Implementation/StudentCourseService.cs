@@ -60,7 +60,7 @@
                         .WhereIf(!string.IsNullOrEmpty(requestData.SearchTerm), x => x.Student.User.FirstName.Contains(requestData.SearchTerm))
                         .OrderBy(x => x.Student.User.FirstName)
                         .ThenBy(x => x.Student.User.LastName)
-                        .ProjectTo<StudentNamesViewModel>(this.Mapper.ConfigurationProvider)
+                        .ProjectTo<StudentWithGradeViewModel>(this.Mapper.ConfigurationProvider)
                         .ToPagedAsync(requestData.CurrentPage, StudentsPerPage);
 
             requestData.Courses = await this.teacherService.GetMyCoursesAsync();

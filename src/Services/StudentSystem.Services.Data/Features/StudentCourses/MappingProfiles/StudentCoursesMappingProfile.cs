@@ -8,7 +8,7 @@
     {
         public StudentCoursesMappingProfile()
         {
-            this.CreateMap<CourseStudentMap, StudentNamesViewModel>()
+            this.CreateMap<CourseStudentMap, StudentWithGradeViewModel>()
                 .ForMember(s => s.Id, conf => conf.MapFrom(s => s.StudentId))
                 .ForMember(s => s.FirstName, conf => conf.MapFrom(s => s.Student.User.FirstName))
                 .ForMember(s => s.LastName, conf => conf.MapFrom(s => s.Student.User.LastName))

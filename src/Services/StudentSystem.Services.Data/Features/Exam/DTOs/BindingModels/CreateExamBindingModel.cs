@@ -4,7 +4,7 @@
 
     using static StudentSystem.Data.Common.Constants.Exam;
 
-    public class ExamBindingModel
+    public class CreateExamBindingModel
     {
         [Range(MinGradeValue, MaxGradeValue)]
         public int? Grade { get; set; }

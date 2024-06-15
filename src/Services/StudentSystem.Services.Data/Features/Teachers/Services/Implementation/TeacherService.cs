@@ -25,10 +25,7 @@
 
     public class TeacherService : BaseService<Teacher>, ITeacherService
     {
-        private readonly TimeSpan CacheTimeInHours = TimeSpan.FromHours(1);
-
         private readonly IUserService userService;
-        private readonly ICacheService cacheService;
         private readonly ICurrentUserService currentUserService;
         private readonly ILogger<TeacherService> logger;
 
@@ -36,13 +33,11 @@
             IRepository<Teacher> repository,
             IMapper mapper,
             IUserService userService,
-            ICacheService cacheService,
             ICurrentUserService currentUserService,
             ILogger<TeacherService> logger)
             : base(repository, mapper)
         {
             this.userService = userService;
-            this.cacheService = cacheService;
             this.currentUserService = currentUserService;
             this.logger = logger;
         }
