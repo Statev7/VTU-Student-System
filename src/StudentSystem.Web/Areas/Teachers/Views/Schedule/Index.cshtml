@@ -1,0 +1,51 @@
+﻿@model IPageList<LessonScheduleViewModel>
+
+@{
+    this.ViewData["Title"] = "My Schedule";
+}
+
+<section class="mt-5">
+    <table class="table table-bordered">
+        <thead class="text-center">
+            <tr>
+                <th scope="col">Course</th>
+                <th scope="col">Lesson</th>
+                <th scope="col">Date held</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lesson in Model.Entities)
+            {
+                <tr>
+                    <th class="col-2" scope="row">@lesson.CourseName</th>
+                    <td class="col-6">@lesson.Name</td>
+                    <td class="col-3 text-center">
+                        @{
+                            await Html.RenderPartialAsync("~/Views/Shared/Partials/Lessons/_LessonMetaDataPartial.cshtml", lesson);
+                        }
+                    </td>
+                    <td class="col-1 text-center">
+                        <a 
+                            asp-area="" 
+                            asp-controller="Trainings" 
+                            asp-action="Details" 
+                            asp-route-id="@lesson.CourseId"
+                           asp-fragment="collapse-@lesson.Id"
+                            class="btn btn-primary">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.HasPagination)
+    {
+        <div class="row">
+            <div class="mt-4 pt-2 col-lg-12">
+                @await Html.PartialAsync("_Pagination", Model)
+            </div>
+        </div>
+    }
+
+</section>

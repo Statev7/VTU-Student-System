@@ -8,7 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 
-    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
     using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
@@ -25,6 +25,8 @@
 
     public class TeacherService : BaseService<Teacher>, ITeacherService
     {
+        private const int LessonsPerPage = 6;
+
         private readonly IUserService userService;
         private readonly ICurrentUserService currentUserService;
         private readonly ILogger<TeacherService> logger;
@@ -58,13 +60,25 @@
                 .ProjectTo<CourseSelectionItemViewModel>(this.Mapper.ConfigurationProvider)
                 .ToListAsync();
 
+        public async Task<IPageList<TEntity>> GetMyScheduleAsync<TEntity>(int currentPage)
+            where TEntity : class
+            => await this.Repository
+                .AllAsNoTracking()
+                .Where(x => x.ApplicationUserId.Equals(this.currentUserService.GetUserId()))
+                    .SelectMany(x => x.Courses)
+                    .Where(x => x.IsActive)
+                        .SelectMany(c => c.Lessons)
+                        .Where(x => x.StartTime.Date >= DateTime.UtcNow.Date)
+                        .OrderBy(x => x.StartTime)
+                        .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                .ToPagedAsync(currentPage, LessonsPerPage);
+
         public async Task<Guid> GetIdByUserId(string userId)
             => await this.Repository
                 .AllAsNoTracking()
                 .Where(t => t.ApplicationUserId.Equals(userId))
                 .Select(t => t.Id)
                 .FirstOrDefaultAsync();
-
 
         public async Task<Result> CreateTeacherAsync(string userEmail, BecomeTeacherBindingModel bindingModel)
         {
