@@ -5,6 +5,7 @@
     using StudentSystem.Common.Infrastructure.Collections.Contracts;
     using StudentSystem.Data.Models.Users;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure;
     using StudentSystem.Services.Data.Infrastructure.Contracts;
 
@@ -18,6 +19,8 @@
 
         Task<IEnumerable<TEntity>> GetCoursesAsync<TEntity>(string userId) 
             where TEntity : class;
+
+        Task<StudentTrainingsInformationViewModel> GetTrainingsInformationAsync();
 
         Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel);
 

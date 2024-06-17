@@ -20,8 +20,8 @@
                 var controllerHelper = context.HttpContext.RequestServices.GetRequiredService<IControllerHelper>();
 
                 context.Result = new RedirectToActionResult(
-                    nameof(StudentApplicationController.Apply),
-                    controllerHelper.GetName(nameof(StudentApplicationController)),
+                    nameof(ApplicationController.Apply),
+                    controllerHelper.GetName(nameof(ApplicationController)),
                     new { area = StudentsArea });
 
                 return;

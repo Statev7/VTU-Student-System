@@ -13,7 +13,9 @@
     using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Users;
+    using StudentSystem.Services.Data.Features.Courses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Students.DTOs.BindingModels;
+    using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
     using StudentSystem.Services.Data.Features.Users.Services.Contracts;
     using StudentSystem.Services.Data.Infrastructure;
@@ -26,6 +28,7 @@
 
     public class StudentService : BaseService<Student>, IStudentService
     {
+        private const int MinGradeToGetCredits = 3;
         private const int EntitiesPerPage = 9;
 
         private readonly ICurrentUserService currentUserService;
@@ -88,6 +91,39 @@
                         .OrderBy(cs => cs.Course.Name)
                         .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
                 .ToListAsync();
+
+        public async Task<StudentTrainingsInformationViewModel> GetTrainingsInformationAsync()
+        {
+            var userId = this.currentUserService.GetUserId();
+
+            var courses = await this.Repository
+                .AllAsNoTracking()
+                .Where(s => s.ApplicationUserId.Equals(userId))
+                .SelectMany(s => s.Courses)
+                    .OrderBy(csm => csm.CreatedOn)
+                    .ProjectTo<StudentDashboardCourseViewModel>(this.Mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            var averageGrade = courses
+                .Where(x => x.ExamGrade.HasValue)
+                .Average(x => x.ExamGrade);
+
+            var totalCredits = await this.Repository
+                .AllAsNoTracking()
+                .Where(s => s.ApplicationUserId.Equals(userId))
+                .SelectMany(s => s.Courses)
+                .Where(csm => csm.Exam != null && csm.Exam.Grade >= MinGradeToGetCredits)
+                .SumAsync(csm => csm.Course.Credits);
+
+            var model = new StudentTrainingsInformationViewModel()
+            {
+                Courses = courses,
+                AvgGrade = averageGrade,
+                TotalCredits = totalCredits,
+            };
+
+            return model;
+        }
 
         public async Task<Result> CreateAsync(BecomeStudentBindingModel bindingModel)
         {

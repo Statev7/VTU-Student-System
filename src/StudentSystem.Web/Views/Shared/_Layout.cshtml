@@ -55,7 +55,6 @@
                                 </a>
                             </li>
                         }
-
                         else if (this.User.IsTeacher())
                         {
                             <li class="nav-item dropdown">
@@ -71,6 +70,15 @@
                                 </ul>
                             </li>
                         }
+                        else if (this.User.IsStudent())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Students" asp-controller="Profile" asp-action="Trainings">
+                                    <span>Trainings</span>
+                                </a>
+                            </li>
+                        }
+
                     </ul>
 
                     <partial name="_LoginPartial" />

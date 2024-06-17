@@ -14,16 +14,14 @@
     using StudentSystem.Web.Infrastructure.Helpers.Contracts;
 
     using static StudentSystem.Common.Constants.GlobalConstants;
-    using static StudentSystem.Web.Infrastructure.Constants;
 
-    [Area(StudentsArea)]
-    public class StudentApplicationController : Controller
+    public class ApplicationController : BaseStudentController
     {
         private readonly IStudentService studentService;
         private readonly ICityService cityService;
         private readonly IControllerHelper controllerHelper;
 
-        public StudentApplicationController(
+        public ApplicationController(
             IStudentService studentService, 
             ICityService cityService,
             IControllerHelper controllerHelper)

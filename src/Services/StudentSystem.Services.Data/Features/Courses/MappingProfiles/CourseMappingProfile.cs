@@ -43,6 +43,8 @@
                 .ForMember(d => d.Lessons, conf => conf.Ignore())
                 .ForMember(d => d.StartDate, conf => conf.MapFrom(s => s.StartDate.ToString(CourseConstants.DateFormat)))
                 .ForMember(d => d.Duration, conf => conf.MapFrom(s => (int)Math.Ceiling((s.EndDate - s.StartDate).TotalDays / 7)));
+
+            this.CreateMap<Course, StudentDashboardCourseViewModel>();
         }
     }
 }

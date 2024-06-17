@@ -1,0 +1,48 @@
+﻿@model CourseWithExamDetailsViewModel
+
+<section class="p-4 text-white d-flex flex-column course-grade-banner">
+
+    <h4 class="text-center mt-2">
+        <a asp-controller="Trainings" asp-action="Details" asp-route-id="@Model.Id" class="text-decoration-none text-white">
+           <strong>@Model.Name</strong>
+       </a>
+    </h4>
+
+    <section class="mt-4 d-flex align-items-center">
+
+        <section class="col-4 d-flex gap-2 justify-content-center">
+            <section class="align-self-center">
+                <i class="fa-regular fa-calendar fa-2xl"></i>
+            </section>
+            <section class="course-duration">
+                <p>Start Date: <strong>@Model.FormatedStartDate</strong></p>
+                <p>Start Date: <strong>@Model.FormatedEndDate</strong></p>
+            </section>
+        </section>
+
+        <section class="col-4 d-flex gap-2 justify-content-center">
+            <section class="align-self-center">
+                <i class="fa-solid fa-bullseye fa-2xl"></i>
+            </section>
+            <section class="align-self-center">
+                <p>Grade: <strong>@Model.FormatedGrade</strong></p>
+            </section>
+        </section>
+
+        <section class="col-4 d-flex gap-2 justify-content-center">
+            <section class="align-self-center">
+                <i class="fa-solid fa-tag fa-2xl"></i>
+            </section>
+            <section class="align-self-center">
+                <p>Credits: <strong>@Model.FormatedCredits</strong></p>
+            </section>
+        </section>
+
+    </section>
+
+    <section class="mt-5">
+        <h5>Comment</h5>
+        @Html.Raw(Model.GradeComment)
+    </section>
+
+</section>
