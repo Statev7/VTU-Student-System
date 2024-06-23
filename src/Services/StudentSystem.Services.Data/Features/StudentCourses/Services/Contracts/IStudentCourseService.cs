@@ -2,12 +2,16 @@
 {
     using StudentSystem.Services.Data.Features.StudentCourses.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.StudentCourses.DTOs.RequestDataModels;
+    using StudentSystem.Services.Data.Features.StudentCourses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels;
     using StudentSystem.Services.Data.Infrastructure;
 
     public interface IStudentCourseService
     {
         Task<ListStudentsViewModel> GetStudentsByCourseAsync(StudentsInCourseRequestData requestData);
+
+        Task<TEntity?> GetCourseWithExamDetailsAsync<TEntity>(Guid courseId)
+            where TEntity : class;
 
         Task<bool> IsUserRegisteredInCourseAsync(Guid courseId, string userId);
 

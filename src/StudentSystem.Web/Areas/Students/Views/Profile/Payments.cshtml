@@ -1,0 +1,50 @@
+﻿@model IPageList<PaymentDetailsViewModel>
+
+@{
+    this.ViewData["Title"] = "Payments";
+}
+
+<section class="mt-5">
+
+    <table class="table table-bordered">
+
+        <thead>
+            <tr class="text-center table-light">
+                <th scope="col">Date</th>
+                <th scope="col">Course</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Type</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var payment in Model.Entities)
+            {
+                <tr class="text-center table-light">
+                    <td>@payment.PurchaseDateFormated</td>
+                    <td>@payment.CourseName</td>
+                    <td>@payment.PaymentShipping.CustomerEmail</td>
+                    <td>@payment.PaymentShipping.PaymentMethod</td>
+                    <td>@payment.PaymentShipping.AmountTotal.ToString("F2") @payment.PaymentShipping.Currency.ToUpper()</td>
+                    <td>@payment.Status</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+
+    @if (Model.HasPagination)
+    {
+        <div class="row">
+            <div class="mt-4 pt-2 col-lg-12">
+                @await Html.PartialAsync("_Pagination", Model)
+            </div>
+        </div>
+    }
+
+</section>

@@ -11,8 +11,7 @@
 
     using Stripe.Checkout;
 
-    using StudentSystem.Common.Infrastructure.Cache.Services.Contracts;
-    using StudentSystem.Common.Infrastructure.Cache.Settings;
+    using StudentSystem.Common.Infrastructure.Collections.Contracts;
     using StudentSystem.Common.Infrastructure.Extensions;
     using StudentSystem.Data.Common.Repositories;
     using StudentSystem.Data.Models.Courses;
@@ -20,6 +19,7 @@
     using StudentSystem.Services.Data.Features.Courses.DTOs.ServiceModels;
     using StudentSystem.Services.Data.Features.Courses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Payments.DTOs.ServiceModels;
+    using StudentSystem.Services.Data.Features.Payments.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Payments.Services.Contracts;
     using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
@@ -31,6 +31,10 @@
 
     public class PaymentService : BaseService<Payment>, IPaymentService
     {
+        private const int AmountMultiplier = 100;
+
+        private const int PaymentsPerPage = 10;
+
         private readonly ICourseService courseService;
         private readonly ICurrentUserService currentUserService;
         private readonly IStudentService studentService;
@@ -131,6 +135,48 @@
             return result; 
         }
 
+        public async Task<IPageList<PaymentDetailsViewModel>> GetStudentPaymentsAsync(int currentPage)
+        {
+            var studentId = await this.studentService.GetIdByUserIdAsync(this.currentUserService.GetUserId());
+
+            var payments = await this.Repository.AllAsNoTracking()
+                .Where(x => x.StudentId.Equals(studentId))
+                .Select(x => new PaymentDetailsViewModel
+                {
+                    CourseName = x.Course.Name,
+                    Status = x.Status,
+                    CreatedOn = x.CreatedOn,
+                    SessionId = x.SessionId,
+                })
+                .ToPagedAsync(currentPage, PaymentsPerPage);
+
+            var paymentTasks = payments.Entities.Select(x => Task.Run(async () =>
+            {
+                x.PaymentShipping = await this.GetInformationAsync(x.SessionId);
+            }));
+
+            await Task.WhenAll(paymentTasks);
+
+            return payments;
+        }
+
+        #region Private Methods
+
+        private async Task<PaymentShippingViewModel> GetInformationAsync(string sessionId)
+        {
+            var session = await this.sessionService.GetAsync(sessionId);
+
+            var paymentModel = new PaymentShippingViewModel()
+            {
+                PaymentMethod = session.PaymentMethodTypes.FirstOrDefault(),
+                CustomerEmail = session.CustomerDetails?.Email,
+                AmountTotal = session.AmountTotal.HasValue ? session.AmountTotal.Value / AmountMultiplier : 0,
+                Currency = session.Currency,
+            };
+
+            return paymentModel;
+        }
+
         private async Task<SessionCreateOptions> CreateSessionOptionsAsync(Guid courseId)
         {
             var course = await this.courseService.GetByIdAsync<CoursePaymentDetailsServiceModel>(courseId);
@@ -157,7 +203,7 @@
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            UnitAmountDecimal = course.Price * 100,
+                            UnitAmountDecimal = course.Price * AmountMultiplier,
                             Currency = "BGN",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
@@ -193,5 +239,7 @@
 
         private string GenerateHostUrl()
             => $"{this.httpContextAccessor?.HttpContext?.Request.Scheme}://{this.httpContextAccessor?.HttpContext?.Request.Host}";
+
+        #endregion
     }
 }

@@ -13,6 +13,7 @@
     using StudentSystem.Data.Models.Courses;
     using StudentSystem.Services.Data.Features.StudentCourses.DTOs.BindingModels;
     using StudentSystem.Services.Data.Features.StudentCourses.DTOs.RequestDataModels;
+    using StudentSystem.Services.Data.Features.StudentCourses.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.StudentCourses.Services.Contracts;
     using StudentSystem.Services.Data.Features.Students.DTOs.ViewModels;
     using StudentSystem.Services.Data.Features.Students.Services.Contracts;
@@ -68,6 +69,20 @@
             var resultModel =  new ListStudentsViewModel() { StudentsPageList = pageList, RequestData = requestData };
 
             return resultModel;
+        }
+
+        public async Task<TEntity?> GetCourseWithExamDetailsAsync<TEntity>(Guid courseId)
+            where TEntity : class
+        {
+            var studentId = await this.studentService.GetIdByUserIdAsync(this.currentUserService.GetUserId());
+
+            var model = await this.Repository
+                .AllAsNoTracking()
+                .Where(x => x.CourseId.Equals(courseId) && x.StudentId.Equals(studentId))
+                .ProjectTo<TEntity>(this.Mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
+
+            return model;
         }
 
         public async Task AddStudentToCourseAsync(Guid courseId)

@@ -5,9 +5,7 @@
     using StudentSystem.Services.Data.Features.Lessons.Services.Contracts;
     using StudentSystem.Web.Infrastructure.Attributes;
 
-    [ApiController]
-    [Route("[controller]")]
-    public class LessonsApiController : Controller
+    public class LessonsApiController : BaseApiController
     {
         private readonly ILessonService lessonService;
 
@@ -21,7 +19,7 @@
         {
             var lesson = await lessonService.GetDetailsAsync(id);
 
-            return PartialView("~/Views/Shared/Partials/Lessons/_LessonDetailsPartial.cshtml", lesson);
+            return this.PartialView("~/Views/Shared/Partials/Lessons/_LessonDetailsPartial.cshtml", lesson);
         }
     }
 }

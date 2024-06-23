@@ -12,7 +12,7 @@
             var modelState = filterContext.ModelState;
 
             if (!modelState.IsValid)
-            {
+                {
                 var controller = filterContext.Controller as Controller;
 
                 var errors = modelState.Values

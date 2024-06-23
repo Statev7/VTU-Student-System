@@ -247,3 +247,68 @@ footer p {
     height: 100%; 
     object-fit: cover;
 }
+
+.active-course {
+    color: #F5A425;
+}
+
+.credits-circle {
+    color: white;
+    background-color: #234465;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.credits-circle .credits {
+    font-size: 20px;
+}
+
+.student-avg-grade-box {
+    font-size: 20px;
+}
+
+.student-avg-grade-box .grade{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.active-course-legend {
+    background-color: #F5A425;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.not-active-course-legend {
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.course-legend {
+    font-size: 14px;
+}
+
+.course-grade-banner {
+    background-color: rgba(22,34,57,0.85);
+}
+
+.course-duration {
+    font-size: 14px;
+}
+
+.course-grade-banner a {
+    color: white;
+    text-decoration: none;
+}
+
+.course-grade-banner a :hover {
+    color: #F5A425;
+}

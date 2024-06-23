@@ -1,0 +1,68 @@
+﻿@model StudentTrainingsInformationViewModel
+
+@{
+    this.ViewData["Title"] = "Trainings";
+}
+
+<section class="mt-5">
+
+    <section class="d-flex col-10">
+        <div class="p-3 align-self-start credits-circle">
+            <p class="credits"><strong>@Model.TotalCredits</strong></p>
+            <p><strong>Credits</strong></p>
+        </div>
+
+        @if (Model.AvgGrade.HasValue)
+        {
+            <div class="align-self-center text-center mx-auto student-avg-grade-box">
+                <p>Avarage Grade</p>
+                <p class="grade">@Model.AvgGrade?.ToString("F2")</p>
+            </div>
+        }
+    </section>
+
+    <section class="mt-4">
+        <h4>Legend:</h4>
+
+        <section class="d-flex gap-2 mt-2 course-legend">
+            <section class="d-flex gap-1">
+                <div class="active-course-legend"></div>
+                <p class="align-self-center">The course is active</p>
+            </section>
+
+            <section class="d-flex gap-1">
+                <div class="not-active-course-legend"></div>
+                <p class="align-self-center">The course is not active</p>
+            </section>
+        </section>
+
+    </section>
+
+    <section class="accordion col-12 mt-4 d-flex flex-column flex-md-row" id="accordion">
+
+        <section class="col-10">
+            <h3 class="mb-3">My Courses</h3>
+
+            @foreach (var course in Model.Courses)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed @(course.IsActive ? "active-course" : string.Empty)" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@course.Id" aria-expanded="false" aria-controls="@course.Id">
+                            <strong> @course.Name</strong>
+                        </button>
+                    </h2>
+
+                    <div id="collapse-@course.Id" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                    </div>
+                </div>
+            }
+        </section>
+
+    </section>
+
+
+</section>
+
+@section Scripts {
+    <script src="~/js/accordion.js"></script>
+}
