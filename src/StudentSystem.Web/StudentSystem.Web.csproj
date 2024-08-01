@@ -51,6 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\files\Resources\" />
     <Folder Include="wwwroot\files\seeds\" />
   </ItemGroup>
 
